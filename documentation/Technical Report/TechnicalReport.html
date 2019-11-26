@@ -118,26 +118,30 @@
         </figure>
         <figure typeof="schema:SoftwareSourceCode" resource="#person-example" id="person-example">
           <pre><code>
-              &lt;ns1:notary rdf:about="http://example.org/people/MARIA_CREŢOI-DAVID"&gt;
-                &lt;ns2:lastName&gt;CREŢOI&lt;/ns2:lastName&gt;
-                &lt;ns2:address&gt;
-                  &lt;rdf:Description rdf:about="https://address.org/id/JIBOU"&gt;
-                    &lt;ns2:street&gt;STR. AVRAM IANCU NR. 2, BL. G11, AP. 2&lt;/ns2:street&gt;
-                    &lt;ns2:county&gt;SĂLAJ&lt;/ns2:county&gt;
-                    &lt;ns2:city&gt;JIBOU&lt;/ns2:city&gt;
-                  &lt;/rdf:Description&gt;
-                &lt;/ns2:address&gt;
-                &lt;ns2:firstName&gt;MARIA&lt;/ns2:firstName&gt;
-                &lt;ns2:phoneNo&gt;0705788213&lt;/ns2:phoneNo&gt;
-              &lt;/ns1:notary&gt;
+            &lt;ns2:translator rdf:about="http://example.org/people/Emel_Abduraman"&gt;
+             &lt;ns1:phoneNo&gt;072135773&lt;/ns1:phoneNo&gt;
+             &lt;ns1:address&gt;
+                &lt;rdf:Description rdf:about="https://address.org/id/CONSTANŢA"&gt;
+                    &lt;ns1:street&gt;STR. SOVEJA NR. 21A-21B,ET. 3&lt;/ns1:street&gt;
+                    &lt;ns1:county&gt;CONSTANŢA&lt;/ns1:county&gt;
+                    &lt;ns1:city&gt;CONSTANŢA&lt;/ns1:city&gt;
+                &lt;/rdf:Description&gt;
+             &lt;/ns1:address&gt;
+             &lt;ns1:firstName&gt;Emel&lt;/ns1:firstName&gt;
+             &lt;ns1:languages&gt;['Engleză', 'Germană']&lt;/ns1:languages&gt;
+             &lt;ns1:lastName&gt;Abduraman&lt;/ns1:lastName&gt;
+            &lt;/ns2:translator&gt;
           </code></pre>
           <figcaption>
             <span property="schema:name"></span>
             <span property="schema:description">
-              Example of a Translator. TO DO -- change xml 
+              Example of a Translator.
             </span>
           </figcaption>
         </figure>
+        <p>As we can see both entities have a similar structure, the only difference being the <b>languages</b> tag that is applying only for translators. This structure will suffer changes in the future, different types of document templates will be added and the prices for each service that is offered by an entity.
+        </p>
+        <p>Different types of RDFs can be generated using the <b>rdflib</b> library such as:‘xml’, ‘n3’, ‘turtle’, ‘nt’, ‘pretty-xml’, ‘trix’, ‘trig’. The current format is pretty-xml.</p>
     </section>
     <section id="biblio-references">
         <h2><span>. </span>References</h2>
