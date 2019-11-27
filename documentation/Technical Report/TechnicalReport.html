@@ -4,45 +4,50 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Scholarly HTML</title>
+    <title>Technical Report</title>
     <link rel="stylesheet" href="./Scholarly HTML_files/scholarly.min.css">
-    <script src="./Scholarly HTML_files/scholarly.min.js.download"></script>
+    <link rel="stylesheet" href="./Scholarly%20HTML_files/technical-report.css">
 </head>
 
-<body prefix="schema: http://schema.org">
-    <header style="
-    width: 700px;
-    height: 100px;
-    padding-bottom: 50px;
-">
-        <h1 style="
-    padding-top: 50px;
-">Technical Report</h1>
+<body>
+    <header>
+        <h1 id="header-title">Technical Report</h1>
     </header>
-    <div role="contentinfo">
+    <div class="contentinfo">
         <ol role="directory">
-            <li><a href="#"><span>1. </span>Abstract</a></li>
-            <li><a href="#"><span>2. </span>Introduction and objectives</a></li>
-            <li><a href="#"><span>3. </span>Application Architecture</a>
+            <li><a id="content-info-link" href="#abstract"><span>1. </span>Abstract</a></li>
+            <li><a id="content-info-link" href="#introduction"><span>2. </span>Introduction and objectives</a></li>
+            <li><a id="content-info-link" href="#application-architecture"><span>3. </span>Application Architecture</a>
                 <ol role="directory">
-                    <li><a href="#"><span>3.1 </span>Server</a></li>
-                    <li><a href="#"><span>3.2 </span>Client</a></li>
+                    <li><a id="content-info-link" href="#server"><span>3.1. </span>Server</a></li>
+                    <ol role="directory">
+                        <li><a id="content-info-link" href="#maven"><span>3.1.1. </span>Maven</a></li>
+                        <li><a id="content-info-link" href="#spring-boot"><span>3.1.2. </span>Spring Boot</a></li>
+                        <li><a id="content-info-link" href="#apache-jena"><span>3.1.3. </span>Apache Jena</a></li>
+                    </ol>
+                    <li><a id="content-info-link" href="#client"><span>3.2. </span>Client</a></li>
+                    <ol role="directory">
+                        <li><a id="content-info-link" href="#angular"><span>3.2.1. </span>Angular</a></li>
+                        <li><a id="content-info-link" href="#nodejs"><span>3.2.2. </span>NodeJS</a></li>
+                    </ol>
                 </ol>
             </li>
-            <li><a href="#"><span>4. </span>RDF structure</a>
-            </li>
-            <li><a href="#"><span>. </span>References</a></li>
+            <li><a id="content-info-link" href="#rdf-structure"><span>4. </span>RDF structure</a></li>
+            <li><a id="content-info-link" href="#challanges"><span>5. </span>Challanges encounted</a></li>
+            <li><a id="content-info-link" href="#results"><span>6. </span>Results</a></li>
+            <li><a id="content-info-link" href="#conclusion"><span>7. </span>Conclusion</a></li>
+            <li><a id="content-info-link" href="#future-improvements"><span>8. </span>Future improvements</a></li>
+            <li><a id="content-info-link" href="#bibliography"><span>9. </span>Bibliography</a></li>
         </ol>
     </div>
-    <section typeof="sa:Abstract" id="abstract" role="doc-abstract">
+    <section id="abstract">
         <h2><span>1. </span>Abstract</h2>
         <p>
             In this report we have highlighted the stages of the current project development, its description, the technologies used and the challenges encountered. Finally, we presented some conclusions and future improvements for our application.
         </p>
     </section>
-    <section id="introduction" role="doc-introduction">
+    <section id="introduction">
         <!-- review? -->
         <h2><span>2. </span>Introduction and objectives</h2>
         <p>
@@ -61,38 +66,65 @@
         <p>
             Application architecture is separated in two main components consisting of: the server application and the client application. In the image below we can visualize the main architecture.
         </p>
-        <img src="../UML/arhitecture.png" alt="architecture" />
+        <img id="architecture-img" src="../UML/arhitecture.png" alt="architecture" />
+        <p>Communication between server and client is made via HTTP requests.</p>
         <section id="server">
             <h3><span>3.1 </span>Server</h3>
             <p> The server application is written in Java. In Java we do all the processing that the application requires. Regarding technologies we are using: Spring Boot, Maven and Apache Jena.</p>
-            <p>Maven is used in order to resolve all imports of dependecies required for the project.</p>
-            <p>Spring Boot is used to accelerate and facilitate back-end application development. With the help of Spring we create a microservice which helps in processing of data necessary for client, through endpoints. There is an OpenAPI document that contains the main endpoints offered by our server can be found <a href="./openApi.html">here</a>.
-            </p>
-            <p>We made use of Apache Jena framework to manipulate the RDF model and to interogate it via SPARQL. The rdf structure will be described in the next chapter.</p>
-            <p>For a better structure of a code, as design pattern we use MVC pattern where we split the code in three main parts: </p>
+            <p>For a better structure of a code, as design pattern we use MVCS pattern where we split the code in four main parts: </p>
             <ul>
-                <li>M-Model: for defini</li>
-                <li>Tea</li>
-                <li>Milk</li>
+                <li>M-Model: represents an POJO object which is carrying data (gets/sets data)</li>
+                <li>V-View: represents the visualization of the data that model contains; we are skipping that part</li>
+                <li>C-Controller: the one who exposes the data; connects the service with the model, acting as a bridge</li>
+                <li>S-Service: encapsulates the business logic, letting the Model clean</li>
             </ul>
+            <section id="maven">
+                <h4><span>3.1.1 </span>Maven</h4>
+                <p>Maven is used in order to resolve all imports of dependecies required for the project.</p>
+            </section>
+            <section id="spring-boot">
+                <h4><span>3.1.2 </span>Spring Boot</h4>
+                <p>Spring Boot is used to accelerate and facilitate back-end application development. With the help of Spring we create a microservice which helps in processing of data necessary for client, through endpoints. There is an OpenAPI document that contains the main endpoints offered by our server can be found <a href="./openApi.html">here</a>.
+                </p>
+            </section>
+            <section id="apache-jena">
+                <h4><span>3.1.3 </span>Apache Jena</h4>
+                <p>We made use of Apache Jena framework to manipulate the RDF model and to interogate it via SPARQL. The RDF structure will be described in the next chapter.</p>
+            </section>
         </section>
         <section id="client">
-            <!-- review? -->
             <h3><span>3.2 </span>Client</h3>
             <p>The client web application is developed using Angular framework and runs on a NodeJS server.
             </p>
             <p>In order to use a proper map on which the users can see the actual position of different offices across the country we made use of Google Maps API. The official documentation of this API can be consulted <a href="https://developers.google.com/maps/documentation">here</a>.
             </p>
-            <p><br />Communication between server and client is made via HTTP requests.</p>
-
+            <section id="angular">
+                <h4><span>3.2.1 </span>Angular</h4>
+                <p>Angular is a platform for building mobile and desktop web applications, based ob TypeScript language.</p>
+            </section>
+            <section id="nodejs">
+                <h4><span>3.2.2 </span>NodeJS</h4>
+                <p>NodeJS is a JavaScript runtime environment that executes JavaScript code outside of a browser. NodeJS lets developers use JavaScript to write command line tools and for server-side scripting—running scripts server-side to produce dynamic web page content before the page is sent to the user's web browser. </p>
+            </section>
         </section>
     </section>
     <section id="rdf-structure">
-        <!-- review? -->
         <h2><span>4. </span>RDF structure</h2>
     </section>
-    <section id="biblio-references">
-        <h2><span>. </span>References</h2>
+    <section id="challanges">
+        <h2><span>5. </span>Challanges encounted</h2>
+    </section>
+    <section id="results">
+        <h2><span>6. </span>Results</h2>
+    </section>
+    <section id="conclusion">
+        <h2><span>7. </span>Conclusion</h2>
+    </section>
+    <section id="future-improvements">
+        <h2><span>8. </span>Future improvements</h2>
+    </section>
+    <section id="bibliography">
+        <h2><span>9. </span>Bibliography</h2>
         <dl>
             <dt id="ref-HTML">Scholarly HTML</dt>
             <dd property="schema:citation" typeof="schema:ScholarlyArticle" resource="https://w3c.github.io/scholarly-html/">

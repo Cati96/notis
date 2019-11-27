@@ -1,0 +1,33 @@
+header {
+    width: 700px;
+    height: 100px;
+    padding-bottom: 50px;
+}
+
+#header-title {
+    padding-top: 50px;
+}
+
+#content-info-link {
+    text-decoration: none;
+}
+
+#content-info-link:link,
+#content-info-link:visited {
+    color: blue;
+}
+
+#content-info-link:hover {
+    color: red;
+}
+
+#architecture-img {
+    width: 100%;
+    height: auto;
+}
+
+/*
+body {
+    max-width: 50%;
+}
+*/
