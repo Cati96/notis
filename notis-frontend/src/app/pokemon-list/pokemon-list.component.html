@@ -1,13 +1,8 @@
+<p>List:</p>
 <div *ngIf="pokemonData">
   <ul>
     <li *ngFor="let pokemon of pokemonData.pokemons">
       <a routerLink="/pokemon/{{pokemon._id}}">{{pokemon.name}}</a>
     </li>
   </ul>
-</div>
-
-<div *ngIf="pokemon">
-  <h2>{{ pokemon.name | uppercase }} Details</h2>
-  <img [src]="pokemon.image">
-  <p>Evolved from: {{pokemon.evolves_from}}</p>
 </div>
