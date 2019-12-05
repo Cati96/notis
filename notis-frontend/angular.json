@@ -63,7 +63,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "notis-frontend:build"
+            "browserTarget": "notis-frontend:build",
+            "publicHost":"157.230.180.203"
           },
           "configurations": {
             "production": {
