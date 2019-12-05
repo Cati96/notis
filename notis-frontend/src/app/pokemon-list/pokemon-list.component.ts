@@ -7,15 +7,11 @@ import {PokemonService} from '../pokemon.service';
   styleUrls: ['./pokemon-list.component.css']
 })
 export class PokemonListComponent implements OnInit {
-  private pokemonData: any;
 
-  constructor(private svc: PokemonService) {
+  constructor() {
   }
 
   ngOnInit() {
-    this.svc.getPokemons().subscribe(data => {
-      this.pokemonData = data;
-    });
   }
 
 }
