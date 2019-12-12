@@ -17,10 +17,10 @@ export let browserRefresh = false;
 })
 export class AdminNotaryComponent implements OnInit, OnDestroy {
 
-  private subscription: Subscription;
+  subscription: Subscription;
 
-  private displayedColumns = ['ID', 'Name', 'Authorization number', 'Phone number', 'Address', 'Timetable', 'Services', 'Actions'];
-  private notaries: Notary[];
+  displayedColumns = ['ID', 'Name', 'Authorization number', 'Phone number', 'Address', 'Timetable', 'Services', 'Actions'];
+  notaries: Notary[];
 
   @ViewChild(MatTable, {static: true}) table: MatTable<any>;
 

@@ -9,9 +9,9 @@ import {Notary} from '../../../models/notary.model';
 })
 export class DialogBoxNotaryTranslatorComponent {
 
-  private action: string;
-  private localData: Notary;
-  private entityType: string;
+  action: string;
+  localData: Notary;
+  entityType: string;
 
   constructor(
     public dialogRef: MatDialogRef<DialogBoxNotaryTranslatorComponent>,

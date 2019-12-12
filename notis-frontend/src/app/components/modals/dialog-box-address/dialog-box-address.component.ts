@@ -9,11 +9,11 @@ import {Address} from '../../../models/address.model';
 })
 export class DialogBoxAddressComponent implements OnInit {
 
-  private localData: Address;
-  private entityType: string;
-  private isEditing: boolean;
-  private isDeleting: boolean;
-  private editButtonIcon: string;
+  localData: Address;
+  entityType: string;
+  isEditing: boolean;
+  isDeleting: boolean;
+  editButtonIcon: string;
 
   constructor(
     public dialogRef: MatDialogRef<DialogBoxAddressComponent>,

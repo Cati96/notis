@@ -10,7 +10,8 @@ import {ServicesNotaryTranslatorComponent} from './components/services-notary-tr
 
 
 const routes: Routes = [
-  {path: '', component: AppComponent},
+  /*{path: '', component: AppComponent},*/
+  {path: '', pathMatch: 'full', redirectTo: 'admin-login'},
   {path: 'admin-login', component: LoginComponent},
   {
     path: 'admin-home', component: AdminHomeComponent, children: [

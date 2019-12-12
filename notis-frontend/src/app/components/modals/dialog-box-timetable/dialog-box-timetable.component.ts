@@ -9,11 +9,11 @@ import {Timetable} from '../../../models/timetable.model';
 })
 export class DialogBoxTimetableComponent implements OnInit {
 
-  private localData: Timetable;
-  private entityType: string;
-  private isEditing: boolean;
-  private isDeleting: boolean;
-  private editButtonIcon: string;
+  localData: Timetable;
+  entityType: string;
+  isEditing: boolean;
+  isDeleting: boolean;
+  editButtonIcon: string;
 
   constructor(
     public dialogRef: MatDialogRef<DialogBoxTimetableComponent>,
