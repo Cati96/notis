@@ -17,7 +17,7 @@ export class NotaryService {
 
   getAllNotaries() {
     // Global.baseUrl + this.urlPart + '/findAll'
-    this.http.get('http://aiiasw09.ias.ro.almanid.com:8080/notis/test/getAllNotaries').pipe(map(
+    this.http.get('http://157.230.180.203:8080/notis/test/getAllNotaries').pipe(map(
       (data: Response) => {
         this.response = data.json();
       }
