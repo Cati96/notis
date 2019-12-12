@@ -1,0 +1,21 @@
+.dialog-box-entities {
+  width: 100%;
+}
+
+.form-container-notary {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-container-notary {
+  width: 100%;
+}
+
+.form-container-translator {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-container-translator {
+  width: 100%;
+}

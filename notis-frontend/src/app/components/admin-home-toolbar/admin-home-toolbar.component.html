@@ -1,0 +1,11 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <button class="admin-home-button" mat-button routerLink='/admin-home'>Notis Admin Console</button>
+    <button mat-button routerLink='/admin-notary'>Notary</button>
+    <button mat-button routerLink='/admin-translator'>Translator</button>
+    <span class="filler"></span>
+    <button mat-raised-button (click)="logout()">
+      <mat-icon>logout</mat-icon>
+    </button>
+  </mat-toolbar-row>
+</mat-toolbar>

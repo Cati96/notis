@@ -1,0 +1,28 @@
+.dialog-box-address {
+  width: 100%;
+}
+
+.form-container-address {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-container-address {
+  width: 100%;
+}
+
+.address-edit-button{
+  background-color: green;
+  color: #fff;
+}
+
+.address-update-button{
+  background-color: #ffd740;
+  color: black;
+}
+
+.address-delete-button {
+  background-color: darkred;
+  color: #fff;
+}
+

@@ -1,0 +1,59 @@
+<div class="dialog-box-timetable">
+  <h1 mat-dialog-title>{{entityType}} timetable details</h1>
+  <div mat-dialog-content class="dialog-box-timetable-content">
+    <div *ngIf="!isDeleting; else elseTemplate">
+      <div class="form-container-timetable">
+        <mat-form-field>
+          <input placeholder="Monday" matInput [(ngModel)]="localData.monday" [disabled]="!isEditing">
+        </mat-form-field>
+        <mat-form-field>
+          <input placeholder="Tuesday" matInput [(ngModel)]="localData.tuesday" [disabled]="!isEditing">
+        </mat-form-field>
+        <mat-form-field>
+          <input placeholder="Wednesday" matInput [(ngModel)]="localData.wednesday" [disabled]="!isEditing">
+        </mat-form-field>
+        <mat-form-field>
+          <input placeholder="Thursday" matInput [(ngModel)]="localData.thursday" [disabled]="!isEditing">
+        </mat-form-field>
+        <mat-form-field>
+          <input placeholder="Friday" matInput [(ngModel)]="localData.friday" [disabled]="!isEditing">
+        </mat-form-field>
+        <mat-form-field>
+          <input placeholder="Saturday" matInput [(ngModel)]="localData.saturday" [disabled]="!isEditing">
+        </mat-form-field>
+        <mat-form-field>
+          <input placeholder="Sunday" matInput [(ngModel)]="localData.sunday" [disabled]="!isEditing">
+        </mat-form-field>
+      </div>
+    </div>
+    <ng-template #elseTemplate>
+      Sure you want to delete the current timetable?
+    </ng-template>
+  </div>
+</div>
+<div mat-dialog-actions align="end">
+  <div *ngIf="!isDeleting; else elseTemplateYes">
+    <button mat-button [ngClass]="{
+  'timetable-edit-button': isEditing,
+  'timetable-update-button': !isEditing
+}" (click)="doEdit()" mat-flat-button>
+      <mat-icon>{{editButtonIcon.toLowerCase()}}</mat-icon>
+      {{editButtonIcon}}
+    </button>
+    <button mat-button class="timetable-delete-button" (click)="doDelete()" mat-flat-button>
+      <mat-icon>delete</mat-icon>
+      Delete
+    </button>
+  </div>
+  <button mat-button (click)="closeDialog()" mat-flat-button color="warn">
+    <mat-icon>cancel</mat-icon>
+    Cancel
+  </button>
+
+  <ng-template #elseTemplateYes>
+    <button mat-button class="timetable-delete-button" (click)="doDeleteYes()" mat-flat-button>
+      <mat-icon>delete</mat-icon>
+      Delete
+    </button>
+  </ng-template>
+</div>

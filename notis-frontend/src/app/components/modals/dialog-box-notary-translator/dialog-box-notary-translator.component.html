@@ -1,0 +1,33 @@
+<div class="dialog-box-entities">
+  <h1 mat-dialog-title><strong>{{action}}</strong> {{entityType}}</h1>
+  <div mat-dialog-content class="dialog-box-entities-content">
+    <div *ngIf="action != 'Delete'; else elseTemplate">
+      <div *ngIf="entityType === 'notary' " class="form-container-notary">
+        <mat-form-field>
+          <input placeholder="{{action}} Name" matInput [(ngModel)]="localData.name">
+        </mat-form-field>
+        <mat-form-field>
+          <input placeholder="{{action}} Authorization number" matInput [(ngModel)]="localData.authorizationNumber">
+        </mat-form-field>
+        <mat-form-field>
+          <input placeholder="{{action}} Phone number" matInput [(ngModel)]="localData.phoneNumber">
+        </mat-form-field>
+      </div>
+
+      <div *ngIf="entityType === 'translator' " class="form-container-translator">
+      </div>
+    </div>
+    <ng-template #elseTemplate>
+      Sure you want to delete the current {{entityType}}?
+    </ng-template>
+  </div>
+  <div mat-dialog-actions align="end">
+    <button mat-button (click)="doAction()" mat-flat-button color="accent">
+      <mat-icon>{{action.toLowerCase()}}</mat-icon>
+      {{action}}</button>
+    <button mat-button (click)="closeDialog()" mat-flat-button color="warn">
+      <mat-icon>cancel</mat-icon>
+      Cancel
+    </button>
+  </div>
+</div>

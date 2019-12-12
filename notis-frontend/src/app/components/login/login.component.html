@@ -1,0 +1,27 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <button mat-button>Notis Admin Console</button>
+    <span class="filler"></span>
+    <button mat-button>Contact</button>
+    <button mat-button>About</button>
+  </mat-toolbar-row>
+</mat-toolbar>
+<mat-card class="login-class" style="text-align: center;">
+  <mat-card-header>
+    <mat-card-title>Login to admin console</mat-card-title>
+  </mat-card-header>
+  <br>
+  <mat-card-content>
+    <form>
+      <mat-form-field class="username-field">
+        <input matInput placeholder="Username" [(ngModel)]="username" name="username" required>
+      </mat-form-field>
+      <mat-form-field class="password-field">
+        <input matInput placeholder="Password" [(ngModel)]="password" type="password" name="password" required>
+      </mat-form-field>
+    </form>
+  </mat-card-content>
+  <mat-card-actions>
+    <button class = "login-button" mat-raised-button (click)="login()" color="accent">Log in</button>
+  </mat-card-actions>
+</mat-card>
