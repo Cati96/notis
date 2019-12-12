@@ -7,7 +7,6 @@ import {Subscription} from 'rxjs';
 import {NavigationEnd, NavigationStart, Router} from '@angular/router';
 import {DialogBoxAddressComponent} from '../modals/dialog-box-address/dialog-box-address.component';
 import {DialogBoxTimetableComponent} from '../modals/dialog-box-timetable/dialog-box-timetable.component';
-import {DialogBoxServicesComponent} from '../modals/dialog-box-services/dialog-box-services.component';
 
 export let browserRefresh = false;
 
