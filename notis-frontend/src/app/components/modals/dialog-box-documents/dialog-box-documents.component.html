@@ -1,0 +1,104 @@
+<div class="dialog-box-document">
+  <h1 mat-dialog-title>Documents</h1>
+  <div mat-dialog-content class="dialog-box-document-content">
+    <mat-table class="document-table mat-elevation-z8" [dataSource]="documents">
+      <ng-container matColumnDef="ID">
+        <mat-header-cell *matHeaderCellDef>#</mat-header-cell>
+        <mat-cell class="id-cell" *matCellDef="let document">{{document.id}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="Type">
+        <mat-header-cell *matHeaderCellDef>Type</mat-header-cell>
+        <mat-cell class="type-cell"
+                  *matCellDef="let document;">
+          <mat-form-field floatLabel="never">
+            <input matInput placeholder="Type" [value]="document.type" [(ngModel)]="document.type"
+                   [disabled]="!document.isEdited">
+          </mat-form-field>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="Format">
+        <mat-header-cell *matHeaderCellDef>Format</mat-header-cell>
+        <mat-cell class="format-cell"
+                  *matCellDef="let document;">
+          <mat-form-field floatLabel="never">
+            <input matInput placeholder="Format" [value]="document.format" [(ngModel)]="document.format"
+                   [disabled]="!document.isEdited">
+          </mat-form-field>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="Price">
+        <mat-header-cell *matHeaderCellDef>Price</mat-header-cell>
+        <mat-cell class="price-cell"
+                  *matCellDef="let document;">
+          <mat-form-field floatLabel="never">
+            <input matInput placeholder="Price" [value]="document.price" [(ngModel)]="document.price"
+                   [disabled]="!document.isEdited">
+          </mat-form-field>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="Template">
+        <mat-header-cell *matHeaderCellDef>Template</mat-header-cell>
+        <mat-cell class="template-cell"
+                  *matCellDef="let document; ">
+          <div *ngIf="document.template!==null || (document.hasFileToUpload && document.isFileUploaded)">
+            <button mat-button class="document-attachment-button" (click)="doOpenDocument(document.template)">
+              <mat-icon>attach_file</mat-icon>
+            </button>
+          </div>
+          <div *ngIf="(document.template===null && !document.hasFileToUpload) || (document.hasFileToUpload && !document.isFileUploaded)">
+            <input [ngClass]="'template-file-input'+hiddenId" type="file" accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,
+text/plain, application/pdf, image/*" #file (change)="onChangeFile(document, $event)">
+            <button mat-button class="document-attachment-button" (click)="doUploadDocument(document, file)">
+              <mat-icon>cloud_upload</mat-icon>
+              Upload File
+            </button>
+          </div>
+
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="Actions">
+        <mat-header-cell *matHeaderCellDef>
+          Actions
+          <span class="filler"></span>
+          <button mat-button mat-flat-button color="accent" class="documents-add-button"
+                  (click)="doAddNewRowForDocument()">
+            <mat-icon>add</mat-icon>
+          </button>
+          <button mat-raised-button class="documents-refresh-button" (click)="doRefreshData()">
+            <mat-icon>refresh</mat-icon>
+          </button>
+        </mat-header-cell>
+        <mat-cell class="actions-cell"
+                  *matCellDef="let document; ">
+          <button mat-button
+                  [ngClass]="{'document-edit-button': document.isEdited,'document-update-button': !document.isEdited}"
+                  (click)="doEdit(document)" mat-flat-button>
+            <mat-icon>{{document.editButtonIcon.toLowerCase()}}</mat-icon>
+            {{document.editButtonIcon}}
+          </button>
+          <button mat-raised-button class="document-delete-button" (click)="doDelete(document)">
+            <mat-icon>delete</mat-icon>
+            Delete
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+      <mat-row *matRowDef="let row; columns: displayedColumns">
+      </mat-row>
+
+    </mat-table>
+  </div>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-button (click)="closeDialog()" mat-flat-button color="warn">
+    <mat-icon>cancel</mat-icon>
+    Cancel
+  </button>
+</div>

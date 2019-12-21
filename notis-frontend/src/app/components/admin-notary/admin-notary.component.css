@@ -7,14 +7,3 @@
   background-color: darkred;
   color: #fff;
 }
-
-.add-notary-button {
-  position: center;
-  /*top: 50%;*/
-}
-
-.add-notary-wrapper {
-  text-align: center;
-  padding-bottom: 20px;
-  padding-top: 20px;
-}

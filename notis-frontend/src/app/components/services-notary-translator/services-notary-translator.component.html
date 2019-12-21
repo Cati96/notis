@@ -1,2 +1,58 @@
 <router-outlet name="admin-home-toolbar"></router-outlet>
-<h1>services-notary-translator works!!!</h1>
+
+<mat-table class="service-table mat-elevation-z8" [dataSource]="services">
+  <ng-container matColumnDef="ID">
+    <mat-header-cell *matHeaderCellDef>#</mat-header-cell>
+    <mat-cell class="id-cell" *matCellDef="let service">{{service.id}}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="Type">
+    <mat-header-cell *matHeaderCellDef>Type</mat-header-cell>
+    <mat-cell class="type-cell"
+              *matCellDef="let service">{{service.type}}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="Description">
+    <mat-header-cell *matHeaderCellDef>Description</mat-header-cell>
+    <mat-cell class="description-cell"
+              *matCellDef="let service">{{service.description}}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="Documents">
+    <mat-header-cell *matHeaderCellDef>Documents</mat-header-cell>
+    <mat-cell class="documents-cell"
+              *matCellDef="let service">
+      <button (click)="showAllDocuments(service.documents === [] ? {} : service.id)">See documents</button>
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="Actions">
+    <mat-header-cell *matHeaderCellDef>
+      Actions
+      <span class="filler"></span>
+      <button mat-button (click)="openDialog('Add',{})" mat-flat-button color="accent" class="add-service-button">
+        <mat-icon>add</mat-icon>
+      </button>
+      <button mat-raised-button class="documents-refresh-button" (click)="doRefreshData()">
+        <mat-icon>refresh</mat-icon>
+      </button>
+    </mat-header-cell>
+    <mat-cell class="actions-cell"
+              *matCellDef="let service">
+      <button mat-raised-button class="edit-row-button" (click)="openDialog('Update', service)">
+        <mat-icon>edit</mat-icon>
+        Edit
+      </button>
+      <button mat-raised-button class="delete-row-button" (click)="openDialog('Delete', service)">
+        <mat-icon>delete</mat-icon>
+        Delete
+      </button>
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+  <mat-row *matRowDef="let row; columns: displayedColumns">
+  </mat-row>
+
+</mat-table>

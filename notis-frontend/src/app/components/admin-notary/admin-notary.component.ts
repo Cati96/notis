@@ -8,8 +8,6 @@ import {NavigationEnd, NavigationStart, Router} from '@angular/router';
 import {DialogBoxAddressComponent} from '../modals/dialog-box-address/dialog-box-address.component';
 import {DialogBoxTimetableComponent} from '../modals/dialog-box-timetable/dialog-box-timetable.component';
 
-export let browserRefresh = false;
-
 @Component({
   selector: 'app-admin-notary',
   templateUrl: './admin-notary.component.html',
@@ -18,6 +16,7 @@ export let browserRefresh = false;
 export class AdminNotaryComponent implements OnInit, OnDestroy {
 
   subscription: Subscription;
+  browserRefresh = false;
 
   displayedColumns = ['ID', 'Name', 'Authorization number', 'Phone number', 'Address', 'Timetable', 'Services', 'Actions'];
   notaries: Notary[];
@@ -34,7 +33,7 @@ export class AdminNotaryComponent implements OnInit, OnDestroy {
         // Trick the Router into believing it's last link wasn't previously loaded
         this.router.navigated = false;
       } else if (event instanceof NavigationStart) {
-        browserRefresh = !router.navigated;
+        this.browserRefresh = !router.navigated;
       }
     });
   }
@@ -49,8 +48,14 @@ export class AdminNotaryComponent implements OnInit, OnDestroy {
     }
   }
 
+  doRefreshData() {
+    this.findAllNotaries();
+  }
+
   findAllNotaries() {
-    this.notaries = this.notaryService.getAllNotaries();
+    this.notaryService.getAllNotaries().subscribe(json => {
+      this.notaries = json;
+    });
     console.log('TO DO GET ALL NOTARIES');
   }
 

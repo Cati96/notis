@@ -6,7 +6,7 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {LoginComponent} from './components/login/login.component';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CustomMaterialModule} from './core/material.module';
 import {LayoutModule} from '@angular/cdk/layout';
 import {AdminHomeComponent} from './components/admin-home/admin-home.component';
@@ -23,6 +23,11 @@ import {DialogBoxNotaryTranslatorComponent} from './components/modals/dialog-box
 import {DialogBoxAddressComponent} from './components/modals/dialog-box-address/dialog-box-address.component';
 import {DialogBoxTimetableComponent} from './components/modals/dialog-box-timetable/dialog-box-timetable.component';
 import {ServicesNotaryTranslatorComponent} from './components/services-notary-translator/services-notary-translator.component';
+import {ServiceService} from './services/service.service';
+import {DialogBoxServiceComponent} from './components/modals/dialog-box-service/dialog-box-service.component';
+import {DialogBoxDocumentsComponent} from './components/modals/dialog-box-documents/dialog-box-documents.component';
+import {DocumentService} from './services/document.service';
+import {HttpClientJsonpModule, HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -35,7 +40,9 @@ import {ServicesNotaryTranslatorComponent} from './components/services-notary-tr
     DialogBoxNotaryTranslatorComponent,
     DialogBoxAddressComponent,
     DialogBoxTimetableComponent,
-    ServicesNotaryTranslatorComponent
+    ServicesNotaryTranslatorComponent,
+    DialogBoxServiceComponent,
+    DialogBoxDocumentsComponent
   ],
   imports: [
     BrowserModule,
@@ -49,15 +56,19 @@ import {ServicesNotaryTranslatorComponent} from './components/services-notary-tr
     MatSidenavModule,
     MatIconModule,
     MatListModule,
-    HttpModule,
-    JsonpModule,
+    HttpClientModule,
+    HttpClientJsonpModule,
+    ReactiveFormsModule,
   ],
   entryComponents: [
     DialogBoxNotaryTranslatorComponent,
     DialogBoxAddressComponent,
-    DialogBoxTimetableComponent
+    DialogBoxTimetableComponent,
+    DialogBoxServiceComponent,
+    DialogBoxDocumentsComponent
+
   ],
-  providers: [NotaryService],
+  providers: [NotaryService, ServiceService, DocumentService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

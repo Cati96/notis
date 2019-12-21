@@ -1,0 +1,9 @@
+.edit-row-button {
+  background-color: green;
+  color: #fff;
+}
+
+.delete-row-button {
+  background-color: darkred;
+  color: #fff;
+}

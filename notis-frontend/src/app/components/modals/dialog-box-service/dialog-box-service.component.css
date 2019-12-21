@@ -1,0 +1,12 @@
+.dialog-box-entities {
+  width: 100%;
+}
+
+.form-container-service{
+  display: flex;
+  flex-direction: column;
+}
+
+.form-container-service {
+  width: 100%;
+}

@@ -1,0 +1,19 @@
+.dialog-box-document {
+  width: 100%;
+}
+
+.document-edit-button{
+  background-color: green;
+  color: #fff;
+}
+
+.document-update-button{
+  background-color: #ffd740;
+  color: black;
+}
+
+.document-delete-button {
+  background-color: darkred;
+  color: #fff;
+}
+
