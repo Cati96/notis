@@ -1,2 +1,88 @@
 <router-outlet name="admin-home-toolbar"></router-outlet>
-<p>admin-translator works!</p>
+
+<mat-table class="translator-table mat-elevation-z8" [dataSource]="translators">
+  <ng-container matColumnDef="ID">
+    <mat-header-cell *matHeaderCellDef>#</mat-header-cell>
+    <mat-cell class="id-cell" *matCellDef="let translator">{{translator.id}}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="Name">
+    <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+    <mat-cell class="name-cell"
+              *matCellDef="let translator">{{translator.name}}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="Authorization number">
+    <mat-header-cell *matHeaderCellDef>Authorization number</mat-header-cell>
+    <mat-cell class="authorization-number-cell"
+              *matCellDef="let translator">{{translator.authorizationNumber}}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="Phone number">
+    <mat-header-cell *matHeaderCellDef>Phone number</mat-header-cell>
+    <mat-cell class="phone-number-cell"
+              *matCellDef="let translator">{{translator.phoneNumber}}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="Languages">
+    <mat-header-cell *matHeaderCellDef>Languages</mat-header-cell>
+    <mat-cell class="languages-cell"
+              *matCellDef="let translator">{{translator.languages}}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="Address">
+    <mat-header-cell *matHeaderCellDef>Address</mat-header-cell>
+    <mat-cell class="address-cell"
+              *matCellDef="let translator">
+      <button (click)="showAddressDetails(translator.address === null ? {} : translator.address)">See details</button>
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="Timetable">
+    <mat-header-cell *matHeaderCellDef>Timetable</mat-header-cell>
+    <mat-cell class="timetable-cell"
+              *matCellDef="let translator">
+      <button (click)="showTimetableDetails(translator.timetable === null ? {} : translator.timetable)">See details
+      </button>
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="Services">
+    <mat-header-cell *matHeaderCellDef>Services</mat-header-cell>
+    <mat-cell class="services-cell"
+              *matCellDef="let translator">
+      <button (click)="showServicesDetails(translator.services === null ? {} : translator.services)">See details
+      </button>
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="Actions">
+    <mat-header-cell *matHeaderCellDef>
+      Actions
+      <span class="filler"></span>
+      <button mat-button (click)="openDialog('Add',{})" mat-flat-button color="accent" class="add-translator-button">
+        <mat-icon>add</mat-icon>
+      </button>
+      <button mat-raised-button class="documents-refresh-button" (click)="doRefreshData()">
+        <mat-icon>refresh</mat-icon>
+      </button>
+    </mat-header-cell>
+    <mat-cell class="actions-cell"
+              *matCellDef="let translator">
+      <button mat-raised-button class="edit-row-button" (click)="openDialog('Update', translator)">
+        <mat-icon>edit</mat-icon>
+        Edit
+      </button>
+      <button mat-raised-button class="delete-row-button" (click)="openDialog('Delete', translator)">
+        <mat-icon>delete</mat-icon>
+        Delete
+      </button>
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+  <mat-row *matRowDef="let row; columns: displayedColumns">
+  </mat-row>
+
+</mat-table>

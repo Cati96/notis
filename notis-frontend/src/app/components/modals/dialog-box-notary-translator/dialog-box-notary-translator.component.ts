@@ -10,7 +10,7 @@ import {Notary} from '../../../models/notary.model';
 export class DialogBoxNotaryTranslatorComponent {
 
   action: string;
-  localData: Notary;
+  localData: any;
   entityType: string;
 
   constructor(

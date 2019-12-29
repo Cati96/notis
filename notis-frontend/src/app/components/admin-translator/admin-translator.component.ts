@@ -1,15 +1,124 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Subscription} from 'rxjs';
+import {Translator} from '../../models/translator.model';
+import {MatDialog, MatTable} from '@angular/material';
+import {NavigationEnd, NavigationStart, Router} from '@angular/router';
+import {DialogBoxNotaryTranslatorComponent} from '../modals/dialog-box-notary-translator/dialog-box-notary-translator.component';
+import {DialogBoxAddressComponent} from '../modals/dialog-box-address/dialog-box-address.component';
+import {DialogBoxTimetableComponent} from '../modals/dialog-box-timetable/dialog-box-timetable.component';
+import {TranslatorService} from '../../services/translator.service';
 
 @Component({
   selector: 'app-admin-translator',
   templateUrl: './admin-translator.component.html',
   styleUrls: ['./admin-translator.component.css']
 })
-export class AdminTranslatorComponent implements OnInit {
+export class AdminTranslatorComponent implements OnInit, OnDestroy {
 
-  constructor() { }
+  subscription: Subscription;
+  browserRefresh = false;
 
-  ngOnInit() {
+  displayedColumns = ['ID', 'Name', 'Authorization number', 'Phone number', 'Languages', 'Address', 'Timetable', 'Services', 'Actions'];
+  translators: Translator[];
+
+  @ViewChild(MatTable, {static: true}) table: MatTable<any>;
+
+  constructor(private router: Router, private translatorService: TranslatorService, private dialog: MatDialog) {
+    this.router.routeReuseStrategy.shouldReuseRoute = function() {
+      return false;
+    };
+
+    this.subscription = this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        // Trick the Router into believing it's last link wasn't previously loaded
+        this.router.navigated = false;
+      } else if (event instanceof NavigationStart) {
+        this.browserRefresh = !router.navigated;
+      }
+    });
   }
 
+  ngOnInit() {
+    this.findAllTranslators();
+  }
+
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
+
+  doRefreshData() {
+    this.findAllTranslators();
+  }
+
+  findAllTranslators() {
+    this.translatorService.getAllTranslators().subscribe(json => {
+      this.translators = json;
+    });
+    console.log('TO DO GET ALL TRANSLATORS');
+  }
+
+  openDialog(action, translator) {
+    const dialogRef = this.dialog.open(DialogBoxNotaryTranslatorComponent, {
+        width: '50%',
+        data: {
+          data: translator,
+          actionMade: action,
+          entityType: 'translator'
+        }
+      })
+    ;
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result.event === 'Add') {
+        this.addTranslator(result.data);
+      } else if (result.event === 'Update') {
+        this.updateTranslator(result.data);
+      } else if (result.event === 'Delete') {
+        this.deleteTranslator(result.data.id);
+      }
+    });
+  }
+
+  addTranslator(translator) {
+    this.table.renderRows();
+    console.log('TO DO ADD NEW TRANSLATOR');
+
+  }
+
+  updateTranslator(translator) {
+    console.log('TO DO UPDATE TRANSLATOR');
+  }
+
+  deleteTranslator(translator) {
+    console.log('TO DO DELETE TRANSLATOR BY ID');
+  }
+
+  showAddressDetails(address) {
+    this.dialog.open(DialogBoxAddressComponent, {
+      width: '30%',
+      data: {
+        data: address,
+        entityType: 'Translator'
+      }
+    });
+    this.table.renderRows();
+  }
+
+  showTimetableDetails(timetable) {
+    this.dialog.open(DialogBoxTimetableComponent, {
+      width: '30%',
+      data: {
+        data: timetable,
+        entityType: 'Translator'
+      }
+    });
+    this.table.renderRows();
+  }
+
+  showServicesDetails(services) {
+    this.router.navigate(['admin-translator/services']);
+  }
 }
+

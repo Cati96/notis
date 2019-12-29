@@ -15,6 +15,18 @@
       </div>
 
       <div *ngIf="entityType === 'translator' " class="form-container-translator">
+        <mat-form-field>
+          <input placeholder="{{action}} Name" matInput [(ngModel)]="localData.name">
+        </mat-form-field>
+        <mat-form-field>
+          <input placeholder="{{action}} Authorization number" matInput [(ngModel)]="localData.authorizationNumber">
+        </mat-form-field>
+        <mat-form-field>
+          <input placeholder="{{action}} Phone number" matInput [(ngModel)]="localData.phoneNumber">
+        </mat-form-field>
+        <mat-form-field>
+          <input placeholder="{{action}} Languages" matInput [(ngModel)]="localData.languages">
+        </mat-form-field>
       </div>
     </div>
     <ng-template #elseTemplate>

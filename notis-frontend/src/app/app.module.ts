@@ -1,11 +1,10 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-import {HttpModule, JsonpModule} from '@angular/http';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {LoginComponent} from './components/login/login.component';
+import {AdminLoginComponent} from './components/admin-login/admin-login.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CustomMaterialModule} from './core/material.module';
 import {LayoutModule} from '@angular/cdk/layout';
@@ -28,11 +27,13 @@ import {DialogBoxServiceComponent} from './components/modals/dialog-box-service/
 import {DialogBoxDocumentsComponent} from './components/modals/dialog-box-documents/dialog-box-documents.component';
 import {DocumentService} from './services/document.service';
 import {HttpClientJsonpModule, HttpClientModule} from '@angular/common/http';
+import {MainPageComponent} from './components/main-page/main-page.component';
+import {TranslatorService} from './services/translator.service';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
+    AdminLoginComponent,
     AdminHomeComponent,
     AdminTranslatorComponent,
     AdminNotaryComponent,
@@ -42,7 +43,8 @@ import {HttpClientJsonpModule, HttpClientModule} from '@angular/common/http';
     DialogBoxTimetableComponent,
     ServicesNotaryTranslatorComponent,
     DialogBoxServiceComponent,
-    DialogBoxDocumentsComponent
+    DialogBoxDocumentsComponent,
+    MainPageComponent
   ],
   imports: [
     BrowserModule,
@@ -68,7 +70,7 @@ import {HttpClientJsonpModule, HttpClientModule} from '@angular/common/http';
     DialogBoxDocumentsComponent
 
   ],
-  providers: [NotaryService, ServiceService, DocumentService],
+  providers: [NotaryService, ServiceService, DocumentService, TranslatorService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

@@ -13,9 +13,9 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "baseHref" : "/notis-frontend/",
-            "deployUrl": "/notis-frontend/",
-            "outputPath": "dist/notis-frontend",
+            "baseHref": "/notis/",
+            "deployUrl": "/notis/",
+            "outputPath": "dist/notis",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",

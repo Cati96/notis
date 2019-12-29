@@ -2,12 +2,12 @@
   width: 100%;
 }
 
-.document-edit-button{
+.document-edit-button {
   background-color: green;
   color: #fff;
 }
 
-.document-update-button{
+.document-update-button {
   background-color: #ffd740;
   color: black;
 }
@@ -16,4 +16,3 @@
   background-color: darkred;
   color: #fff;
 }
-
