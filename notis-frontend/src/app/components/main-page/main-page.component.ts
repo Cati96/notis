@@ -22,6 +22,7 @@ export class MainPageComponent implements OnInit {
   }
 
   doRedirectToUser() {
+    this.router.navigate(['home']);
     GlobalProvider.isAdministrator = false;
     GlobalProvider.isRegularUser = true;
   }

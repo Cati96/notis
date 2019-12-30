@@ -10,10 +10,10 @@ import {DialogBoxTimetableAdminComponent} from '../modals/dialog-box-timetable-a
 
 @Component({
   selector: 'app-admin-notary',
-  templateUrl: './admin-notary.component.html',
-  styleUrls: ['./admin-notary.component.css']
+  templateUrl: './admin-notaries.component.html',
+  styleUrls: ['./admin-notaries.component.css']
 })
-export class AdminNotaryComponent implements OnInit, OnDestroy {
+export class AdminNotariesComponent implements OnInit, OnDestroy {
 
   subscription: Subscription;
   browserRefresh = false;
@@ -118,6 +118,6 @@ export class AdminNotaryComponent implements OnInit, OnDestroy {
   }
 
   showServicesDetails(services) {
-    this.router.navigate(['admin-notary/services']);
+    this.router.navigate(['admin-notaries/services']);
   }
 }

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MainPageToolbarComponent } from './main-page-toolbar.component';
+import { UserTranslatorsComponent } from './user-translators.component';
 
-describe('MainPageToolbarComponent', () => {
-  let component: MainPageToolbarComponent;
-  let fixture: ComponentFixture<MainPageToolbarComponent>;
+describe('UserTranslatorsComponent', () => {
+  let component: UserTranslatorsComponent;
+  let fixture: ComponentFixture<UserTranslatorsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MainPageToolbarComponent ]
+      declarations: [ UserTranslatorsComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MainPageToolbarComponent);
+    fixture = TestBed.createComponent(UserTranslatorsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

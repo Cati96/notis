@@ -1,0 +1,10 @@
+.dialog-box-timetable {
+  width: 100%;
+}
+
+.form-container-timetable {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+

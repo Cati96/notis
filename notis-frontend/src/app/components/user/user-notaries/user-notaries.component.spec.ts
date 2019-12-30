@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AdminNotaryComponent } from './admin-notary.component';
+import { UserNotariesComponent } from './user-notaries.component';
 
-describe('AdminNotaryComponent', () => {
-  let component: AdminNotaryComponent;
-  let fixture: ComponentFixture<AdminNotaryComponent>;
+describe('UserNotariesComponent', () => {
+  let component: UserNotariesComponent;
+  let fixture: ComponentFixture<UserNotariesComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AdminNotaryComponent ]
+      declarations: [ UserNotariesComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AdminNotaryComponent);
+    fixture = TestBed.createComponent(UserNotariesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

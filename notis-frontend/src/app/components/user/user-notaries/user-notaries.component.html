@@ -1,0 +1,57 @@
+<router-outlet name="user-home-toolbar"></router-outlet>
+
+<mat-table class="notary-table mat-elevation-z8" [dataSource]="notaries">
+  <ng-container matColumnDef="Name">
+    <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+    <mat-cell class="name-cell"
+              *matCellDef="let notary">{{notary.name}}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="Authorization number">
+    <mat-header-cell *matHeaderCellDef>Authorization number</mat-header-cell>
+    <mat-cell class="authorization-number-cell"
+              *matCellDef="let notary">{{notary.authorizationNumber}}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="Phone number">
+    <mat-header-cell *matHeaderCellDef>Phone number</mat-header-cell>
+    <mat-cell class="phone-number-cell"
+              *matCellDef="let notary">{{notary.phoneNumber}}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="Address">
+    <mat-header-cell *matHeaderCellDef>Address</mat-header-cell>
+    <mat-cell class="address-cell"
+              *matCellDef="let notary">
+      <button (click)="showAddressDetails(notary.address === null ? {} : notary.address)">See details</button>
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="Timetable">
+    <mat-header-cell *matHeaderCellDef>Timetable</mat-header-cell>
+    <mat-cell class="timetable-cell"
+              *matCellDef="let notary">
+      <button (click)="showTimetableDetails(notary.timetable === null ? {} : notary.timetable)">See details</button>
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="Services">
+    <mat-header-cell *matHeaderCellDef>
+      Services
+      <span class="filler"></span>
+      <button mat-raised-button class="documents-refresh-button" (click)="doRefreshData()">
+        <mat-icon>refresh</mat-icon>
+      </button>
+    </mat-header-cell>
+    <mat-cell class="services-cell"
+              *matCellDef="let notary">
+      <button (click)="showServicesDetails(notary.services === null ? {} : notary.services)">See details</button>
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+  <mat-row *matRowDef="let row; columns: displayedColumns">
+  </mat-row>
+
+</mat-table>

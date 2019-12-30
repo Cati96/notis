@@ -3,7 +3,7 @@ import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import {Service} from '../../../../models/service.model';
 
 @Component({
-  selector: 'app-dialog-box-service',
+  selector: 'app-dialog-box-service-admin',
   templateUrl: './dialog-box-service-admin.component.html',
   styleUrls: ['./dialog-box-service-admin.component.css']
 })

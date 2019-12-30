@@ -1,10 +1,10 @@
-import {AfterViewInit, Component, ElementRef, Inject, OnInit, Optional} from '@angular/core';
-import {MAT_DIALOG_DATA, MatButton, MatDialogRef} from '@angular/material';
+import {Component, Inject, OnInit, Optional} from '@angular/core';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {Address} from '../../../../models/address.model';
 
 @Component({
-  selector: 'app-dialog-box-address',
-  templateUrl: './dialog-box-addres-admin.component.html',
+  selector: 'app-dialog-box-address-admin',
+  templateUrl: './dialog-box-address-admin.component.html',
   styleUrls: ['./dialog-box-address-admin.component.css']
 })
 export class DialogBoxAddressAdminComponent implements OnInit {

@@ -5,9 +5,6 @@
 .form-container-address {
   display: flex;
   flex-direction: column;
-}
-
-.form-container-address {
   width: 100%;
 }
 

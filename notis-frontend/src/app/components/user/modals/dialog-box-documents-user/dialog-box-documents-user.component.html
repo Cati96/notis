@@ -1,0 +1,49 @@
+<div class="dialog-box-document">
+  <h1 mat-dialog-title>Documents</h1>
+  <div mat-dialog-content class="dialog-box-document-content">
+    <mat-table class="document-table mat-elevation-z8" [dataSource]="documents">
+      <ng-container matColumnDef="Type">
+        <mat-header-cell *matHeaderCellDef>Type</mat-header-cell>
+        <mat-cell class="type-cell" *matCellDef="let document;">{{document.type}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="Format">
+        <mat-header-cell *matHeaderCellDef>Format</mat-header-cell>
+        <mat-cell class="format-cell" *matCellDef="let document;">{{document.format}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="Price">
+        <mat-header-cell *matHeaderCellDef>Price</mat-header-cell>
+        <mat-cell class="price-cell" *matCellDef="let document;">{{document.price}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="Template">
+        <mat-header-cell *matHeaderCellDef>
+          Template
+          <span class="filler"></span>
+          <button mat-raised-button class="documents-refresh-button" (click)="doRefreshData()">
+            <mat-icon>refresh</mat-icon>
+          </button>
+        </mat-header-cell>
+        <mat-cell class="template-cell"
+                  *matCellDef="let document; ">
+          <button mat-button class="document-attachment-button" (click)="doOpenDocument(document.type)">
+            <mat-icon>attach_file</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+      <mat-row *matRowDef="let row; columns: displayedColumns">
+      </mat-row>
+
+    </mat-table>
+  </div>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-button (click)="closeDialog()" mat-flat-button color="warn">
+    <mat-icon>close</mat-icon>
+    Close
+  </button>
+</div>

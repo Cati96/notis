@@ -9,11 +9,11 @@ import {DialogBoxTimetableAdminComponent} from '../modals/dialog-box-timetable-a
 import {TranslatorService} from '../../../services/translator.service';
 
 @Component({
-  selector: 'app-admin-translator',
-  templateUrl: './admin-translator.component.html',
-  styleUrls: ['./admin-translator.component.css']
+  selector: 'app-admin-translators',
+  templateUrl: './admin-translators.component.html',
+  styleUrls: ['./admin-translators.component.css']
 })
-export class AdminTranslatorComponent implements OnInit, OnDestroy {
+export class AdminTranslatorsComponent implements OnInit, OnDestroy {
 
   subscription: Subscription;
   browserRefresh = false;
@@ -118,7 +118,7 @@ export class AdminTranslatorComponent implements OnInit, OnDestroy {
   }
 
   showServicesDetails(services) {
-    this.router.navigate(['admin-translator/services']);
+    this.router.navigate(['admin-translators/services']);
   }
 }
 

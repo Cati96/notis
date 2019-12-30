@@ -1,0 +1,9 @@
+.dialog-box-address {
+  width: 30%;
+}
+
+.form-container-address {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}

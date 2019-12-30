@@ -5,18 +5,15 @@
 .form-container-timetable {
   display: flex;
   flex-direction: column;
-}
-
-.form-container-timetable {
   width: 100%;
 }
 
-.timetable-edit-button{
+.timetable-edit-button {
   background-color: green;
   color: #fff;
 }
 
-.timetable-update-button{
+.timetable-update-button {
   background-color: #ffd740;
   color: black;
 }

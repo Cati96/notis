@@ -3,7 +3,7 @@ import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import {Notary} from '../../../../models/notary.model';
 
 @Component({
-  selector: 'app-dialog-box',
+  selector: 'app-dialog-box-notary-translator-admin',
   templateUrl: './dialog-box-notary-translator-admin.component.html',
   styleUrls: ['./dialog-box-notary-translator-admin.component.css']
 })

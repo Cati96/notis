@@ -45,7 +45,7 @@
         <mat-cell class="template-cell"
                   *matCellDef="let document; ">
           <div *ngIf="document.template!==null || (document.hasFileToUpload && document.isFileUploaded)">
-            <button mat-button class="document-attachment-button" (click)="doOpenDocument(document.template)">
+            <button mat-button class="document-attachment-button" (click)="doOpenDocument(document.type)">
               <mat-icon>attach_file</mat-icon>
             </button>
           </div>

@@ -13,10 +13,6 @@ export class DocumentService {
 
   }
 
-  async delay(ms: number) {
-    await new Promise(resolve => setTimeout(() => resolve(), ms)).then(() => console.log('fired'));
-  }
-
   getAllDocumentsForServiceId(serviceId: number): Observable<any> {
     const params = '?' + 'serviceId=' + serviceId;
     return this.http.get('http://157.230.180.203:8080/notis/test/getAllDocumentsByServiceId' + params, {responseType: 'json'})
@@ -31,9 +27,5 @@ export class DocumentService {
     const formData = new FormData();
     formData.append('uploadedfile', file);
     return this.http.post('http://157.230.180.203:80/upload.php', formData).pipe(map(res => res));
-  }
-
-  uploadDocument(document) {
-
   }
 }

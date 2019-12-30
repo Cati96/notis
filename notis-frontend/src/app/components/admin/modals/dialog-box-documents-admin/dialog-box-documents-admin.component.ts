@@ -6,7 +6,7 @@ import {DocumentCustom} from '../../../../custom-models/document-custom.model';
 import {saveAs as importedSaveAs} from 'file-saver';
 
 @Component({
-  selector: 'app-dialog-box-documents',
+  selector: 'app-dialog-box-documents-admin',
   templateUrl: './dialog-box-documents-admin.component.html',
   styleUrls: ['./dialog-box-documents-admin.component.css']
 })
@@ -113,9 +113,9 @@ export class DialogBoxDocumentsAdminComponent implements OnInit {
     console.log('TO DO DELETE DOCUMENT BY ID');
   }
 
-  doOpenDocument(templateLink) {
+  doOpenDocument(templateType) {
     this.documentService.downloadFile().subscribe(blob => {
-        importedSaveAs(blob, templateLink);
+        importedSaveAs(blob, templateType);
       }
     );
   }

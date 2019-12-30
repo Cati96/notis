@@ -3,14 +3,13 @@ import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-main-page-toolbar',
-  templateUrl: './main-page-toolbar.component.html',
-  styleUrls: ['./main-page-toolbar.component.css']
+  templateUrl: './user-home-toolbar.component.html',
+  styleUrls: ['./user-home-toolbar.component.css']
 })
-export class MainPageToolbarComponent implements OnInit {
+export class UserHomeToolbarComponent implements OnInit {
 
   constructor(private router: Router) { }
 
   ngOnInit() {
   }
-
 }

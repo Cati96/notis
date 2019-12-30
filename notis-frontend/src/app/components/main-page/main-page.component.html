@@ -1,4 +1,11 @@
-<router-outlet name="main-page-toolbar"></router-outlet>
+<mat-toolbar class="primary-toolbar">
+  <mat-toolbar-row>
+    <button mat-button (click)="this.router.navigate(['main']);">Notis</button>
+    <span class="filler"></span>
+    <button mat-button>Contact</button>
+    <button mat-button>About</button>
+  </mat-toolbar-row>
+</mat-toolbar>
 
 <div class="main-page-container">
   <button mat-button class="main-continue-admin-button" (click)="doRedirectToAdmin()">

@@ -3,7 +3,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {Timetable} from '../../../../models/timetable.model';
 
 @Component({
-  selector: 'app-dialog-box-timetable',
+  selector: 'app-dialog-box-timetable-admin',
   templateUrl: './dialog-box-timetable-admin.component.html',
   styleUrls: ['./dialog-box-timetable-admin.component.css']
 })

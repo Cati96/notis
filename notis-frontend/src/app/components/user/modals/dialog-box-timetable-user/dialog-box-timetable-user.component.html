@@ -1,0 +1,32 @@
+<div class="dialog-box-timetable">
+  <h1 mat-dialog-title>{{entityType}} timetable details</h1>
+  <div mat-dialog-content class="form-container-timetable">
+    <mat-form-field>
+      <input placeholder="Monday" matInput [(ngModel)]="localData.monday" [disabled]="true">
+    </mat-form-field>
+    <mat-form-field>
+      <input placeholder="Tuesday" matInput [(ngModel)]="localData.tuesday" [disabled]="true">
+    </mat-form-field>
+    <mat-form-field>
+      <input placeholder="Wednesday" matInput [(ngModel)]="localData.wednesday" [disabled]="true">
+    </mat-form-field>
+    <mat-form-field>
+      <input placeholder="Thursday" matInput [(ngModel)]="localData.thursday" [disabled]="true">
+    </mat-form-field>
+    <mat-form-field>
+      <input placeholder="Friday" matInput [(ngModel)]="localData.friday" [disabled]="true">
+    </mat-form-field>
+    <mat-form-field>
+      <input placeholder="Saturday" matInput [(ngModel)]="localData.saturday" [disabled]="true">
+    </mat-form-field>
+    <mat-form-field>
+      <input placeholder="Sunday" matInput [(ngModel)]="localData.sunday" [disabled]="true">
+    </mat-form-field>
+  </div>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-button (click)="closeDialog()" mat-flat-button color="warn">
+    <mat-icon>close</mat-icon>
+    Close
+  </button>
+</div>
