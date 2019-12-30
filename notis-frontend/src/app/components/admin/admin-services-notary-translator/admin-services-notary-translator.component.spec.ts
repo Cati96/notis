@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ServicesNotaryTranslatorComponent } from './services-notary-translator.component';
+import { AdminServicesNotaryTranslatorComponent } from './admin-services-notary-translator.component';
 
 describe('ServicesNotaryTranslatorComponent', () => {
-  let component: ServicesNotaryTranslatorComponent;
-  let fixture: ComponentFixture<ServicesNotaryTranslatorComponent>;
+  let component: AdminServicesNotaryTranslatorComponent;
+  let fixture: ComponentFixture<AdminServicesNotaryTranslatorComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ServicesNotaryTranslatorComponent ]
+      declarations: [ AdminServicesNotaryTranslatorComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ServicesNotaryTranslatorComponent);
+    fixture = TestBed.createComponent(AdminServicesNotaryTranslatorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,16 +1,16 @@
 import {Component, Inject, OnInit, Optional, ViewChild} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef, MatTable} from '@angular/material';
-import {DocumentService} from '../../../services/document.service';
-import {Document} from '../../../models/document.model';
-import {DocumentCustom} from '../../../custom-models/document-custom.model';
+import {DocumentService} from '../../../../services/document.service';
+import {Document} from '../../../../models/document.model';
+import {DocumentCustom} from '../../../../custom-models/document-custom.model';
 import {saveAs as importedSaveAs} from 'file-saver';
 
 @Component({
   selector: 'app-dialog-box-documents',
-  templateUrl: './dialog-box-documents.component.html',
-  styleUrls: ['./dialog-box-documents.component.css']
+  templateUrl: './dialog-box-documents-admin.component.html',
+  styleUrls: ['./dialog-box-documents-admin.component.css']
 })
-export class DialogBoxDocumentsComponent implements OnInit {
+export class DialogBoxDocumentsAdminComponent implements OnInit {
 
   displayedColumns = ['ID', 'Type', 'Format', 'Price', 'Template', 'Actions'];
 
@@ -23,7 +23,7 @@ export class DialogBoxDocumentsComponent implements OnInit {
   @ViewChild(MatTable, {static: true}) table: MatTable<any>;
 
   constructor(private documentService: DocumentService,
-              public dialogRef: MatDialogRef<DialogBoxDocumentsComponent>,
+              public dialogRef: MatDialogRef<DialogBoxDocumentsAdminComponent>,
               @Optional() @Inject(MAT_DIALOG_DATA) public data: any) {
     this.serviceId = data.serviceId;
     this.entityType = data.entityType;

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DialogBoxServiceComponent } from './dialog-box-service.component';
+import { DialogBoxServiceAdminComponent } from './dialog-box-service-admin.component';
 
 describe('DialogBoxServiceComponent', () => {
-  let component: DialogBoxServiceComponent;
-  let fixture: ComponentFixture<DialogBoxServiceComponent>;
+  let component: DialogBoxServiceAdminComponent;
+  let fixture: ComponentFixture<DialogBoxServiceAdminComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DialogBoxServiceComponent ]
+      declarations: [ DialogBoxServiceAdminComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DialogBoxServiceComponent);
+    fixture = TestBed.createComponent(DialogBoxServiceAdminComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

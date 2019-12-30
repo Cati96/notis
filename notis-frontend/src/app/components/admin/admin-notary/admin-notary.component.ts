@@ -1,12 +1,12 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {Notary} from '../../models/notary.model';
-import {NotaryService} from '../../services/notary.service';
+import {Notary} from '../../../models/notary.model';
+import {NotaryService} from '../../../services/notary.service';
 import {MatDialog, MatTable} from '@angular/material';
-import {DialogBoxNotaryTranslatorComponent} from '../modals/dialog-box-notary-translator/dialog-box-notary-translator.component';
+import {DialogBoxNotaryTranslatorAdminComponent} from '../modals/dialog-box-notary-translator-admin/dialog-box-notary-translator-admin.component';
 import {Subscription} from 'rxjs';
 import {NavigationEnd, NavigationStart, Router} from '@angular/router';
-import {DialogBoxAddressComponent} from '../modals/dialog-box-address/dialog-box-address.component';
-import {DialogBoxTimetableComponent} from '../modals/dialog-box-timetable/dialog-box-timetable.component';
+import {DialogBoxAddressAdminComponent} from '../modals/dialog-box-address-admin/dialog-box-address-admin.component';
+import {DialogBoxTimetableAdminComponent} from '../modals/dialog-box-timetable-admin/dialog-box-timetable-admin.component';
 
 @Component({
   selector: 'app-admin-notary',
@@ -60,7 +60,7 @@ export class AdminNotaryComponent implements OnInit, OnDestroy {
   }
 
   openDialog(action, notary) {
-    const dialogRef = this.dialog.open(DialogBoxNotaryTranslatorComponent, {
+    const dialogRef = this.dialog.open(DialogBoxNotaryTranslatorAdminComponent, {
         width: '50%',
         data: {
           data: notary,
@@ -96,7 +96,7 @@ export class AdminNotaryComponent implements OnInit, OnDestroy {
   }
 
   showAddressDetails(address) {
-    this.dialog.open(DialogBoxAddressComponent, {
+    this.dialog.open(DialogBoxAddressAdminComponent, {
       width: '30%',
       data: {
         data: address,
@@ -107,7 +107,7 @@ export class AdminNotaryComponent implements OnInit, OnDestroy {
   }
 
   showTimetableDetails(timetable) {
-    this.dialog.open(DialogBoxTimetableComponent, {
+    this.dialog.open(DialogBoxTimetableAdminComponent, {
       width: '30%',
       data: {
         data: timetable,

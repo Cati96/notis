@@ -2,17 +2,17 @@ import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Subscription} from 'rxjs';
 import {MatDialog, MatTable} from '@angular/material';
 import {NavigationEnd, NavigationStart, Router} from '@angular/router';
-import {ServiceService} from '../../services/service.service';
-import {Service} from '../../models/service.model';
-import {DialogBoxServiceComponent} from '../modals/dialog-box-service/dialog-box-service.component';
-import {DialogBoxDocumentsComponent} from '../modals/dialog-box-documents/dialog-box-documents.component';
+import {ServiceService} from '../../../services/service.service';
+import {Service} from '../../../models/service.model';
+import {DialogBoxServiceAdminComponent} from '../modals/dialog-box-service-admin/dialog-box-service-admin.component';
+import {DialogBoxDocumentsAdminComponent} from '../modals/dialog-box-documents-admin/dialog-box-documents-admin.component';
 
 @Component({
   selector: 'app-services-notary-translator',
-  templateUrl: './services-notary-translator.component.html',
-  styleUrls: ['./services-notary-translator.component.css']
+  templateUrl: './admin-services-notary-translator.component.html',
+  styleUrls: ['./admin-services-notary-translator.component.css']
 })
-export class ServicesNotaryTranslatorComponent implements OnInit, OnDestroy {
+export class AdminServicesNotaryTranslatorComponent implements OnInit, OnDestroy {
 
   subscription: Subscription;
   browserRefresh = false;
@@ -59,7 +59,7 @@ export class ServicesNotaryTranslatorComponent implements OnInit, OnDestroy {
   }
 
   openDialog(action, service) {
-    const dialogRef = this.dialog.open(DialogBoxServiceComponent, {
+    const dialogRef = this.dialog.open(DialogBoxServiceAdminComponent, {
         width: '40%',
         data: {
           data: service,
@@ -96,7 +96,7 @@ export class ServicesNotaryTranslatorComponent implements OnInit, OnDestroy {
   }
 
   showAllDocuments(serviceID) {
-    this.dialog.open(DialogBoxDocumentsComponent, {
+    this.dialog.open(DialogBoxDocumentsAdminComponent, {
       width: '90%',
       data: {
         serviceId: serviceID,

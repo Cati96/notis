@@ -1,23 +1,25 @@
 import {Component, Inject, Optional} from '@angular/core';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
-import {Service} from '../../../models/service.model';
+import {Notary} from '../../../../models/notary.model';
 
 @Component({
-  selector: 'app-dialog-box-service',
-  templateUrl: './dialog-box-service.component.html',
-  styleUrls: ['./dialog-box-service.component.css']
+  selector: 'app-dialog-box',
+  templateUrl: './dialog-box-notary-translator-admin.component.html',
+  styleUrls: ['./dialog-box-notary-translator-admin.component.css']
 })
-export class DialogBoxServiceComponent {
+export class DialogBoxNotaryTranslatorAdminComponent {
 
   action: string;
-  localData: Service;
+  localData: any;
+  entityType: string;
 
   constructor(
-    public dialogRef: MatDialogRef<DialogBoxServiceComponent>,
+    public dialogRef: MatDialogRef<DialogBoxNotaryTranslatorAdminComponent>,
     // @Optional() is used to prevent error if no data is passed
     @Optional() @Inject(MAT_DIALOG_DATA) public data: any) {
     this.localData = data.data;
     this.action = data.actionMade;
+    this.entityType = data.entityType;
   }
 
   doAction() {

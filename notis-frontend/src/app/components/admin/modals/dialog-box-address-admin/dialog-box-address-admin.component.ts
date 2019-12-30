@@ -1,13 +1,13 @@
 import {AfterViewInit, Component, ElementRef, Inject, OnInit, Optional} from '@angular/core';
 import {MAT_DIALOG_DATA, MatButton, MatDialogRef} from '@angular/material';
-import {Address} from '../../../models/address.model';
+import {Address} from '../../../../models/address.model';
 
 @Component({
   selector: 'app-dialog-box-address',
-  templateUrl: './dialog-box-address.component.html',
-  styleUrls: ['./dialog-box-address.component.css']
+  templateUrl: './dialog-box-addres-admin.component.html',
+  styleUrls: ['./dialog-box-address-admin.component.css']
 })
-export class DialogBoxAddressComponent implements OnInit {
+export class DialogBoxAddressAdminComponent implements OnInit {
 
   localData: Address;
   entityType: string;
@@ -16,7 +16,7 @@ export class DialogBoxAddressComponent implements OnInit {
   editButtonIcon: string;
 
   constructor(
-    public dialogRef: MatDialogRef<DialogBoxAddressComponent>,
+    public dialogRef: MatDialogRef<DialogBoxAddressAdminComponent>,
     @Optional() @Inject(MAT_DIALOG_DATA) public data: any) {
     this.localData = data.data;
     this.entityType = data.entityType;

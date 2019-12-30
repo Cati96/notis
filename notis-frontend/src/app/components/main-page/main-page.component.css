@@ -1,0 +1,40 @@
+.main-page-container {
+  position: absolute;
+  display: block;
+  width: 300px;
+  height: 200px;
+  z-index: 15;
+  top: 50%;
+  left: 50%;
+  margin: -100px 0 0 -150px;
+}
+
+.main-continue-admin-button {
+  margin: 10px auto;
+  left: 20%;
+}
+
+.main-continue-user-button {
+  margin: 10px auto;
+  left: 20%;
+}
+
+.main-continue-admin-button:before, .main-continue-admin-button:after {
+  content: "";
+  height: 1px;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(147, 147, 147, 1) 50%, rgba(0, 0, 0, 0) 100%);
+
+  display: block;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.main-continue-user-button:before, .main-continue-user-button:after {
+  content: "";
+  height: 1px;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(147, 147, 147, 1) 50%, rgba(0, 0, 0, 0) 100%);
+
+  display: block;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}

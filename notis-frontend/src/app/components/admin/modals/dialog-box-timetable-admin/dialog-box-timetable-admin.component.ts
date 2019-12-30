@@ -1,13 +1,13 @@
 import {Component, Inject, OnInit, Optional} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
-import {Timetable} from '../../../models/timetable.model';
+import {Timetable} from '../../../../models/timetable.model';
 
 @Component({
   selector: 'app-dialog-box-timetable',
-  templateUrl: './dialog-box-timetable.component.html',
-  styleUrls: ['./dialog-box-timetable.component.css']
+  templateUrl: './dialog-box-timetable-admin.component.html',
+  styleUrls: ['./dialog-box-timetable-admin.component.css']
 })
-export class DialogBoxTimetableComponent implements OnInit {
+export class DialogBoxTimetableAdminComponent implements OnInit {
 
   localData: Timetable;
   entityType: string;
@@ -16,7 +16,7 @@ export class DialogBoxTimetableComponent implements OnInit {
   editButtonIcon: string;
 
   constructor(
-    public dialogRef: MatDialogRef<DialogBoxTimetableComponent>,
+    public dialogRef: MatDialogRef<DialogBoxTimetableAdminComponent>,
     @Optional() @Inject(MAT_DIALOG_DATA) public data: any) {
     this.localData = data.data;
     this.entityType = data.entityType;

@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
+import {GlobalProvider} from '../../core/global';
 
 @Component({
   selector: 'app-main-page',
@@ -16,10 +17,13 @@ export class MainPageComponent implements OnInit {
 
   doRedirectToAdmin() {
     this.router.navigate(['admin-login']);
+    GlobalProvider.isAdministrator = true;
+    GlobalProvider.isRegularUser = false;
   }
 
   doRedirectToUser() {
-
+    GlobalProvider.isAdministrator = false;
+    GlobalProvider.isRegularUser = true;
   }
 
 }

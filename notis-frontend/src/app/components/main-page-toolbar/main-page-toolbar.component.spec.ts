@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DialogBoxTimetableComponent } from './dialog-box-timetable.component';
+import { MainPageToolbarComponent } from './main-page-toolbar.component';
 
-describe('DialogBoxTimetableComponent', () => {
-  let component: DialogBoxTimetableComponent;
-  let fixture: ComponentFixture<DialogBoxTimetableComponent>;
+describe('MainPageToolbarComponent', () => {
+  let component: MainPageToolbarComponent;
+  let fixture: ComponentFixture<MainPageToolbarComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DialogBoxTimetableComponent ]
+      declarations: [ MainPageToolbarComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DialogBoxTimetableComponent);
+    fixture = TestBed.createComponent(MainPageToolbarComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

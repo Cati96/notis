@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DialogBoxAddressComponent } from './dialog-box-address.component';
+import { DialogBoxAddressAdminComponent } from './dialog-box-address-admin.component';
 
 describe('DialogBoxAddressComponent', () => {
-  let component: DialogBoxAddressComponent;
-  let fixture: ComponentFixture<DialogBoxAddressComponent>;
+  let component: DialogBoxAddressAdminComponent;
+  let fixture: ComponentFixture<DialogBoxAddressAdminComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DialogBoxAddressComponent ]
+      declarations: [ DialogBoxAddressAdminComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DialogBoxAddressComponent);
+    fixture = TestBed.createComponent(DialogBoxAddressAdminComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DialogBoxNotaryTranslatorComponent } from './dialog-box-notary-translator.component';
+import { DialogBoxNotaryTranslatorAdminComponent } from './dialog-box-notary-translator-admin.component';
 
 describe('DialogBoxComponent', () => {
-  let component: DialogBoxNotaryTranslatorComponent;
-  let fixture: ComponentFixture<DialogBoxNotaryTranslatorComponent>;
+  let component: DialogBoxNotaryTranslatorAdminComponent;
+  let fixture: ComponentFixture<DialogBoxNotaryTranslatorAdminComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DialogBoxNotaryTranslatorComponent ]
+      declarations: [ DialogBoxNotaryTranslatorAdminComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DialogBoxNotaryTranslatorComponent);
+    fixture = TestBed.createComponent(DialogBoxNotaryTranslatorAdminComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
