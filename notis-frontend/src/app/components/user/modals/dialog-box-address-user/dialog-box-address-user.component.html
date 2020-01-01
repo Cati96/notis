@@ -1,26 +1,31 @@
 <div class="dialog-box-address">
   <h1 mat-dialog-title>{{entityType}} address details</h1>
-  <div mat-dialog-content class="form-container-address">
-    <mat-form-field>
-      <input placeholder="Country" matInput [(ngModel)]="localData.country" [disabled]="true">
-    </mat-form-field>
-    <mat-form-field>
-      <input placeholder="County" matInput [(ngModel)]="localData.county" [disabled]="true">
-    </mat-form-field>
-    <mat-form-field>
-      <input placeholder="City" matInput [(ngModel)]="localData.city" [disabled]="true">
-    </mat-form-field>
-    <mat-form-field>
-      <input placeholder="Street" matInput [(ngModel)]="localData.street" [disabled]="true">
-    </mat-form-field>
-    <mat-form-field>
-      <input placeholder="Street number" matInput [(ngModel)]="localData.streetNumber" [disabled]="true">
-    </mat-form-field>
-    <mat-form-field>
-      <input placeholder="others" matInput [(ngModel)]="localData.others" [disabled]="true">
-    </mat-form-field>
+  <div class="address-and-map">
+    <div mat-dialog-content class="form-container-address">
+      <mat-form-field>
+        <input placeholder="Country" matInput [(ngModel)]="localData.country" [disabled]="true">
+      </mat-form-field>
+      <mat-form-field>
+        <input placeholder="County" matInput [(ngModel)]="localData.county" [disabled]="true">
+      </mat-form-field>
+      <mat-form-field>
+        <input placeholder="City" matInput [(ngModel)]="localData.city" [disabled]="true">
+      </mat-form-field>
+      <mat-form-field>
+        <input placeholder="Street" matInput [(ngModel)]="localData.street" [disabled]="true">
+      </mat-form-field>
+      <mat-form-field>
+        <input placeholder="Street number" matInput [(ngModel)]="localData.streetNumber" [disabled]="true">
+      </mat-form-field>
+      <mat-form-field>
+        <input placeholder="others" matInput [(ngModel)]="localData.others" [disabled]="true">
+      </mat-form-field>
+    </div>
+
+    <div id="map-container" class="map-container"></div>
   </div>
 </div>
+
 <div mat-dialog-actions align="end">
   <button mat-button (click)="closeDialog()" mat-flat-button color="warn">
     <mat-icon>close</mat-icon>

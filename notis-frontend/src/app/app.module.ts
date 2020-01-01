@@ -76,7 +76,7 @@ import {UserServicesNotaryTranslatorComponent} from './components/user/user-serv
     MatListModule,
     HttpClientModule,
     HttpClientJsonpModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule
   ],
   entryComponents: [
     DialogBoxNotaryTranslatorAdminComponent,

@@ -1,9 +1,22 @@
 .dialog-box-address {
-  width: 30%;
+  width: 100%;
+}
+
+.address-and-map {
+  display: flex;
+  flex-direction: row;
 }
 
 .form-container-address {
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 30%;
+}
+
+#map-container {
+  width: 70%;
+  /*height: 400px;*/
+  height: 100%;
+  background-color: #ffd740;
+  margin-left: 30px;
 }
