@@ -27,26 +27,34 @@
   <ng-container matColumnDef="Address">
     <mat-header-cell *matHeaderCellDef>Address</mat-header-cell>
     <mat-cell class="address-cell"
-              *matCellDef="let notary"><button (click)="showAddressDetails(notary.address === null ? {} : notary.address)">See details</button></mat-cell>
+              *matCellDef="let notary">
+      <button (click)="showAddressDetails(notary.address === null ? {} : notary.address)">See details</button>
+    </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="Timetable">
     <mat-header-cell *matHeaderCellDef>Timetable</mat-header-cell>
     <mat-cell class="timetable-cell"
-              *matCellDef="let notary"><button (click)="showTimetableDetails(notary.timetable === null ? {} : notary.timetable)">See details</button></mat-cell>
+              *matCellDef="let notary">
+      <button (click)="showTimetableDetails(notary.timetable === null ? {} : notary.timetable)">See details</button>
+    </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="Services">
     <mat-header-cell *matHeaderCellDef>Services</mat-header-cell>
     <mat-cell class="services-cell"
-              *matCellDef="let notary"><button (click)="showServicesDetails(notary.services === null ? {} : notary.services)">See details</button></mat-cell>
+              *matCellDef="let notary">
+      <button (click)="showServicesDetailsForEntityId(notary.id)">See details</button>
+    </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="Actions">
     <mat-header-cell *matHeaderCellDef>
       Actions
       <span class="filler"></span>
-      <button mat-button (click)="openDialog('Add',{})" mat-flat-button color="accent" class="add-notary-button"><mat-icon>add</mat-icon></button>
+      <button mat-button (click)="openDialog('Add',{})" mat-flat-button color="accent" class="add-notary-button">
+        <mat-icon>add</mat-icon>
+      </button>
       <button mat-raised-button class="documents-refresh-button" (click)="doRefreshData()">
         <mat-icon>refresh</mat-icon>
       </button>

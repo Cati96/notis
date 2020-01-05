@@ -23,9 +23,7 @@ export class UserTranslatorsComponent implements OnInit, OnDestroy {
   @ViewChild(MatTable, {static: true}) table: MatTable<any>;
 
   constructor(private router: Router, private translatorService: TranslatorService, private dialog: MatDialog) {
-    this.router.routeReuseStrategy.shouldReuseRoute = function() {
-      return false;
-    };
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
 
     this.subscription = this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
@@ -80,7 +78,7 @@ export class UserTranslatorsComponent implements OnInit, OnDestroy {
     this.table.renderRows();
   }
 
-  showServicesDetails(services) {
-    this.router.navigate(['translators/services']);
+  showServicesDetailsForEntityId(id) {
+    this.router.navigate(['translators/services'], {queryParams: {entityType: 'Translator', entityId: id}});
   }
 }

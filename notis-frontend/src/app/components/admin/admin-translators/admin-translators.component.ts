@@ -117,8 +117,8 @@ export class AdminTranslatorsComponent implements OnInit, OnDestroy {
     this.table.renderRows();
   }
 
-  showServicesDetails(services) {
-    this.router.navigate(['admin-translators/services']);
+  showServicesDetailsForEntityId(id) {
+    this.router.navigate(['admin-translators/services'], {queryParams: {entityType: 'Translator', entityId: id}});
   }
 }
 

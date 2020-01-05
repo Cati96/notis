@@ -51,7 +51,7 @@
     <mat-header-cell *matHeaderCellDef>Services</mat-header-cell>
     <mat-cell class="services-cell"
               *matCellDef="let translator">
-      <button (click)="showServicesDetails(translator.services === null ? {} : translator.services)">See details
+      <button (click)="showServicesDetailsForEntityId(translator.id)">See details
       </button>
     </mat-cell>
   </ng-container>

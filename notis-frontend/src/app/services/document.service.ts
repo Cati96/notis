@@ -2,20 +2,21 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs/operators';
 import {Observable} from 'rxjs';
+import {baseUrl} from '../core/global';
 
 @Injectable(
 )
 export class DocumentService {
 
-  private urlPart = 'documents/';
+  private urlPart = baseUrl + 'documents/';
 
   constructor(private http: HttpClient) {
 
   }
 
-  getAllDocumentsForServiceId(serviceId: number): Observable<any> {
-    const params = '?' + 'serviceId=' + serviceId;
-    return this.http.get('http://157.230.180.203:8080/notis/test/getAllDocumentsByServiceId' + params, {responseType: 'json'})
+  getAllDocumentsForEntityTypeServiceId(entityType, serviceId: number): Observable<any> {
+    const params = '?entityType=' + entityType + '&serviceId=' + serviceId;
+    return this.http.get(this.urlPart + 'getAllForEntityTypeAndServiceId' + params, {responseType: 'json'})
       .pipe(map(res => res));
   }
 

@@ -8,15 +8,20 @@ import {Observable} from 'rxjs';
 )
 export class NotaryService {
 
-  private urlPart = 'notaries/';
+  private urlPart = baseUrl + 'notaries/';
 
   constructor(private http: HttpClient) {
-
   }
 
   getAllNotaries(): Observable<any> {
-    // Global.baseUrl + this.urlPart + '/findAll'
-    return this.http.get('http://157.230.180.203:8080/notis/test/getAllNotaries', {responseType: 'json'}).pipe(map(
+    return this.http.get(this.urlPart + 'getAll', {responseType: 'json'}).pipe(map(
+      res => res
+    ));
+  }
+
+  getAllNotariesForAddressId(addressId): Observable<any> {
+    const params = '?' + 'addressId=' + addressId;
+    return this.http.get(this.urlPart + 'getAllForAddressId' + params, {responseType: 'json'}).pipe(map(
       res => res
     ));
   }

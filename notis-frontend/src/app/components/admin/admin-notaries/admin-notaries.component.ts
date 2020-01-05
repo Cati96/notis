@@ -117,7 +117,7 @@ export class AdminNotariesComponent implements OnInit, OnDestroy {
     this.table.renderRows();
   }
 
-  showServicesDetails(services) {
-    this.router.navigate(['admin-notaries/services']);
+  showServicesDetailsForEntityId(id) {
+    this.router.navigate(['admin-notaries/services'], {queryParams: {entityType: 'Notary', entityId: id}});
   }
 }

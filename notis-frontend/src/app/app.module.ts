@@ -18,9 +18,11 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatListModule} from '@angular/material/list';
 import {AdminHomeToolbarComponent} from './components/admin/admin-home-toolbar/admin-home-toolbar.component';
 import {NotaryService} from './services/notary.service';
+// tslint:disable-next-line:max-line-length
 import {DialogBoxNotaryTranslatorAdminComponent} from './components/admin/modals/dialog-box-notary-translator-admin/dialog-box-notary-translator-admin.component';
 import {DialogBoxAddressAdminComponent} from './components/admin/modals/dialog-box-address-admin/dialog-box-address-admin.component';
 import {DialogBoxTimetableAdminComponent} from './components/admin/modals/dialog-box-timetable-admin/dialog-box-timetable-admin.component';
+// tslint:disable-next-line:max-line-length
 import {AdminServicesNotaryTranslatorComponent} from './components/admin/admin-services-notary-translator/admin-services-notary-translator.component';
 import {ServiceService} from './services/service.service';
 import {DialogBoxServiceAdminComponent} from './components/admin/modals/dialog-box-service-admin/dialog-box-service-admin.component';
@@ -36,7 +38,10 @@ import {DialogBoxAddressUserComponent} from './components/user/modals/dialog-box
 import {DialogBoxDocumentsUserComponent} from './components/user/modals/dialog-box-documents-user/dialog-box-documents-user.component';
 import {DialogBoxTimetableUserComponent} from './components/user/modals/dialog-box-timetable-user/dialog-box-timetable-user.component';
 import {UserTranslatorsComponent} from './components/user/user-translators/user-translators.component';
+// tslint:disable-next-line:max-line-length
 import {UserServicesNotaryTranslatorComponent} from './components/user/user-services-notary-translator/user-services-notary-translator.component';
+import {UserSearchWithFiltersComponent} from './components/user/user-search-with-filters/user-search-with-filters.component';
+import {AddressService} from './services/address.service';
 
 @NgModule({
   declarations: [
@@ -60,7 +65,8 @@ import {UserServicesNotaryTranslatorComponent} from './components/user/user-serv
     DialogBoxDocumentsUserComponent,
     DialogBoxTimetableUserComponent,
     UserTranslatorsComponent,
-    UserServicesNotaryTranslatorComponent
+    UserServicesNotaryTranslatorComponent,
+    UserSearchWithFiltersComponent
   ],
   imports: [
     BrowserModule,
@@ -88,7 +94,7 @@ import {UserServicesNotaryTranslatorComponent} from './components/user/user-serv
     DialogBoxDocumentsUserComponent,
     DialogBoxTimetableUserComponent
   ],
-  providers: [NotaryService, ServiceService, DocumentService, TranslatorService],
+  providers: [NotaryService, ServiceService, DocumentService, TranslatorService, AddressService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

@@ -4,6 +4,7 @@ import {Address} from '../../../../models/address.model';
 import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs/operators';
 import {Observable} from 'rxjs';
+import {GlobalProvider} from '../../../../core/global';
 
 declare var ol: any;
 
@@ -38,7 +39,7 @@ export class DialogBoxAddressUserComponent implements OnInit, AfterViewInit {
   }
 
   getJsonDataFromStringAddress(address): Observable<any> {
-    const stringAddress = address.number + '+strada+' + address.street + '%2C+' + address.city + '%2C+' + address.country;
+    const stringAddress = GlobalProvider.getAddressForSearchInUrl(address);
     // const stringAddress = '20+strada+Petre+Tutea%2C+Iasi%2C+Romania';
     const url = 'https://nominatim.openstreetmap.org/search?q=' + stringAddress + '&format=geojson';
     console.log('Searched address:' + stringAddress);
@@ -105,66 +106,6 @@ export class DialogBoxAddressUserComponent implements OnInit, AfterViewInit {
         markerFeature.setStyle(markerStyle);
         vectorSource.addFeature(markerFeature);
       }
-    }
-
-
-    const vectorLayer = new ol.layer.Vector({
-      source: vectorSource,
-      updateWhileAnimating: true,
-      updateWhileInteracting: true,
-    });
-
-    const myMap = new ol.Map({
-      target: 'map-container',
-      view: mapOsmView,
-      layers: [
-        new ol.layer.Tile({
-          preload: 3,
-          source: new ol.source.OSM(),
-        }),
-        vectorLayer,
-      ],
-      loadTilesWhileAnimating: true,
-      loadTilesWhileInteracting: true,
-    });
-  }
-
-  testMultipleMarkers() {
-    this.longitude = 27.579372;
-    this.latitude = 47.142196;
-    const coordinates = ol.proj.fromLonLat([this.longitude, this.latitude]);
-    const mapOsmView = new ol.View({
-      center: coordinates,
-      zoom: 15
-    });
-
-    const vectorSource = new ol.source.Vector({});
-    const places = [
-      // [longitude, latitude]
-      [27.579372, 47.142196],
-      [27.589111, 47.156495],
-      [27.588563, 47.155381],
-      [27.589583, 47.157167]
-    ];
-
-    const markerStyle = new ol.style.Style({
-      image: new ol.style.Icon({
-        anchor: [0.5, 0.5],
-        anchorXUnits: 'fraction',
-        anchorYUnits: 'fraction',
-        src: 'http://maps.google.com/mapfiles/ms/micons/blue.png',
-        color: '#4271AE',
-        crossOrigin: 'anonymous',
-      })
-    });
-
-    for (const place of places) {
-      const markerFeature = new ol.Feature({
-        geometry: new ol.geom.Point(ol.proj.transform(place, 'EPSG:4326', 'EPSG:3857')),
-      });
-
-      markerFeature.setStyle(markerStyle);
-      vectorSource.addFeature(markerFeature);
     }
 
 

@@ -2,7 +2,7 @@ import {Component, Inject, OnInit, Optional, ViewChild} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef, MatTable} from '@angular/material';
 import {DocumentService} from '../../../../services/document.service';
 import {Document} from '../../../../models/document.model';
-import {DocumentCustom} from '../../../../custom-models/document-custom.model';
+import {DocumentCustom} from '../../../../models/custom-models/document-custom.model';
 import {saveAs as importedSaveAs} from 'file-saver';
 
 @Component({
@@ -29,7 +29,7 @@ export class DialogBoxDocumentsAdminComponent implements OnInit {
     this.entityType = data.entityType;
     this.isDeleting = false;
     this.documents = [];
-    this.getAllDocumentsForService();
+    this.getAllDocumentsForServiceId();
   }
 
   ngOnInit() {
@@ -43,12 +43,12 @@ export class DialogBoxDocumentsAdminComponent implements OnInit {
   }
 
   doRefreshData() {
-    this.getAllDocumentsForService();
+    this.getAllDocumentsForServiceId();
   }
 
-  getAllDocumentsForService() {
+  getAllDocumentsForServiceId() {
     let temp;
-    this.documentService.getAllDocumentsForServiceId(this.serviceId)
+    this.documentService.getAllDocumentsForEntityTypeServiceId(this.entityType, this.serviceId)
       .subscribe(json => {
           temp = json;
           console.log(temp);
@@ -73,7 +73,7 @@ export class DialogBoxDocumentsAdminComponent implements OnInit {
         }
       )
     ;
-    console.log('TO DO GET ALL DOCUMENTS FOR SERVICE ID');
+    console.log('TO DO GET ALL DOCUMENTS FOR ENTITY TYPE AND SERVICE ID');
   }
 
   closeDialog() {

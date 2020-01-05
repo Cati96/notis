@@ -24,24 +24,24 @@ export class DialogBoxDocumentsUserComponent implements OnInit {
               @Optional() @Inject(MAT_DIALOG_DATA) public data: any) {
     this.serviceId = data.serviceId;
     this.entityType = data.entityType;
-    this.getAllDocumentsForService();
+    this.getAllDocumentsForServiceId();
   }
 
   ngOnInit() {
   }
 
   doRefreshData() {
-    this.getAllDocumentsForService();
+    this.getAllDocumentsForServiceId();
   }
 
-  getAllDocumentsForService() {
-    this.documentService.getAllDocumentsForServiceId(this.serviceId)
+  getAllDocumentsForServiceId() {
+    this.documentService.getAllDocumentsForEntityTypeServiceId(this.entityType, this.serviceId)
       .subscribe(json => {
           this.documents = json;
         }
       )
     ;
-    console.log('TO DO GET ALL DOCUMENTS FOR SERVICE ID');
+    console.log('TO DO GET ALL DOCUMENTS FOR ENTITY TYPE AND SERVICE ID');
   }
 
   closeDialog() {

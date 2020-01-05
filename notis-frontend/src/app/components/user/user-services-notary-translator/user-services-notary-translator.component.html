@@ -23,7 +23,7 @@
     </mat-header-cell>
     <mat-cell class="documents-cell"
               *matCellDef="let service">
-      <button (click)="showAllDocuments(service.documents === [] ? {} : service.id)">See documents</button>
+      <button (click)="showAllDocuments(service.id)">See documents</button>
     </mat-cell>
   </ng-container>
 

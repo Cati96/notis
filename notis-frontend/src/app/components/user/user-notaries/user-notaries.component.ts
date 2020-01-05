@@ -80,8 +80,8 @@ export class UserNotariesComponent implements OnInit, OnDestroy {
     this.table.renderRows();
   }
 
-  showServicesDetails(services) {
-    this.router.navigate(['notaries/services']);
+  showServicesDetailsForEntityId(id) {
+    this.router.navigate(['notaries/services'], {queryParams: {entityType: 'Notary', entityId: id}});
   }
 }
 

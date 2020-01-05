@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Subscription} from 'rxjs';
 import {Service} from '../../../models/service.model';
 import {MatDialog, MatTable} from '@angular/material';
-import {NavigationEnd, NavigationStart, Router} from '@angular/router';
+import {ActivatedRoute, NavigationEnd, NavigationStart, Router} from '@angular/router';
 import {ServiceService} from '../../../services/service.service';
 import {DialogBoxDocumentsUserComponent} from '../modals/dialog-box-documents-user/dialog-box-documents-user.component';
 
@@ -14,17 +14,18 @@ import {DialogBoxDocumentsUserComponent} from '../modals/dialog-box-documents-us
 export class UserServicesNotaryTranslatorComponent implements OnInit, OnDestroy {
 
   subscription: Subscription;
+  sub: any;
   browserRefresh = false;
 
   displayedColumns = ['Type', 'Description', 'Documents'];
   services: Service[];
+  entityType: string;
+  entityId: number;
 
   @ViewChild(MatTable, {static: true}) table: MatTable<any>;
 
-  constructor(private router: Router, private serviceService: ServiceService, private dialog: MatDialog) {
-    this.router.routeReuseStrategy.shouldReuseRoute = function() {
-      return false;
-    };
+  constructor(private route: ActivatedRoute, private router: Router, private serviceService: ServiceService, private dialog: MatDialog) {
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
 
     this.subscription = this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
@@ -37,6 +38,12 @@ export class UserServicesNotaryTranslatorComponent implements OnInit, OnDestroy 
   }
 
   ngOnInit() {
+    this.sub = this.route
+      .queryParams
+      .subscribe(params => {
+        this.entityType = params.entityType;
+        this.entityId = params.entityId;
+      });
     this.findAllServices();
   }
 
@@ -44,6 +51,7 @@ export class UserServicesNotaryTranslatorComponent implements OnInit, OnDestroy 
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
+    this.sub.unsubscribe();
   }
 
   doRefreshData() {
@@ -51,7 +59,7 @@ export class UserServicesNotaryTranslatorComponent implements OnInit, OnDestroy 
   }
 
   findAllServices() {
-    this.serviceService.getAllServices().subscribe(json => {
+    this.serviceService.getAllServicesForEntityTypeAndEntityId(this.entityType, this.entityId).subscribe(json => {
       this.services = json;
     });
     console.log('TO DO GET ALL SERVICES');
@@ -62,7 +70,7 @@ export class UserServicesNotaryTranslatorComponent implements OnInit, OnDestroy 
       width: '90%',
       data: {
         serviceId: serviceID,
-        entityType: 'notary'
+        entityType: this.entityType.toLowerCase()
       }
     });
     this.table.renderRows();

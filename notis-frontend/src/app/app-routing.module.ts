@@ -12,6 +12,7 @@ import {UserHomeComponent} from './components/user/user-home/user-home.component
 import {UserNotariesComponent} from './components/user/user-notaries/user-notaries.component';
 import {UserTranslatorsComponent} from './components/user/user-translators/user-translators.component';
 import {UserServicesNotaryTranslatorComponent} from './components/user/user-services-notary-translator/user-services-notary-translator.component';
+import {UserSearchWithFiltersComponent} from './components/user/user-search-with-filters/user-search-with-filters.component';
 
 
 const routes: Routes = [
@@ -55,6 +56,11 @@ const routes: Routes = [
   },
   {
     path: 'translators', pathMatch: 'full', component: UserTranslatorsComponent, children: [
+      {path: '', outlet: 'user-home-toolbar', component: UserHomeToolbarComponent}
+    ]
+  },
+  {
+    path: 'search', pathMatch: 'full', component: UserSearchWithFiltersComponent, children: [
       {path: '', outlet: 'user-home-toolbar', component: UserHomeToolbarComponent}
     ]
   },
