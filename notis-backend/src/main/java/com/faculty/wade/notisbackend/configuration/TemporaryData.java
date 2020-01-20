@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.context.annotation.Configuration;
+
 import com.faculty.wade.notisbackend.model.Address;
 import com.faculty.wade.notisbackend.model.Document;
 import com.faculty.wade.notisbackend.model.Notary;
@@ -11,6 +13,7 @@ import com.faculty.wade.notisbackend.model.Service;
 import com.faculty.wade.notisbackend.model.Timetable;
 import com.faculty.wade.notisbackend.model.Translator;
 
+@Configuration
 public class TemporaryData {
 
 	public static List<Notary> notaries = new ArrayList<>();
@@ -32,8 +35,10 @@ public class TemporaryData {
 		address.setCountry("Romania");
 		address.setCounty("Romania");
 		address.setCity("Iasi");
+		address.setLocality("Iasi");
 		address.setStreet("Petre Tutea");
 		address.setStreetNumber("20");
+		address.setZipCode("700693");
 		address.setOthers("-");
 		addresses.add(address);
 
@@ -42,8 +47,10 @@ public class TemporaryData {
 		address.setCountry("Romania");
 		address.setCounty("Romania");
 		address.setCity("Iasi");
+		address.setLocality("Iasi");
 		address.setStreet("Lac Cerbu Barnova");
 		address.setStreetNumber("");
+		address.setZipCode("");
 		address.setOthers("-");
 		addresses.add(address);
 
@@ -51,9 +58,11 @@ public class TemporaryData {
 		address.setId(3);
 		address.setCountry("Romania");
 		address.setCounty("Romania");
-		address.setCity("Visan");
+		address.setCity("Iasi");
+		address.setLocality("Iasi");
 		address.setStreet("Sfantul Ilie");
 		address.setStreetNumber("95");
+		address.setZipCode("");
 		address.setOthers("-");
 		addresses.add(address);
 
@@ -62,8 +71,10 @@ public class TemporaryData {
 		address.setCountry("Romania");
 		address.setCounty("Romania");
 		address.setCity("Iasi");
+		address.setLocality("Iasi");
 		address.setStreet("Bulevardul Stefan cel Mare si Sfant");
 		address.setStreetNumber("1");
+		address.setZipCode("");
 		address.setOthers("-");
 		addresses.add(address);
 
@@ -72,18 +83,10 @@ public class TemporaryData {
 		address.setCountry("Romania");
 		address.setCounty("Romania");
 		address.setCity("Iasi");
+		address.setLocality("Iasi");
 		address.setStreet("Palas");
 		address.setStreetNumber("5C");
-		address.setOthers("-");
-		addresses.add(address);
-
-		address = new Address();
-		address.setId(6);
-		address.setCountry("Romania");
-		address.setCounty("Romania");
-		address.setCity("Iasi");
-		address.setStreet("Bulevardul Socola");
-		address.setStreetNumber("208");
+		address.setZipCode("");
 		address.setOthers("-");
 		addresses.add(address);
 
@@ -92,8 +95,10 @@ public class TemporaryData {
 		address.setCountry("Romania");
 		address.setCounty("Romania");
 		address.setCity("Iasi");
+		address.setLocality("Iasi");
 		address.setStreet("Bulevardul Socola");
 		address.setStreetNumber("");
+		address.setZipCode("");
 		address.setOthers("-");
 		addresses.add(address);
 
@@ -102,8 +107,10 @@ public class TemporaryData {
 		address.setCountry("Romania");
 		address.setCounty("Romania");
 		address.setCity("Iasi");
+		address.setLocality("Iasi");
 		address.setStreet("Pocreaca");
 		address.setStreetNumber("");
+		address.setZipCode("");
 		address.setOthers("-");
 		addresses.add(address);
 
@@ -152,7 +159,7 @@ public class TemporaryData {
 		for (int i = 0; i < 9; i++) {
 			notary = new Notary();
 			notary.setId(i);
-			notary.setAddress(addresses.get((int) (Math.random() * 8)));
+			notary.setAddress(addresses.get((int) (Math.random() * 7)));
 			notary.setAuthorizationNumber("authorization" + i);
 			notary.setName("Chilaboc Ecaterina " + i);
 			notary.setPhoneNumber("phone " + i);
@@ -162,7 +169,7 @@ public class TemporaryData {
 
 			translator = new Translator();
 			translator.setId(i);
-			translator.setAddress(addresses.get((int) (Math.random() * 8)));
+			translator.setAddress(addresses.get((int) (Math.random() * 7)));
 			translator.setAuthorizationNumber("authorization" + i);
 			translator.setName("Chilaboc Ecaterina-Mihaela " + i);
 			translator.setPhoneNumber("phone " + i);

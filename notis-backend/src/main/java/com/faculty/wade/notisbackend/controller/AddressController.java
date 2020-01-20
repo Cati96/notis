@@ -36,4 +36,30 @@ public class AddressController {
 		}
 		return addresses;
 	}
+
+	@CrossOrigin(origins = "*")
+	@GetMapping(value = "/getAllForEntityTypeAndCustomLocation")
+	public List<Address> getAllAddressesForEntityTypeAndCustomLocation(@RequestParam("entityType") String entityType,
+			@RequestParam("city") String city, @RequestParam("locality") String locality) {
+		List<Address> addresses = null;
+		if (entityType.toLowerCase().equals("notary")) {
+			addresses = new ArrayList<>();
+			for (Notary notary : TemporaryData.notaries) {
+				Address address = notary.getAddress();
+				if (address.getCity().equals(city) && address.getLocality().equals(locality)) {
+					addresses.add(address);
+				}
+			}
+
+		} else if (entityType.toLowerCase().equals("translator")) {
+			addresses = new ArrayList<>();
+			for (Translator translator : TemporaryData.translators) {
+				Address address = translator.getAddress();
+				if (address.getCity().equals(city) && address.getLocality().equals(locality)) {
+					addresses.add(address);
+				}
+			}
+		}
+		return addresses;
+	}
 }
