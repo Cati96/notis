@@ -30,4 +30,12 @@ public class LiteralConvertor {
         }
         return services;
     }
+    public static List<String> convertFromStringToLanguages(String string) {
+        String[] languagesList = string.split("],");
+        List<String> languages = new LinkedList<>();
+        for (String language : languagesList) {
+            languages.add(language.replace("]", "").replace("[", "").replace("'",""));
+        }
+        return languages;
+    }
 }

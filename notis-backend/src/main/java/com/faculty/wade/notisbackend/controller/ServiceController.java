@@ -28,14 +28,9 @@ public class ServiceController {
 			@RequestParam("entityId") Integer entityId) {
 		if (entityType.toLowerCase().equals("notary")) {
 			return serviceService.getServicesForNotary(entityId);
-//			return new ArrayList<>();
+
 		} else if (entityType.toLowerCase().equals("translator")) {
-			for (Translator translator : TemporaryData.translators) {
-				if (translator.getId().equals(entityId)) {
-					return translator.getServices();
-				}
-			}
-			return new ArrayList<>();
+			return serviceService.getServicesForTranslator(entityId);
 		} else {
 			return null;
 		}

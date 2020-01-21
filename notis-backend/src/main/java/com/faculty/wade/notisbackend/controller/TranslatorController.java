@@ -3,6 +3,8 @@ package com.faculty.wade.notisbackend.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.faculty.wade.notisbackend.service.TranslatorService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,11 +17,13 @@ import com.faculty.wade.notisbackend.model.Translator;
 @RestController
 @RequestMapping("/translators")
 public class TranslatorController {
+	@Autowired
+	private TranslatorService translatorService;
 
 	@CrossOrigin(origins = "*")
 	@GetMapping(value = "/getAll")
 	public List<Translator> getAllTranslators() {
-		return TemporaryData.translators;
+		return translatorService.getAll();
 	}
 
 	@CrossOrigin(origins = "*")

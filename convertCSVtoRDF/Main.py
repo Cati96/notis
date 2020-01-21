@@ -6,8 +6,8 @@ def main():
     list_of_translators = read_translators()
     createRDF(list_of_notaries, list_of_translators)
     # print(generateSchedule())
-    # generateNotaryService()
-
+    # print(generateNotaryService())
+    # print(generateTranslatorsService())
 if __name__ == '__main__':
     main()
 

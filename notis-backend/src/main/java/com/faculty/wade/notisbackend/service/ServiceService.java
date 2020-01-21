@@ -45,4 +45,33 @@ public class ServiceService {
         qexec.close();
         return services;
     }
+    public List<Service> getServicesForTranslator(Integer id){
+        List<com.faculty.wade.notisbackend.model.Service> services = new LinkedList<>();
+        Model model = ModelFactory.createDefaultModel();
+        try {
+            model.read(new FileInputStream("./rdf/output.txt"), null, "TTL");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        String queryString = "PREFIX ns1: <http://xmlns.com/foaf/0.1/> " +
+                "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> " +
+                "SELECT  ?services WHERE { " +
+                " ?person rdf:type <https://www.merriam-webster.com/dictionary/translator> ." +
+                " ?person ns1:id ?id ." +
+                " ?person ns1:services ?services ." +
+                " FILTER (?id = "+id+" ) "+
+                "}";
+        Query query = QueryFactory.create(queryString);
+        QueryExecution qexec = QueryExecutionFactory.create(query, model);
+        ResultSet results = qexec.execSelect();
+        while (results.hasNext()) {
+            QuerySolution soln = results.nextSolution();
+            String servicesLiteral = (String) soln.getLiteral("services").getValue();
+            services = LiteralConvertor.convertFromStringToServices(servicesLiteral);
+        }
+        qexec.close();
+        return services;
+    }
+
 }

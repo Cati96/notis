@@ -43,6 +43,13 @@ notaryTypeOfServices = [["Succession","https://notariat-tineretului.net/succesiu
                         ["Document Legalisation","https://notariat-tineretului.net/legalizari/"],
                         ["Marriage agreement","https://notariat-tineretului.net/conventie-matrimoniala/"]
 ]
+translatorsTypeOfServices = [["Technical translations","Technical translations"],
+                             ["Medical and pharmaceutical translations","Medical and pharmaceutical translations"],
+                             ["Literary translations","Literary translations"],
+                             ["Legal translations","Legal translations"],
+                             ["Economic translations","Economic translations"],
+                             ["IT translations","IT translations"]]
+
 def read_notaries():
     print("read notaries")
     list_of_notaries = []
@@ -102,7 +109,7 @@ def read_translators():
             "languages": languages,
             "authorisation_no":authorisationNo,
             "schedule": generateSchedule(),
-            "services": generateNotaryService()
+            "services": generateTranslatorsService()
         }
         list_of_translators.append(translator)
         # print(translator)
@@ -142,5 +149,9 @@ def generateSchedule():
 
 def generateNotaryService():
     numberOfServices = random.randrange(2,len(notaryTypeOfServices) + 1)
-    services = random.choices(notaryTypeOfServices, k=numberOfServices)
+    services = random.sample(notaryTypeOfServices, k=numberOfServices)
+    return services
+def generateTranslatorsService():
+    numberOfServices = random.randrange(2, len(translatorsTypeOfServices) + 1)
+    services = random.sample(translatorsTypeOfServices, numberOfServices)
     return services
