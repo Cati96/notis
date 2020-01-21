@@ -82,9 +82,12 @@ export class AdminNotariesComponent implements OnInit, OnDestroy {
   }
 
   addNotary(notary) {
-    this.table.renderRows();
-    console.log('TO DO ADD NEW NOTARY');
 
+    console.log('TO DO ADD NEW NOTARY');
+    this.notaryService.addNotary(notary).subscribe(json => {
+             this.notaries.push(json);
+             this.table.renderRows();
+    });
   }
 
   updateNotary(notary) {
