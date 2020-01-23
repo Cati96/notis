@@ -27,6 +27,10 @@ def createRDF(list_of_notaries, list_of_translators):
         gg.add((address, FOAF.county, Literal(notary["county"])))
         gg.add((address, FOAF.city, Literal(notary["city"])))
         gg.add((address, FOAF.street, Literal(notary["address"])))
+        gg.add((address, FOAF.country, Literal(notary["country"])))
+        gg.add((address, FOAF.streetNr, Literal(notary["streetNumber"])))
+        gg.add((address, FOAF.zipCode, Literal(notary["zipCode"])))
+        gg.add((address, FOAF.others, Literal(notary["others"])))
         gg.add((person_notary, FOAF.address, address))
         #TO DO DOCUMENTS
 
@@ -48,6 +52,10 @@ def createRDF(list_of_notaries, list_of_translators):
         gg.add((address, FOAF.county, Literal(translator["county"])))
         gg.add((address, FOAF.city, Literal(translator["city"])))
         gg.add((address, FOAF.street, Literal(translator["address"])))
+        gg.add((address, FOAF.country, Literal(translator["country"])))
+        gg.add((address, FOAF.streetNr, Literal(translator["streetNumber"])))
+        gg.add((address, FOAF.zipCode, Literal(translator["zipCode"])))
+        gg.add((address, FOAF.others, Literal(translator["others"])))
         gg.add((person_translator, FOAF.address, address))
         gg.add((person_translator, FOAF.languages, Literal(translator["languages"])))
 

@@ -31,10 +31,12 @@ export class NotaryService {
   }
 
   addNotary(notary : Notary): Observable<any> {
+    let languages = []
+    languages.push("English");
     return this.http.post(this.urlPart,{name: notary.name,
                                         authorizationNumber: notary.authorizationNumber,
                                         phoneNumber: notary.phoneNumber,
-                                        languages: 'English'
+                                        languages: languages
     }).pipe(map(
         data => Object.assign(new Notary(), data)
     ));
