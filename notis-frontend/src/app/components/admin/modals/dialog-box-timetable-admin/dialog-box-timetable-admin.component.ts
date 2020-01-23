@@ -70,6 +70,20 @@ export class DialogBoxTimetableAdminComponent implements OnInit {
 
   deleteAddress(id: number) {
     console.log('TO DO DELETE TIMETABLE BY ID');
+    this.localData.monday='None';
+    this.localData.tuesday='None';
+    this.localData.wednesday='None';
+    this.localData.thursday='None';
+    this.localData.friday='None';
+    this.localData.saturday='None';
+    this.localData.sunday='None';
+    let idt = this.entityId;
+    if( this.entityType !== 'Notary')
+            idt = idt * -1;
+    this.timetableService.update(this.localData, idt).subscribe(json => {
+               console.log(json);
+     });
+
   }
 
 }

@@ -35,20 +35,20 @@ import random
 #
 # 	private Double price;
 scheduleList = ["8:00 - 12:00 | 14:00-20:00", "8:30 - 13:00 | 14:00 - 19:00","9:00 - 13:00 | 14:00 - 19:30","10:00 - 14:00 | 15:00 - 18:00","9:30 - 12:00 | 13:00 - 19:00"]
-notaryTypeOfServices = [["Succession","https://notariat-tineretului.net/succesiune/"],
-                        ["Declaration","https://notariat-tineretului.net/declaratie/"],
-                        ["Contract","https://notariat-tineretului.net/contract/"],
-                        ["Procure","https://notariat-tineretului.net/procura/"],
-                        ["Divorce","https://notariat-tineretului.net/divort/"],
-                        ["Document Legalisation","https://notariat-tineretului.net/legalizari/"],
-                        ["Marriage agreement","https://notariat-tineretului.net/conventie-matrimoniala/"]
+notaryTypeOfServices = [["1","Succession","https://notariat-tineretului.net/succesiune/"],
+                        ["2","Declaration","https://notariat-tineretului.net/declaratie/"],
+                        ["3","Contract","https://notariat-tineretului.net/contract/"],
+                        ["4","Procure","https://notariat-tineretului.net/procura/"],
+                        ["5","Divorce","https://notariat-tineretului.net/divort/"],
+                        ["6","Document Legalisation","https://notariat-tineretului.net/legalizari/"],
+                        ["7","Marriage agreement","https://notariat-tineretului.net/conventie-matrimoniala/"]
 ]
-translatorsTypeOfServices = [["Technical translations","Technical translations"],
-                             ["Medical and pharmaceutical translations","Medical and pharmaceutical translations"],
-                             ["Literary translations","Literary translations"],
-                             ["Legal translations","Legal translations"],
-                             ["Economic translations","Economic translations"],
-                             ["IT translations","IT translations"]]
+translatorsTypeOfServices = [["1","Technical translations","Technical translations"],
+                             ["2","Medical and pharmaceutical translations","Medical and pharmaceutical translations"],
+                             ["3","Literary translations","Literary translations"],
+                             ["4","Legal translations","Legal translations"],
+                             ["5","Economic translations","Economic translations"],
+                             ["6","IT translations","IT translations"]]
 
 def read_notaries():
     print("read notaries")
@@ -77,7 +77,12 @@ def read_notaries():
             "county":county.upper(),
             "phoneNo":phoneNo,
             "schedule": generateSchedule(),
-            "services": generateNotaryService()
+            "services": generateNotaryService(),
+            "country": "ROMANIA",
+            "street": "-",
+            "streetNumber": "-",
+            "zipCode": "-",
+            "others": "-"
         }
         list_of_notaries.append(notary)
         # TO DO ACTE
@@ -109,8 +114,14 @@ def read_translators():
             "languages": languages,
             "authorisation_no":authorisationNo,
             "schedule": generateSchedule(),
-            "services": generateTranslatorsService()
+            "services": generateTranslatorsService(),
+            "country" : "ROMANIA",
+            "street": "-",
+            "streetNumber":"-",
+            "zipCode":"-",
+            "others":"-"
         }
+
         list_of_translators.append(translator)
         # print(translator)
         # TO DO ACTE
