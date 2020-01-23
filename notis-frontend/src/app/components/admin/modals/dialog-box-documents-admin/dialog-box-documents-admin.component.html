@@ -49,7 +49,8 @@
               <mat-icon>attach_file</mat-icon>
             </button>
           </div>
-          <div *ngIf="(document.template===null && !document.hasFileToUpload) || (document.hasFileToUpload && !document.isFileUploaded)">
+          <div
+            *ngIf="(document.template===null && !document.hasFileToUpload) || (document.hasFileToUpload && !document.isFileUploaded)">
             <input [ngClass]="'template-file-input'+hiddenId" type="file" accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,
 text/plain, application/pdf, image/*" #file (change)="onChangeFile(document, $event)">
             <button mat-button class="document-attachment-button" (click)="doUploadDocument(document, file)">

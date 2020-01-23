@@ -81,32 +81,32 @@ export class AdminTranslatorsComponent implements OnInit, OnDestroy {
     });
   }
 
-   addTranslator(translator) {
+  addTranslator(translator) {
 
-      console.log('TO DO ADD NEW NOTARY');
-      this.translatorService.addTranslator(translator).subscribe(json => {
-               this.translators.push(json);
-               this.table.renderRows();
-      });
-    }
+    console.log('TO DO ADD NEW NOTARY');
+    this.translatorService.addTranslator(translator).subscribe(json => {
+      this.translators.push(json);
+      this.table.renderRows();
+    });
+  }
 
   updateTranslator(translator) {
     console.log('TO DO UPDATE TRANSLATOR');
     debugger;
     this.translatorService.update(translator).subscribe(json => {
-                     //this.notaries.push(json);
-                     this.table.renderRows();
-            });
+      //this.notaries.push(json);
+      this.table.renderRows();
+    });
   }
 
   deleteTranslator(translatorId) {
     console.log('TO DO DELETE TRANSLATOR BY ID');
     this.translatorService.delete(translatorId).subscribe(result => {
-                     console.log(result);
-                     this.findAndDeleteTranslatorFromArray(translatorId);
-     },
-    err => console.log(err)
-    )
+        console.log(result);
+        this.findAndDeleteTranslatorFromArray(translatorId);
+      },
+      err => console.log(err)
+    );
   }
 
   showAddressDetails(address, translatorId) {
@@ -115,7 +115,7 @@ export class AdminTranslatorsComponent implements OnInit, OnDestroy {
       data: {
         data: address,
         entityType: 'Translator',
-        entityId : translatorId,
+        entityId: translatorId,
       }
     });
     this.table.renderRows();
@@ -127,7 +127,7 @@ export class AdminTranslatorsComponent implements OnInit, OnDestroy {
       data: {
         data: timetable,
         entityType: 'Translator',
-        entityId : translatorId
+        entityId: translatorId
       }
     });
     this.table.renderRows();
@@ -136,10 +136,11 @@ export class AdminTranslatorsComponent implements OnInit, OnDestroy {
   showServicesDetailsForEntityId(id) {
     this.router.navigate(['admin-translators/services'], {queryParams: {entityType: 'Translator', entityId: id}});
   }
-  findAndDeleteTranslatorFromArray(translatorId){
-        let index = this.translators.findIndex( translator => translator.id === translatorId );
-        this.translators.splice(index,1);
-        this.table.renderRows();
-      }
+
+  findAndDeleteTranslatorFromArray(translatorId) {
+    let index = this.translators.findIndex(translator => translator.id === translatorId);
+    this.translators.splice(index, 1);
+    this.table.renderRows();
+  }
 }
 

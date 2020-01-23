@@ -16,11 +16,10 @@ export class TimetableService {
 
   }
 
-  update(timetable : Timetable, entityId): Observable<any> {
-         debugger;
-         timetable.id = entityId;
-         return this.http.put(this.urlPart,timetable).pipe(map(
-             data => Object.assign(new Timetable(), data)
-         ));
-       }
+  update(timetable: Timetable, entityId): Observable<any> {
+    timetable.id = entityId;
+    return this.http.put(this.urlPart, timetable).pipe(map(
+      data => Object.assign(new Timetable(), data)
+    ));
+  }
 }

@@ -1,54 +1,60 @@
 package com.faculty.wade.notisbackend.queryes;
 
-import com.faculty.wade.notisbackend.DTO.EntityDTO;
-import com.faculty.wade.notisbackend.helper.EntityCreator;
-import com.faculty.wade.notisbackend.helper.LiteralConvertor;
-import com.faculty.wade.notisbackend.helper.RandomGenerator;
-import com.faculty.wade.notisbackend.model.*;
-import com.github.jsonldjava.utils.JsonUtils;
-import org.apache.jena.query.*;
-import org.apache.jena.rdf.model.*;
-import org.apache.jena.vocabulary.RDF;
-import org.w3c.dom.ls.LSOutput;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.LinkedList;
 import java.util.List;
 
-public class SparkQLQuery {
+import org.apache.jena.query.Query;
+import org.apache.jena.query.QueryExecution;
+import org.apache.jena.query.QueryExecutionFactory;
+import org.apache.jena.query.QueryFactory;
+import org.apache.jena.query.QuerySolution;
+import org.apache.jena.query.ResultSet;
+import org.apache.jena.rdf.model.Literal;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.Property;
+import org.apache.jena.rdf.model.RDFNode;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.ResourceFactory;
+import org.apache.jena.vocabulary.RDF;
 
+import com.faculty.wade.notisbackend.DTO.EntityDTO;
+import com.faculty.wade.notisbackend.configuration.Global;
+import com.faculty.wade.notisbackend.helper.EntityCreator;
+import com.faculty.wade.notisbackend.helper.LiteralConvertor;
+import com.faculty.wade.notisbackend.model.Address;
+import com.faculty.wade.notisbackend.model.EntityObject;
+import com.faculty.wade.notisbackend.model.Notary;
+import com.faculty.wade.notisbackend.model.Service;
+import com.faculty.wade.notisbackend.model.Timetable;
+import com.faculty.wade.notisbackend.model.Translator;
+
+public class SparkQLQuery {
 
     public static List<Notary> getAllNotaries() {
         List<Notary> notaries = new LinkedList<>();
         Model model = ModelFactory.createDefaultModel();
         try {
-            model.read(new FileInputStream("./rdf/rdf.txt"), null, "TTL");
+            model.read(new FileInputStream(Global.RDF_FILE_PATH), null, "TTL");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
 
-        String queryString = "PREFIX ns1: <http://xmlns.com/foaf/0.1/> " +
-                "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> " +
-                "SELECT ?id ?person ?firstName ?lastName ?authorizationNumber ?phone ?schedule ?services ?county ?city ?street ?address ?country ?zipCode ?streetNr ?others WHERE { " +
-                " ?person rdf:type \"https://www.merriam-webster.com/dictionary/notary%20public\" ." +
-                " ?person <ns1:id> ?id ." +
-                " ?person <ns1:firstName> ?firstName ." +
-                " ?person <ns1:lastName> ?lastName ." +
-                " ?person <ns1:authorizationNumber> ?authorizationNumber ." +
-                " ?person <ns1:phone> ?phone ." +
-                " ?person <ns1:address> ?address ." +
-                " ?person <ns1:schedule> ?schedule ." +
-                " ?person <ns1:services> ?services ." +
-                " ?address <ns1:county> ?county ." +
-                " ?address <ns1:city> ?city ." +
-                " ?address <ns1:street> ?street ." +
-                " ?address <ns1:country> ?country ." +
-                " ?address <ns1:zipCode> ?zipCode ." +
-                " ?address <ns1:streetNr> ?streetNr ." +
-                " ?address <ns1:others> ?others ." +
-                "}";
+        String queryString = "PREFIX ns1: <http://xmlns.com/foaf/0.1/> "
+                + "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> "
+                + "SELECT ?id ?person ?firstName ?lastName ?authorizationNumber ?phone ?schedule ?services ?county ?city ?street ?address ?country ?zipCode ?streetNr ?others WHERE { "
+                + " ?person rdf:type \"https://www.merriam-webster.com/dictionary/notary%20public\" ."
+                + " ?person <ns1:id> ?id ." + " ?person <ns1:firstName> ?firstName ."
+                + " ?person <ns1:lastName> ?lastName ." + " ?person <ns1:authorizationNumber> ?authorizationNumber ."
+                + " ?person <ns1:phone> ?phone ." + " ?person <ns1:address> ?address ."
+                + " ?person <ns1:schedule> ?schedule ." + " ?person <ns1:services> ?services ."
+                + " ?address <ns1:county> ?county ." + " ?address <ns1:city> ?city ."
+                + " ?address <ns1:street> ?street ." + " ?address <ns1:country> ?country ."
+                + " ?address <ns1:zipCode> ?zipCode ." + " ?address <ns1:streetNr> ?streetNr ."
+                + " ?address <ns1:others> ?others ." + "}";
         Query query = QueryFactory.create(queryString);
         QueryExecution qexec = QueryExecutionFactory.create(query, model);
         ResultSet results = qexec.execSelect();
@@ -74,7 +80,8 @@ public class SparkQLQuery {
             List<Service> services = LiteralConvertor.convertFromStringToServices(servicesLiteral);
             Address addressOnj = new Address(country, county, city, null, street, streetNr, zipCode, others);
 
-            Notary notary = new Notary(id, firstName + " " + lastName, "" + authorizationNumber, phone, addressOnj, schedule, services);
+            Notary notary = new Notary(id, firstName + " " + lastName, "" + authorizationNumber, phone, addressOnj,
+                    schedule, services);
             notaries.add(notary);
         }
         qexec.close();
@@ -84,21 +91,18 @@ public class SparkQLQuery {
     public static ResultSet returnAllByPhoneNumberAndAuthorisation(EntityDTO entityDTO) {
         Model model = ModelFactory.createDefaultModel();
         try {
-            model.read(new FileInputStream("./rdf/rdf.txt"), null, "TTL");
+            model.read(new FileInputStream(Global.RDF_FILE_PATH), null, "TTL");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
 //     TO DO FIX QUERY
-        String queryString = "PREFIX ns1: <http://xmlns.com/foaf/0.1/> " +
-                "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> " +
-                "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> " +
-                "SELECT  ?authorizationNumber ?phone WHERE { " +
-                " ?type rdfs:subClassOf ns1:Person ." +
-                " ?person rdf:type ?type ." +
-                " ?person ns1:authorizationNumber ?authorizationNumber ." +
-                " ?person ns1:phone ?phone ." +
-                " FILTER (?phone = " + entityDTO.getPhoneNumber() + " || ?authorizationNumber =" + entityDTO.getAuthorizationNumber() + " ) " +
-                "}";
+        String queryString = "PREFIX ns1: <http://xmlns.com/foaf/0.1/> "
+                + "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> "
+                + "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> "
+                + "SELECT  ?authorizationNumber ?phone WHERE { " + " ?type rdfs:subClassOf ns1:Person ."
+                + " ?person rdf:type ?type ." + " ?person ns1:authorizationNumber ?authorizationNumber ."
+                + " ?person ns1:phone ?phone ." + " FILTER (?phone = " + entityDTO.getPhoneNumber()
+                + " || ?authorizationNumber =" + entityDTO.getAuthorizationNumber() + " ) " + "}";
         Query query = QueryFactory.create(queryString);
         QueryExecution qexec = QueryExecutionFactory.create(query, model);
         ResultSet results = qexec.execSelect();
@@ -111,32 +115,23 @@ public class SparkQLQuery {
         Model model = ModelFactory.createDefaultModel();
         List<Translator> translators = new LinkedList<>();
         try {
-            model.read(new FileInputStream("./rdf/rdf.txt"), null, "TTL");
+            model.read(new FileInputStream(Global.RDF_FILE_PATH), null, "TTL");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
 
-        String queryString = "PREFIX ns1: <http://xmlns.com/foaf/0.1/> " +
-                "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> " +
-                "SELECT ?id ?person ?firstName ?lastName ?authorizationNumber ?phone ?schedule ?services ?county ?city ?street ?languages ?country ?zipCode ?streetNr ?others WHERE { " +
-                " ?person rdf:type \"https://www.merriam-webster.com/dictionary/translator\" ." +
-                " ?person <ns1:id> ?id ." +
-                " ?person <ns1:firstName> ?firstName ." +
-                " ?person <ns1:lastName> ?lastName ." +
-                " ?person <ns1:authorizationNumber> ?authorizationNumber ." +
-                " ?person <ns1:phone> ?phone ." +
-                " ?person <ns1:address> ?address ." +
-                " ?person <ns1:schedule> ?schedule ." +
-                " ?person <ns1:services> ?services ." +
-                " ?person <ns1:languages> ?languages ." +
-                " ?address <ns1:county> ?county ." +
-                " ?address <ns1:city> ?city ." +
-                " ?address <ns1:street> ?street ." +
-                " ?address <ns1:country> ?country ." +
-                " ?address <ns1:zipCode> ?zipCode ." +
-                " ?address <ns1:streetNr> ?streetNr ." +
-                " ?address <ns1:others> ?others ." +
-                "}";
+        String queryString = "PREFIX ns1: <http://xmlns.com/foaf/0.1/> "
+                + "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> "
+                + "SELECT ?id ?person ?firstName ?lastName ?authorizationNumber ?phone ?schedule ?services ?county ?city ?street ?languages ?country ?zipCode ?streetNr ?others WHERE { "
+                + " ?person rdf:type \"https://www.merriam-webster.com/dictionary/translator\" ."
+                + " ?person <ns1:id> ?id ." + " ?person <ns1:firstName> ?firstName ."
+                + " ?person <ns1:lastName> ?lastName ." + " ?person <ns1:authorizationNumber> ?authorizationNumber ."
+                + " ?person <ns1:phone> ?phone ." + " ?person <ns1:address> ?address ."
+                + " ?person <ns1:schedule> ?schedule ." + " ?person <ns1:services> ?services ."
+                + " ?person <ns1:languages> ?languages ." + " ?address <ns1:county> ?county ."
+                + " ?address <ns1:city> ?city ." + " ?address <ns1:street> ?street ."
+                + " ?address <ns1:country> ?country ." + " ?address <ns1:zipCode> ?zipCode ."
+                + " ?address <ns1:streetNr> ?streetNr ." + " ?address <ns1:others> ?others ." + "}";
         Query query = QueryFactory.create(queryString);
         QueryExecution qexec = QueryExecutionFactory.create(query, model);
         ResultSet results = qexec.execSelect();
@@ -160,10 +155,12 @@ public class SparkQLQuery {
             String others = (String) soln.getLiteral("others").getValue();
             Timetable schedule = LiteralConvertor.convertFromStringToTimetable(scheduleLiteral);
             List<String> languages = LiteralConvertor.convertFromStringToLanguages(languagesLiteral);
-            List<com.faculty.wade.notisbackend.model.Service> services = LiteralConvertor.convertFromStringToServices(servicesLiteral);
+            List<com.faculty.wade.notisbackend.model.Service> services = LiteralConvertor
+                    .convertFromStringToServices(servicesLiteral);
             Address addressOnj = new Address(country, county, city, null, street, streetNr, zipCode, others);
 
-            Translator translator = new Translator(id, firstName + " " + lastName, "" + authorizationNumber, phone, addressOnj, schedule, services, languages);
+            Translator translator = new Translator(id, firstName + " " + lastName, "" + authorizationNumber, phone,
+                    addressOnj, schedule, services, languages);
             translators.add(translator);
         }
         qexec.close();
@@ -174,19 +171,16 @@ public class SparkQLQuery {
         List<com.faculty.wade.notisbackend.model.Service> services = new LinkedList<>();
         Model model = ModelFactory.createDefaultModel();
         try {
-            model.read(new FileInputStream("./rdf/rdf.txt"), null, "TTL");
+            model.read(new FileInputStream(Global.RDF_FILE_PATH), null, "TTL");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
 
-        String queryString = "PREFIX ns1: <http://xmlns.com/foaf/0.1/> " +
-                "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> " +
-                "SELECT  ?services WHERE { " +
-                " ?person rdf:type \"https://www.merriam-webster.com/dictionary/notary%20public\" ." +
-                " ?person <ns1:id> ?id ." +
-                " ?person <ns1:services> ?services ." +
-                " FILTER (?id = " + id + " ) " +
-                "}";
+        String queryString = "PREFIX ns1: <http://xmlns.com/foaf/0.1/> "
+                + "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> " + "SELECT  ?services WHERE { "
+                + " ?person rdf:type \"https://www.merriam-webster.com/dictionary/notary%20public\" ."
+                + " ?person <ns1:id> ?id ." + " ?person <ns1:services> ?services ." + " FILTER (?id = " + id + " ) "
+                + "}";
         Query query = QueryFactory.create(queryString);
         QueryExecution qexec = QueryExecutionFactory.create(query, model);
         ResultSet results = qexec.execSelect();
@@ -203,19 +197,16 @@ public class SparkQLQuery {
         List<com.faculty.wade.notisbackend.model.Service> services = new LinkedList<>();
         Model model = ModelFactory.createDefaultModel();
         try {
-            model.read(new FileInputStream("./rdf/rdf.txt"), null, "TTL");
+            model.read(new FileInputStream(Global.RDF_FILE_PATH), null, "TTL");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
 
-        String queryString = "PREFIX ns1: <http://xmlns.com/foaf/0.1/> " +
-                "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> " +
-                "SELECT  ?services WHERE { " +
-                " ?person rdf:type \"https://www.merriam-webster.com/dictionary/translator\" ." +
-                " ?person <ns1:id> ?id ." +
-                " ?person <ns1:services> ?services ." +
-                " FILTER (?id = " + id + " ) " +
-                "}";
+        String queryString = "PREFIX ns1: <http://xmlns.com/foaf/0.1/> "
+                + "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> " + "SELECT  ?services WHERE { "
+                + " ?person rdf:type \"https://www.merriam-webster.com/dictionary/translator\" ."
+                + " ?person <ns1:id> ?id ." + " ?person <ns1:services> ?services ." + " FILTER (?id = " + id + " ) "
+                + "}";
         Query query = QueryFactory.create(queryString);
         QueryExecution qexec = QueryExecutionFactory.create(query, model);
         ResultSet results = qexec.execSelect();
@@ -233,21 +224,18 @@ public class SparkQLQuery {
         EntityObject entityObject = EntityCreator.createEntityToBeStored(entityDTO, isTranslator);
 
         try {
-            model.read(new FileInputStream("./rdf/rdf.txt"), null, "TTL");
+            model.read(new FileInputStream(Global.RDF_FILE_PATH), null, "TTL");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
 //     TO DO FIX QUERY
-        String queryString = "PREFIX ns1: <http://xmlns.com/foaf/0.1/> " +
-                "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> " +
-                "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> " +
-                "SELECT  ?authorizationNumber ?phone WHERE { " +
-                " ?type rdfs:subClassOf ns1:Person ." +
-                " ?person rdf:type ?type ." +
-                " ?person ns1:authorizationNumber ?authorizationNumber ." +
-                " ?person ns1:phone ?phone ." +
-                " FILTER (?phone = " + entityDTO.getPhoneNumber() + " || ?authorizationNumber =" + entityDTO.getAuthorizationNumber() + " ) " +
-                "}";
+        String queryString = "PREFIX ns1: <http://xmlns.com/foaf/0.1/> "
+                + "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> "
+                + "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> "
+                + "SELECT  ?authorizationNumber ?phone WHERE { " + " ?type rdfs:subClassOf ns1:Person ."
+                + " ?person rdf:type ?type ." + " ?person ns1:authorizationNumber ?authorizationNumber ."
+                + " ?person ns1:phone ?phone ." + " FILTER (?phone = " + entityDTO.getPhoneNumber()
+                + " || ?authorizationNumber =" + entityDTO.getAuthorizationNumber() + " ) " + "}";
         Query query = QueryFactory.create(queryString);
         QueryExecution qexec = QueryExecutionFactory.create(query, model);
         ResultSet results = qexec.execSelect();
@@ -257,7 +245,6 @@ public class SparkQLQuery {
         }
         qexec.close();
         addDefaultEntity(model, isTranslator, entityObject);
-
 
         return entityObject.getId();
     }
@@ -266,21 +253,18 @@ public class SparkQLQuery {
         Model model = ModelFactory.createDefaultModel();
 
         try {
-            model.read(new FileInputStream("./rdf/rdf.txt"), null, "TTL");
+            model.read(new FileInputStream(Global.RDF_FILE_PATH), null, "TTL");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
 //     TO DO FIX QUERY
-        String queryString = "PREFIX ns1: <http://xmlns.com/foaf/0.1/> " +
-                "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> " +
-                "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> " +
-                "SELECT  ?authorizationNumber ?phone WHERE { " +
-                " ?type rdfs:subClassOf ns1:Person ." +
-                " ?person rdf:type ?type ." +
-                " ?person ns1:authorizationNumber ?authorizationNumber ." +
-                " ?person ns1:phone ?phone ." +
-                " FILTER (?phone = " + entityObject.getPhoneNumber() + " || ?authorizationNumber =" + entityObject.getAuthorizationNumber() + " ) " +
-                "}";
+        String queryString = "PREFIX ns1: <http://xmlns.com/foaf/0.1/> "
+                + "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> "
+                + "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> "
+                + "SELECT  ?authorizationNumber ?phone WHERE { " + " ?type rdfs:subClassOf ns1:Person ."
+                + " ?person rdf:type ?type ." + " ?person ns1:authorizationNumber ?authorizationNumber ."
+                + " ?person ns1:phone ?phone ." + " FILTER (?phone = " + entityObject.getPhoneNumber()
+                + " || ?authorizationNumber =" + entityObject.getAuthorizationNumber() + " ) " + "}";
         Query query = QueryFactory.create(queryString);
         QueryExecution qexec = QueryExecutionFactory.create(query, model);
         ResultSet results = qexec.execSelect();
@@ -290,7 +274,6 @@ public class SparkQLQuery {
         }
         qexec.close();
         addDefaultEntity(model, isTranslator, entityObject);
-
 
         return entityObject.getId();
     }
@@ -304,7 +287,8 @@ public class SparkQLQuery {
             firstName = firstName + " " + name[i];
         firstName = firstName.replace(" ", "");
 
-        Resource notary = model.createResource("http://example.org/people/" + entityObject.getName().replace(" ", "_").toUpperCase());
+        Resource notary = model
+                .createResource("http://example.org/people/" + entityObject.getName().replace(" ", "_").toUpperCase());
 
         Property firstNameProperty = ResourceFactory.createProperty("ns1:", "firstName");
         Property lastNameProperty = ResourceFactory.createProperty("ns1:", "lastName");
@@ -341,7 +325,6 @@ public class SparkQLQuery {
         Literal othersLiteral = ResourceFactory.createStringLiteral(entityObject.getAddress().getOthers());
         Literal streetNumberLiteral = ResourceFactory.createStringLiteral(entityObject.getAddress().getStreetNumber());
 
-
         addressResource.addLiteral(countyProperty, countyLiteral);
         addressResource.addLiteral(cityProperty, cityLiteral);
         addressResource.addLiteral(streetProperty, streetLiteral);
@@ -364,42 +347,33 @@ public class SparkQLQuery {
         model.add(notary, RDF.type, entityObject.getEntityType());
 
         try {
-            model.write(new FileOutputStream("./rdf/rdf.txt"), "TTL");
+            model.write(new FileOutputStream(Global.RDF_FILE_PATH), "TTL");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }
 
-
     public static Notary getNotary(Integer notaryId) {
         List<Notary> notaries = new LinkedList<>();
         Model model = ModelFactory.createDefaultModel();
         try {
-            model.read(new FileInputStream("./rdf/rdf.txt"), null, "TTL");
+            model.read(new FileInputStream(Global.RDF_FILE_PATH), null, "TTL");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
 
-        String queryString = "PREFIX ns1: <http://xmlns.com/foaf/0.1/> " +
-                "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> " +
-                "SELECT ?id ?person ?firstName ?lastName ?authorizationNumber ?phone ?schedule ?services ?county ?city ?street ?address ?country ?zipCode ?streetNr ?others WHERE { " +
-                " ?person rdf:type \"https://www.merriam-webster.com/dictionary/notary%20public\" ." +
-                " ?person <ns1:id> ?id ." +
-                " ?person <ns1:firstName> ?firstName ." +
-                " ?person <ns1:lastName> ?lastName ." +
-                " ?person <ns1:authorizationNumber> ?authorizationNumber ." +
-                " ?person <ns1:phone> ?phone ." +
-                " ?person <ns1:address> ?address ." +
-                " ?person <ns1:schedule> ?schedule ." +
-                " ?person <ns1:services> ?services ." +
-                " ?address <ns1:county> ?county ." +
-                " ?address <ns1:city> ?city ." +
-                " ?address <ns1:street> ?street ." +
-                " ?address <ns1:country> ?country ." +
-                " ?address <ns1:zipCode> ?zipCode ." +
-                " ?address <ns1:streetNr> ?streetNr ." +
-                " ?address <ns1:others> ?others ." +
-                "}";
+        String queryString = "PREFIX ns1: <http://xmlns.com/foaf/0.1/> "
+                + "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> "
+                + "SELECT ?id ?person ?firstName ?lastName ?authorizationNumber ?phone ?schedule ?services ?county ?city ?street ?address ?country ?zipCode ?streetNr ?others WHERE { "
+                + " ?person rdf:type \"https://www.merriam-webster.com/dictionary/notary%20public\" ."
+                + " ?person <ns1:id> ?id ." + " ?person <ns1:firstName> ?firstName ."
+                + " ?person <ns1:lastName> ?lastName ." + " ?person <ns1:authorizationNumber> ?authorizationNumber ."
+                + " ?person <ns1:phone> ?phone ." + " ?person <ns1:address> ?address ."
+                + " ?person <ns1:schedule> ?schedule ." + " ?person <ns1:services> ?services ."
+                + " ?address <ns1:county> ?county ." + " ?address <ns1:city> ?city ."
+                + " ?address <ns1:street> ?street ." + " ?address <ns1:country> ?country ."
+                + " ?address <ns1:zipCode> ?zipCode ." + " ?address <ns1:streetNr> ?streetNr ."
+                + " ?address <ns1:others> ?others ." + "}";
 
         Query query = QueryFactory.create(queryString);
         QueryExecution qexec = QueryExecutionFactory.create(query, model);
@@ -426,7 +400,8 @@ public class SparkQLQuery {
             List<Service> services = LiteralConvertor.convertFromStringToServices(servicesLiteral);
             Address addressOnj = new Address(country, county, city, null, street, streetNr, zipCode, others);
 
-            Notary notary = new Notary(id, firstName + " " + lastName, "" + authorizationNumber, phone, addressOnj, schedule, services);
+            Notary notary = new Notary(id, firstName + " " + lastName, "" + authorizationNumber, phone, addressOnj,
+                    schedule, services);
             qexec.close();
             return notary;
         }
@@ -437,32 +412,23 @@ public class SparkQLQuery {
         List<Notary> notaries = new LinkedList<>();
         Model model = ModelFactory.createDefaultModel();
         try {
-            model.read(new FileInputStream("./rdf/rdf.txt"), null, "TTL");
+            model.read(new FileInputStream(Global.RDF_FILE_PATH), null, "TTL");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
 
-        String queryString = "PREFIX ns1: <http://xmlns.com/foaf/0.1/> " +
-                "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> " +
-                "SELECT ?id ?person ?firstName ?lastName ?authorizationNumber ?phone ?schedule ?services ?county ?city ?street ?languages ?country ?zipCode ?streetNr ?others WHERE { " +
-                " ?person rdf:type \"https://www.merriam-webster.com/dictionary/translator\" ." +
-                " ?person <ns1:id> ?id ." +
-                " ?person <ns1:firstName> ?firstName ." +
-                " ?person <ns1:lastName> ?lastName ." +
-                " ?person <ns1:authorizationNumber> ?authorizationNumber ." +
-                " ?person <ns1:phone> ?phone ." +
-                " ?person <ns1:address> ?address ." +
-                " ?person <ns1:schedule> ?schedule ." +
-                " ?person <ns1:services> ?services ." +
-                " ?person <ns1:languages> ?languages ." +
-                " ?address <ns1:county> ?county ." +
-                " ?address <ns1:city> ?city ." +
-                " ?address <ns1:street> ?street ." +
-                " ?address <ns1:country> ?country ." +
-                " ?address <ns1:zipCode> ?zipCode ." +
-                " ?address <ns1:streetNr> ?streetNr ." +
-                " ?address <ns1:others> ?others ." +
-                "}";
+        String queryString = "PREFIX ns1: <http://xmlns.com/foaf/0.1/> "
+                + "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> "
+                + "SELECT ?id ?person ?firstName ?lastName ?authorizationNumber ?phone ?schedule ?services ?county ?city ?street ?languages ?country ?zipCode ?streetNr ?others WHERE { "
+                + " ?person rdf:type \"https://www.merriam-webster.com/dictionary/translator\" ."
+                + " ?person <ns1:id> ?id ." + " ?person <ns1:firstName> ?firstName ."
+                + " ?person <ns1:lastName> ?lastName ." + " ?person <ns1:authorizationNumber> ?authorizationNumber ."
+                + " ?person <ns1:phone> ?phone ." + " ?person <ns1:address> ?address ."
+                + " ?person <ns1:schedule> ?schedule ." + " ?person <ns1:services> ?services ."
+                + " ?person <ns1:languages> ?languages ." + " ?address <ns1:county> ?county ."
+                + " ?address <ns1:city> ?city ." + " ?address <ns1:street> ?street ."
+                + " ?address <ns1:country> ?country ." + " ?address <ns1:zipCode> ?zipCode ."
+                + " ?address <ns1:streetNr> ?streetNr ." + " ?address <ns1:others> ?others ." + "}";
         Query query = QueryFactory.create(queryString);
         QueryExecution qexec = QueryExecutionFactory.create(query, model);
         ResultSet results = qexec.execSelect();
@@ -486,10 +452,12 @@ public class SparkQLQuery {
             String others = (String) soln.getLiteral("others").getValue();
             Timetable schedule = LiteralConvertor.convertFromStringToTimetable(scheduleLiteral);
             List<String> languages = LiteralConvertor.convertFromStringToLanguages(languagesLiteral);
-            List<com.faculty.wade.notisbackend.model.Service> services = LiteralConvertor.convertFromStringToServices(servicesLiteral);
+            List<com.faculty.wade.notisbackend.model.Service> services = LiteralConvertor
+                    .convertFromStringToServices(servicesLiteral);
             Address addressOnj = new Address(country, county, city, null, street, streetNr, zipCode, others);
 
-            Translator translator = new Translator(id, firstName + " " + lastName, "" + authorizationNumber, phone, addressOnj, schedule, services, languages);
+            Translator translator = new Translator(id, firstName + " " + lastName, "" + authorizationNumber, phone,
+                    addressOnj, schedule, services, languages);
             qexec.close();
             return translator;
         }
@@ -499,7 +467,7 @@ public class SparkQLQuery {
     public static boolean deleteEntity(String identification) {
         Model model = ModelFactory.createDefaultModel();
         try {
-            model.read(new FileInputStream("./rdf/rdf.txt"), null, "TTL");
+            model.read(new FileInputStream(Global.RDF_FILE_PATH), null, "TTL");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -508,7 +476,7 @@ public class SparkQLQuery {
         model.removeAll(resource, null, (RDFNode) null);
 
         try {
-            model.write(new FileOutputStream("./rdf/rdf.txt"), "TTL");
+            model.write(new FileOutputStream(Global.RDF_FILE_PATH), "TTL");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

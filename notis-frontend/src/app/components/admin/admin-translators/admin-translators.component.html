@@ -34,7 +34,9 @@
     <mat-header-cell *matHeaderCellDef>Address</mat-header-cell>
     <mat-cell class="address-cell"
               *matCellDef="let translator">
-      <button (click)="showAddressDetails(translator.address === null ? {} : translator.address, translator.id)">See details</button>
+      <button (click)="showAddressDetails(translator.address === null ? {} : translator.address, translator.id)">See
+        details
+      </button>
     </mat-cell>
   </ng-container>
 
@@ -42,7 +44,8 @@
     <mat-header-cell *matHeaderCellDef>Timetable</mat-header-cell>
     <mat-cell class="timetable-cell"
               *matCellDef="let translator">
-      <button (click)="showTimetableDetails(translator.timetable === null ? {} : translator.timetable, translator.id)">See details
+      <button (click)="showTimetableDetails(translator.timetable === null ? {} : translator.timetable, translator.id)">
+        See details
       </button>
     </mat-cell>
   </ng-container>

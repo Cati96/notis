@@ -2,6 +2,7 @@ import {Component, Inject, OnInit, Optional} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {Address} from '../../../../models/address.model';
 import {AddressService} from '../../../../services/address.service';
+
 @Component({
   selector: 'app-dialog-box-address-admin',
   templateUrl: './dialog-box-address-admin.component.html',
@@ -63,28 +64,30 @@ export class DialogBoxAddressAdminComponent implements OnInit {
     console.log('TO DO UPDATE ADDRESS');
 
     let idt = this.entityId;
-        if( this.entityType !== 'Notary')
-            idt = idt * -1;
+    if (this.entityType !== 'Notary') {
+      idt = idt * -1;
+    }
     this.addressService.update(address, idt).subscribe(json => {
-                    console.log(json);
-            });
+      console.log(json);
+    });
   }
 
   deleteAddress(id) {
     console.log('TO DO DELETE ADDRESS BY ID');
     let address = this.localData;
-    address.country = "";
-    address.county = "";
-    address.city = "";
-    address.street = "";
-    address.streetNumber = "";
-    address.others = "";
+    address.country = '';
+    address.county = '';
+    address.city = '';
+    address.street = '';
+    address.streetNumber = '';
+    address.others = '';
     let idt = this.entityId;
-            if( this.entityType !== 'Notary')
-                idt = idt * -1;
+    if (this.entityType !== 'Notary') {
+      idt = idt * -1;
+    }
     this.addressService.update(address, idt).subscribe(json => {
-                        console.log(json);
-                });
+      console.log(json);
+    });
   }
 }
 
