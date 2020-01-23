@@ -35,4 +35,34 @@ public class ServiceController {
 			return null;
 		}
 	}
+
+	// TODO : implement on real
+	@CrossOrigin(origins = "*")
+	@GetMapping(value = "/getAllTypesForEntityType")
+	public List<String> getAllServiceTypesForEntityType(@RequestParam("entityType") String entityType) {
+		List<String> types = new ArrayList<>();
+		if (entityType.toLowerCase().equals("notary")) {
+			for (Notary notary : TemporaryData.notaries) {
+				List<Service> services = notary.getServices();
+				if (services != null) {
+					for (Service service : services) {
+						types.add(service.getType());
+					}
+				}
+			}
+			return types;
+		} else if (entityType.toLowerCase().equals("translator")) {
+			for (Translator translator : TemporaryData.translators) {
+				List<Service> services = translator.getServices();
+				if (services != null) {
+					for (Service service : services) {
+						types.add(service.getType());
+					}
+				}
+			}
+			return types;
+		} else {
+			return null;
+		}
+	}
 }

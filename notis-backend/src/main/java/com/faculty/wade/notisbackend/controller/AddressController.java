@@ -62,4 +62,26 @@ public class AddressController {
 		}
 		return addresses;
 	}
+
+	@PutMapping
+	public ResponseEntity<?> update(@RequestBody Address address) {
+		Integer entityId = address.getId();
+
+		if (entityId < 0) {
+			Translator translator = translatorService.get(Math.abs(entityId));
+			boolean isDeleted = translatorService.delete(translator);
+			if (!isDeleted)
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Something went wrong");
+			translator.setAddress(address);
+			translatorService.add(translator);
+		} else {
+			Notary notary = notaryService.get(entityId);
+			boolean isDeleted = notaryService.delete(notary);
+			if (!isDeleted)
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Something went wrong");
+			notary.setAddress(address);
+			notaryService.add(notary);
+		}
+		return ResponseEntity.ok(address);
+	}
 }
