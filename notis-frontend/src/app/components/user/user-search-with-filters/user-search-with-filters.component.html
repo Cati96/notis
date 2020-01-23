@@ -1,65 +1,173 @@
 <router-outlet name="user-home-toolbar"></router-outlet>
-<div class="search-and-map-container">
+<div class="search-container">
   <div class="search-entity-type-container">
     <p>What are you searching for?</p>
-    <div *ngFor="let name of entitiesData">
-      <input type="checkbox" [name]="name" (change)="onChange($event)"
-             [disabled]="isChecked && (isCheckedName!=name)"> {{name}}
+    <div *ngFor="let name of entityTypes">
+      <input type="checkbox" [name]="name" (change)="onChangeEntityType($event)"
+             [disabled]="isEntityChecked && (checkedEntityName!=name)"> {{name}}
     </div>
-    <div #searchDropdown class="search-criteria-container">
-      <label>Search by: </label>
-      <select (change)="filterSearch($event.target.value)" [disabled]="!isChecked">
-        <option *ngFor="let filter of filters" value={{filter}}>
+  </div>
+  <div #searchDropdown class="search-criteria-container">
+    <label>Search by: </label>
+    <label>
+      <select (change)="onChangeFilterSearch($event.target.value)" [disabled]="!isEntityChecked">
+        <option *ngFor="let filter of filtersSearchBy" value={{filter}}>
           {{filter}}
         </option>
       </select>
-    </div>
+    </label>
   </div>
+
+
   <div class="search-selected-criteria-container">
-    <div class="search-by-current-location" [hidden]="!isSearchingByCurrentLocation">
-      <div #mapContainerForSearchByCurrentLocation id="map-container-current-location"
-           class="map-container-current-location"></div>
-      <div class="entity-and-address-details-container" id="entity-and-address-details-container">
-        <div class="row">
-          <div *ngFor="let entity of this.validEntities; let i = index" class="entity-and-address-details-card-{{i}}"
-               style="max-width: 300px;
-                      max-height: 400px;
-                      border-color: rebeccapurple;
-                      border-style: solid;
-                      border-width: 5px;
-                      margin: 5px;
-                      padding: 5px;
-                      background-color: beige;">
-            <mat-card class="{{i}}">
-              <mat-card-header>
-                <mat-card-title>{{entity.name}}</mat-card-title>
-                <mat-card-subtitle> {{this.isCheckedName}}</mat-card-subtitle>
-              </mat-card-header>
-              <mat-card-content>
-                <p><span style="color: midnightblue">Phone:</span> {{entity.phoneNumber}}</p>
-                <p><span style="color: midnightblue">Authorization number:</span> {{entity.authorizationNumber}}</p>
-                <p><span style="color: midnightblue">Street:</span> {{entity.address.street}} </p>
-                <p><span style="color: midnightblue">Street number:</span> {{entity.address.streetNumber}} </p>
-                <p><span style="color: midnightblue">City:</span> {{entity.address.city}} </p>
-                <p><span style="color: midnightblue">County:</span> {{entity.address.county}} </p>
-                <p><span style="color: midnightblue">Country:</span> {{entity.address.country}} </p>
-                <p><span style="color: midnightblue">Others:</span> {{entity.address.others}} </p>
-              </mat-card-content>
-              <mat-card-actions align="end">
-                <button mat-button mat-flat-button>See Timetable</button>
-                <button mat-button mat-flat-button>See Services</button>
-              </mat-card-actions>
-            </mat-card>
-          </div>
+    <div class="search-by-custom-location" [hidden]="!isSearchingByCustomLocation">
+      <div #countyDropdown class="select-county-container">
+        <label>County: </label>
+        <label>
+          <select (change)="this.ccl.onChangeCounty($event.target.value)">
+            <option *ngFor="let county of this.ccl.counties" value={{county}}>
+              {{county}}
+            </option>
+          </select>
+        </label>
+      </div>
+      <div #cityDropdown class="select-city-container">
+        <label>City: </label>
+        <label>
+          <select (change)="this.ccl.onChangeCity($event.target.value)">
+            <option *ngFor="let city of this.ccl.cities" value={{city}}>
+              {{city}}
+            </option>
+          </select>
+        </label>
+      </div>
+      <div #localityDropdown class="select-locality-container">
+        <label>Locality: </label>
+        <label>
+          <select (change)="this.ccl.onChangeLocality($event.target.value)">
+            <option *ngFor="let locality of this.ccl.localities" value={{locality}}>
+              {{locality}}
+            </option>
+          </select>
+        </label>
+      </div>
+      <div class="search-button-container">
+        <button mat-button mat-flat-button class="search-by-city-locality-button" color="accent"
+                (click)="searchByCityAndLocality()"
+                [disabled]="(!this.ccl.isCountySelected) || (!this.ccl.isCitySelected) || (!this.ccl.isLocalitySelected)">
+          Search
+        </button>
+      </div>
+    </div>
+    <div class="search-by-services-offered" [hidden]="!isSearchingByServicesOffered">
+      <label>Services:</label>
+      <div class="services-offered-list-container">
+        <div *ngFor="let option of servicesOffered">
+          <label>
+            <input type="checkbox"
+                   name="servicesOffered"
+                   value="{{option.value}}"
+                   [(ngModel)]="option.checked"/>
+            {{option.name}}
+          </label>
         </div>
       </div>
-      <div class="search-by-custom-location" [hidden]="!isSearchingByCustomLocation">
+      <div class="search-button-container">
+        <button mat-button mat-flat-button class="search-by-services-offered-button" color="accent"
+                (click)="searchByServicesOffered()"
+                [disabled]="!isAtLeastOneServiceChecked()">
+          Search
+        </button>
       </div>
-      <div class="search-by-services-offered" [hidden]="!isSearchingByServicesOffered">
-      </div>
+
     </div>
   </div>
-  <div id="popup" class="popup">
-    <a href="#" id="popup-closer" class="popup-closer"></a>
-    <div id="popup-content"></div>
+</div>
+
+
+<div class="search-by-current-location-result" [hidden]="!isSearchingByCurrentLocation">
+  <div #mapContainerForSearchByCurrentLocation id="map-container-current-location"
+       class="map-container-current-location"></div>
+  <!--  <div>-->
+  <!--    <ng-container *ngTemplateOutlet="template"></ng-container>-->
+  <!--  </div>-->
+</div>
+
+
+<div class="search-by-custom-location-result" [hidden]="!isSearchingByCustomLocation">
+  <div #mapContainerForSearchByCustomLocation id="map-container-custom-location"
+       class="map-container-custom-location" [hidden]="!isLocationFound">
   </div>
+  <!--  <div>-->
+  <!--    <ng-container *ngTemplateOutlet="template"></ng-container>-->
+  <!--  </div>-->
+</div>
+
+<div class="search-by-services-offered" [hidden]="!isSearchingByServicesOffered">
+  <div #mapContainerForSearchByServicesOffered id="map-container-services-offered"
+       class="map-container-services-offered" [hidden]="!startedToSearchByServicesOffered">
+  </div>
+  <!--  <div>-->
+  <!--    <ng-container *ngTemplateOutlet="template"></ng-container>-->
+  <!--  </div>-->
+</div>
+
+
+<!--<ng-template #template>-->
+<div class="entity-details-container" id="entity-details-container" [hidden]="validEntities.length===0">
+  <div class="row">
+    <div *ngFor="let entity of this.validEntities; let i = index" class="entity-details-card-{{i}}"
+         style="      min-width: 300px;
+                        max-width: 300px;
+                        max-height: 450px;
+                        border-color: rebeccapurple;
+                        border-style: solid;
+                        border-width: 5px;
+                        margin: 5px;
+                        padding: 5px;
+                        background-color: beige;">
+      <mat-card class="card-{{i}}">
+        <mat-card-header>
+          <mat-card-title>{{entity.name}}</mat-card-title>
+          <mat-card-subtitle *ngIf="entity.matchedServicesNumber !== undefined"> {{this.checkedEntityName}}
+            -- {{entity.matchedServicesNumber}}</mat-card-subtitle>
+          <mat-card-subtitle
+            *ngIf="entity.matchedServicesNumber === undefined"> {{this.checkedEntityName}}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <p><span style="color: midnightblue">Phone:</span> {{entity.phoneNumber}}</p>
+          <p><span style="color: midnightblue">Authorization number:</span> {{entity.authorizationNumber}}</p>
+          <p *ngIf="entity.languages !== undefined"><span
+            style="color: midnightblue">Languages:</span> {{entity.languages}}</p>
+          <p><span style="color: midnightblue">Street:</span> {{entity.address.street}} </p>
+          <p><span style="color: midnightblue">Street number:</span> {{entity.address.streetNumber}} </p>
+          <p><span style="color: midnightblue">Locality:</span> {{entity.address.locality}} </p>
+          <p><span style="color: midnightblue">City:</span> {{entity.address.city}} </p>
+          <p><span style="color: midnightblue">County:</span> {{entity.address.county}} </p>
+          <p><span style="color: midnightblue">Country:</span> {{entity.address.country}} </p>
+          <p><span style="color: midnightblue">ZipCode:</span> {{entity.address.zipCode}} </p>
+          <p><span style="color: midnightblue">Others:</span> {{entity.address.others}} </p>
+        </mat-card-content>
+        <mat-card-actions align="end">
+          <button mat-button mat-flat-button>Timetable</button>
+          <button mat-button mat-flat-button>Services</button>
+          <button mat-button mat-flat-button>Ratings</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</div>
+<!--</ng-template>-->
+
+<div id="popup-marker-current-location-to-hide" class="popup-marker-current-location">
+  <a href="#" id="popup-marker-current-location-closer" class="popup-marker-current-location-closer"></a>
+  <div id="popup-marker-current-location-content"></div>
+</div>
+<div id="popup-marker-custom-location-to-hide" class="popup-marker-custom-location">
+  <a href="#" id="popup-marker-custom-location-closer" class="popup-marker-custom-location-closer"></a>
+  <div id="popup-marker-custom-location-content"></div>
+</div>
+<div id="popup-marker-services-offered-to-hide" class="popup-marker-services-offered">
+  <a href="#" id="popup-marker-services-offered-closer" class="popup-marker-services-offered-closer"></a>
+  <div id="popup-marker-services-offered-content"></div>
+</div>

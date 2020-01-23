@@ -20,4 +20,11 @@ export class ServiceService {
       res => res
     ));
   }
+
+  getAllServiceTypesForEntityType(entityType): Observable<any> {
+    const params = '?' + 'entityType=' + entityType;
+    return this.http.get(this.urlPart + 'getAllTypesForEntityType' + params, {responseType: 'json'}).pipe(map(
+      res => res
+    ));
+  }
 }

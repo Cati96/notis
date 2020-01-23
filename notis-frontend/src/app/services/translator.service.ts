@@ -26,4 +26,8 @@ export class TranslatorService {
       res => res
     ));
   }
+
+  getAllTranslatorsForSelectedServicesOffered(servicesOffered): Observable<any> {
+    return this.http.post(this.urlPart + 'getAllForSelectedServicesOffered', servicesOffered).pipe(map(res => res));
+  }
 }

@@ -18,4 +18,10 @@ export class AddressService {
     return this.http.get(this.urlPart + 'getAllForEntityType' + params, {responseType: 'json'})
       .pipe(map(res => res));
   }
+
+  getAllAddressesForEntityTypeAndCustomLocation(entityType: any, city: any, locality: any): Observable<any> {
+    const params = '?' + 'entityType=' + entityType + '&city=' + city + '&locality=' + locality;
+    return this.http.get(this.urlPart + 'getAllForEntityTypeAndCustomLocation' + params, {responseType: 'json'})
+      .pipe(map(res => res));
+  }
 }

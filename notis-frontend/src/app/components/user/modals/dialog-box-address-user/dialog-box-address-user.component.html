@@ -12,10 +12,16 @@
         <input placeholder="City" matInput [(ngModel)]="localData.city" [disabled]="true">
       </mat-form-field>
       <mat-form-field>
+        <input placeholder="Locality" matInput [(ngModel)]="localData.locality" [disabled]="true">
+      </mat-form-field>
+      <mat-form-field>
         <input placeholder="Street" matInput [(ngModel)]="localData.street" [disabled]="true">
       </mat-form-field>
       <mat-form-field>
         <input placeholder="Street number" matInput [(ngModel)]="localData.streetNumber" [disabled]="true">
+      </mat-form-field>
+      <mat-form-field>
+        <input placeholder="ZipCode" matInput [(ngModel)]="localData.zipCode" [disabled]="!isEditing">
       </mat-form-field>
       <mat-form-field>
         <input placeholder="others" matInput [(ngModel)]="localData.others" [disabled]="true">

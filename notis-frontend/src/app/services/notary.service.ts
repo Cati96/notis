@@ -25,4 +25,8 @@ export class NotaryService {
       res => res
     ));
   }
+
+  getAllNotariesForSelectedServicesOffered(servicesOffered): Observable<any> {
+    return this.http.post(this.urlPart + 'getAllForSelectedServicesOffered', servicesOffered).pipe(map(res => res));
+  }
 }

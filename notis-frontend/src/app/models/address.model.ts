@@ -3,7 +3,9 @@ export class Address {
   country: string;
   county: string;
   city: string;
+  locality: string;
   street: string;
   streetNumber: string;
+  zipCode: string;
   others: string;
 }

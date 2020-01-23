@@ -1,33 +1,41 @@
-#map-container-current-location {
-  width: 100%;
-  height: 400px;
+#map-container-current-location, #map-container-custom-location, #map-container-services-offered {
+  width: 95%;
+  height: 500px;
   background-color: #ffd740;
+  margin: 0 auto;
+  padding: 5px;
 }
 
-.search-and-map-container {
-  width: 100%;
-  height: 400px;
-  display: flex;
+.search-container {
+  width: 70%;
+  margin: 0 auto;
+  padding-left: 40%;
+  display: block;
 }
 
-.search-entity-type-container {
-  width: 20%;
+.search-entity-type-container, .search-criteria-container, .search-selected-criteria-container {
+  margin: 0 auto;
+  padding-bottom: 15px;
 }
 
-.search-selected-criteria-container {
-  width: 80%;
+.search-button-container {
+  padding-top: 15px;
 }
 
-.entity-and-address-details-container {
-  display: flex;
+.services-offered-list-container {
+  border: 2px solid #ccc;
+  width: 400px;
+  height: 200px;
+  overflow-y: scroll;
 }
 
-.mat-card-actions .mat-button:first-child, .mat-card-actions .mat-raised-button:first-child, .mat-card-actions .mat-stroked-button:first-child {
+.mat-card-actions .mat-button:first-child, .mat-card-actions .mat-raised-button:first-child,
+.mat-card-actions .mat-stroked-button:first-child {
   margin-left: 5px;
   margin-right: 5px;
 }
 
-.popup {
+.popup-marker-current-location, .popup-marker-custom-location, .popup-marker-services-offered {
   position: absolute;
   background-color: white;
   -webkit-filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.2));
@@ -40,7 +48,8 @@
   min-width: 80px;
 }
 
-.popup:after, .popup:before {
+.popup-marker-current-location:after, .popup-marker-current-location:before, .popup-marker-custom-location:after,
+.popup-marker-custom-location:before, .popup-marker-services-offered:after, .popup-marker-services-offered:before {
   top: 100%;
   border: solid transparent;
   content: " ";
@@ -50,33 +59,44 @@
   pointer-events: none;
 }
 
-.popup:after {
+.popup-marker-current-location:after, .popup-marker-custom-location:after, .popup-marker-services-offered:after {
   border-top-color: white;
   border-width: 10px;
   left: 48px;
   margin-left: -10px;
 }
 
-.popup:before {
+.popup-marker-current-location:before, .popup-marker-custom-location:before, .popup-marker-services-offered:before {
   border-top-color: #cccccc;
   border-width: 11px;
   left: 48px;
   margin-left: -11px;
 }
 
-.popup-closer {
+.popup-marker-current-location-closer, .popup-marker-custom-location-closer, .popup-marker-services-offered-closer {
   text-decoration: none;
   position: absolute;
   top: 2px;
   right: 8px;
 }
 
-.popup-closer:after {
+.popup-marker-current-location-closer:after, .popup-marker-custom-location-closer:after, .popup-marker-services-offered-closer:after {
   content: "✖";
+}
+
+#popup-marker-current-location-to-hide, #popup-marker-custom-location-to-hide, #popup-marker-services-offered-to-hide {
+  display: none;
+}
+
+.entity-details-container {
+  width: 90%;
+  margin: 0 auto;
+  padding-top: 20px;
 }
 
 .row {
   width: 100%;
+  margin: auto;
 }
 
 .row div {

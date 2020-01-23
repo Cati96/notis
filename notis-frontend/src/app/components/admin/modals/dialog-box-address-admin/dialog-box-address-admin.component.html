@@ -13,10 +13,17 @@
           <input placeholder="City" matInput [(ngModel)]="localData.city" [disabled]="!isEditing">
         </mat-form-field>
         <mat-form-field>
+          <input placeholder="Locality" matInput [(ngModel)]="localData.locality" [disabled]="!isEditing">
+        </mat-form-field>
+        <mat-form-field>
           <input placeholder="Street" matInput [(ngModel)]="localData.street" [disabled]="!isEditing">
+          <mat-hint align="start"><span style="color: gray">eg: <strong>strada</strong> PetreTutea/ <strong>bulevardul</strong> Independentei/ <strong>soseaua</strong> Veche</span> </mat-hint>
         </mat-form-field>
         <mat-form-field>
           <input placeholder="Street number" matInput [(ngModel)]="localData.streetNumber" [disabled]="!isEditing">
+        </mat-form-field>
+        <mat-form-field>
+          <input placeholder="ZipCode" matInput [(ngModel)]="localData.zipCode" [disabled]="!isEditing">
         </mat-form-field>
         <mat-form-field>
           <input placeholder="others" matInput [(ngModel)]="localData.others" [disabled]="!isEditing">
