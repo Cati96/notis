@@ -68,13 +68,13 @@ def read_notaries():
         phoneNo = "0" + str(random_with_N_digits(9))
         notary = {
             "id" : index,
-            "lastName" : lastName,
-            "firstName" : firstName,
+            "lastName" : lastName.upper(),
+            "firstName" : firstName.upper(),
             "authorisation_no" : random_with_N_digits(9),
-            "room" : room,
-            "address":address,
+            "room" : room.upper(),
+            "address":address.upper(),
             "city":city,
-            "county":county,
+            "county":county.upper(),
             "phoneNo":phoneNo,
             "schedule": generateSchedule(),
             "services": generateNotaryService()
@@ -93,19 +93,19 @@ def read_translators():
         lastName = lastNameFirstName[0]
         firstName = ' '.join(lastNameFirstName[1:]).strip()
         court_of_Appeal = row["Curtea de Apel"]
-        languages = row["Limbi"].replace(" ","").split(",")
+        languages = row["Limbi"].upper().replace(" ","").split(",")
         county = row["judet"]
         phoneNo = editPhoneNumber(row["Telefon"])
         authorisationNo = row["Numar autorizatie"]
         translator = {
             "id": index,
-            "lastName": lastName,
-            "firstName": firstName,
+            "lastName": lastName.upper(),
+            "firstName": firstName.upper(),
             "county": county,
             "address": "-",
             "city": "-",
             "phoneNo": phoneNo,
-            "court_of_appeal": court_of_Appeal,
+            "court_of_appeal": court_of_Appeal.upper(),
             "languages": languages,
             "authorisation_no":authorisationNo,
             "schedule": generateSchedule(),

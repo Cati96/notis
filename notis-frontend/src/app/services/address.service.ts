@@ -3,7 +3,7 @@ import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {Injectable} from '@angular/core';
 import {baseUrl} from '../core/global';
-
+import {Address} from '../models/address.model';
 @Injectable()
 export class AddressService {
 
@@ -24,4 +24,11 @@ export class AddressService {
     return this.http.get(this.urlPart + 'getAllForEntityTypeAndCustomLocation' + params, {responseType: 'json'})
       .pipe(map(res => res));
   }
+  update(address : Address, entityId): Observable<any> {
+         debugger;
+         address.id = entityId;
+         return this.http.put(this.urlPart,address).pipe(map(
+             data => Object.assign(new Address(), data)
+         ));
+       }
 }

@@ -82,36 +82,51 @@ export class AdminNotariesComponent implements OnInit, OnDestroy {
   }
 
   addNotary(notary) {
-    this.table.renderRows();
-    console.log('TO DO ADD NEW NOTARY');
 
+    console.log('TO DO ADD NEW NOTARY');
+    this.notaryService.addNotary(notary).subscribe(json => {
+             this.notaries.push(json);
+             this.table.renderRows();
+    });
   }
 
   updateNotary(notary) {
     console.log('TO DO UPDATE NOTARY');
+    this.notaryService.update(notary).subscribe(json => {
+                 this.notaries.push(json);
+                 this.table.renderRows();
+        });
   }
 
   deleteNotary(notaryID) {
     console.log('TO DO DELETE NOTARY BY ID');
+    this.notaryService.delete(notaryID).subscribe(result => {
+                 console.log(result);
+                 this.findAndDeleteNotaryFromArray(notaryID);
+        },
+        err => console.log(err)
+        )
   }
 
-  showAddressDetails(address) {
+  showAddressDetails(address, notaryId) {
     this.dialog.open(DialogBoxAddressAdminComponent, {
       width: '30%',
       data: {
         data: address,
-        entityType: 'Notary'
+        entityType: 'Notary',
+        entityId : notaryId,
       }
     });
     this.table.renderRows();
   }
 
-  showTimetableDetails(timetable) {
+  showTimetableDetails(timetable, notaryId) {
     this.dialog.open(DialogBoxTimetableAdminComponent, {
       width: '30%',
       data: {
         data: timetable,
-        entityType: 'Notary'
+        entityType: 'Notary',
+        entityId: notaryId
       }
     });
     this.table.renderRows();
@@ -120,4 +135,9 @@ export class AdminNotariesComponent implements OnInit, OnDestroy {
   showServicesDetailsForEntityId(id) {
     this.router.navigate(['admin-notaries/services'], {queryParams: {entityType: 'Notary', entityId: id}});
   }
+  findAndDeleteNotaryFromArray(notaryId){
+      let index = this.notaries.findIndex( notary => notary.id === notaryId );
+      this.notaries.splice(index,1);
+      this.table.renderRows();
+    }
 }

@@ -3,7 +3,7 @@ import {baseUrl} from '../core/global';
 import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs/operators';
 import {Observable} from 'rxjs';
-
+import {Notary} from '../models/notary.model';
 @Injectable(
 )
 export class NotaryService {
@@ -29,4 +29,22 @@ export class NotaryService {
   getAllNotariesForSelectedServicesOffered(servicesOffered): Observable<any> {
     return this.http.post(this.urlPart + 'getAllForSelectedServicesOffered', servicesOffered).pipe(map(res => res));
   }
+
+  addNotary(notary : Notary): Observable<any> {
+    return this.http.post(this.urlPart,{name: notary.name,
+                                        authorizationNumber: notary.authorizationNumber,
+                                        phoneNumber: notary.phoneNumber,
+                                        languages: 'English'
+    }).pipe(map(
+        data => Object.assign(new Notary(), data)
+    ));
+  }
+   delete(id){
+      return this.http.delete<any>(this.urlPart+id);
+    }
+   update(notary : Notary): Observable<any> {
+       return this.http.put(this.urlPart,notary).pipe(map(
+           data => Object.assign(new Notary(), data)
+       ));
+     }
 }

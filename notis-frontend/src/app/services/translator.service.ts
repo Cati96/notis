@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {baseUrl} from '../core/global';
+import {Translator} from '../models/translator.model';
 
 @Injectable(
 )
@@ -30,4 +31,22 @@ export class TranslatorService {
   getAllTranslatorsForSelectedServicesOffered(servicesOffered): Observable<any> {
     return this.http.post(this.urlPart + 'getAllForSelectedServicesOffered', servicesOffered).pipe(map(res => res));
   }
+
+  addTranslator(translator : Translator): Observable<any> {
+      return this.http.post(this.urlPart,{name: translator.name,
+                                          authorizationNumber: translator.authorizationNumber,
+                                          phoneNumber: translator.phoneNumber,
+                                          languages: translator.languages
+      }).pipe(map(
+          data => Object.assign(new Translator(), data)
+      ));
+    }
+  delete(id){
+        return this.http.delete<any>(this.urlPart+id);
+      }
+  update(translator : Translator): Observable<any> {
+         return this.http.put(this.urlPart, translator).pipe(map(
+             data => Object.assign(new Translator(), data)
+         ));
+   }
 }
