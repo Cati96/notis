@@ -88,18 +88,38 @@ export class AdminServicesNotaryTranslatorComponent implements OnInit, OnDestroy
 
   addService(service) {
     console.log('TO DO ADD NEW SERVICE');
-    this.table.renderRows();
+    let idt = this.entityId;
+    if( this.entityType !== 'Notary')
+         idt = idt * -1;
 
+    this.serviceService.add(service, idt).subscribe(json => {
+                   this.services.push(json);
+                   this.table.renderRows();
+          });
   }
 
   updateService(service) {
     console.log('TO DO UPDATE SERVICE');
-    this.table.renderRows();
+    let idt = this.entityId;
+        if( this.entityType !== 'Notary')
+             idt = idt * -1;
+
+        this.serviceService.update(service, idt).subscribe(json => {
+                       console.log(json)
+              });
   }
 
   deleteService(serviceID) {
     console.log('TO DO DELETE SERVICE BY ID');
-    this.table.renderRows();
+    let idt = this.entityId;
+    if( this.entityType !== 'Notary')
+         idt = idt * -1;
+    this.serviceService.delete(serviceID, idt).subscribe(result => {
+                     console.log(result);
+                     this.findAndDeleteServiceFromArray(serviceID);
+            },
+            err => console.log(err)
+           )
   }
 
   showAllDocuments(serviceID) {
@@ -112,5 +132,9 @@ export class AdminServicesNotaryTranslatorComponent implements OnInit, OnDestroy
     });
     this.table.renderRows();
   }
-
+findAndDeleteServiceFromArray(serviceId){
+      let index = this.services.findIndex( service => service.id === serviceId );
+      this.services.splice(index,1);
+      this.table.renderRows();
+    }
 }

@@ -399,6 +399,7 @@ public class SparkQLQuery {
                 " ?address <ns1:zipCode> ?zipCode ." +
                 " ?address <ns1:streetNr> ?streetNr ." +
                 " ?address <ns1:others> ?others ." +
+                " FILTER (?id = " + notaryId + " ) " +
                 "}";
 
         Query query = QueryFactory.create(queryString);
@@ -462,6 +463,7 @@ public class SparkQLQuery {
                 " ?address <ns1:zipCode> ?zipCode ." +
                 " ?address <ns1:streetNr> ?streetNr ." +
                 " ?address <ns1:others> ?others ." +
+                " FILTER (?id = " + translatorId + " ) " +
                 "}";
         Query query = QueryFactory.create(queryString);
         QueryExecution qexec = QueryExecutionFactory.create(query, model);

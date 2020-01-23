@@ -97,7 +97,7 @@ public class EntityCreator {
     }
 
     private static String convertServicesToString(List<Service> services) {
-        String servicesString = services.stream().map(service -> "['" + service.getType() + "', '" + service.getDescription() + "']").collect(Collectors.joining(", "));
+        String servicesString = services.stream().map(service -> "['" + service.getId()+"', '"+ service.getType() + "', '" + service.getDescription() + "']").collect(Collectors.joining(", "));
         return "[" + servicesString + "]";
     }
 

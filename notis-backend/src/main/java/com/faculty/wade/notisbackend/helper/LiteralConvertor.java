@@ -23,10 +23,10 @@ public class LiteralConvertor {
         List<Service> services = new LinkedList<>();
         for (String service : servicesList) {
             String[] serviceInfo = service.split(", ");
-
-            String type = serviceInfo[0].replace("[", "").replace("]", "").replace("'", "").replace(" ", "");
-            String description = serviceInfo[1].replace("[", "").replace("]", "").replace("'", "");
-            Service serviceObj = new Service(type, description, null);
+            String id = serviceInfo[0].replace("[", "").replace("]", "").replace("'", "").replace(" ", "");
+            String type = serviceInfo[1].replace("[", "").replace("]", "").replace("'", "").replace(" ", "");
+            String description = serviceInfo[2].replace("[", "").replace("]", "").replace("'", "");
+            Service serviceObj = new Service(Integer.parseInt(id), type, description, null);
             services.add(serviceObj);
         }
         return services;
