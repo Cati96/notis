@@ -124,22 +124,9 @@ public class TemporaryData {
 		}
 
 		/*
-		 * set services for notaries
+		 * set services for notaries and translator
 		 */
 		Service service = null;
-		for (int i = 0; i < 13; i++) {
-			service = new Service();
-			service.setId(i);
-			service.setType("Type" + i);
-			service.setDescription("Description" + i);
-			service.setDocuments(documents);
-			notaryServices.add(service);
-			translatorServices.add(service);
-		}
-
-		/*
-		 * set services for translators
-		 */
 		for (int i = 0; i < 13; i++) {
 			service = new Service();
 			service.setId(i);
