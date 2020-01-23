@@ -81,37 +81,53 @@ export class AdminTranslatorsComponent implements OnInit, OnDestroy {
     });
   }
 
-  addTranslator(translator) {
-    this.table.renderRows();
-    console.log('TO DO ADD NEW TRANSLATOR');
+   addTranslator(translator) {
 
-  }
+      console.log('TO DO ADD NEW NOTARY');
+      this.translatorService.addTranslator(translator).subscribe(json => {
+               this.translators.push(json);
+               this.table.renderRows();
+      });
+    }
 
   updateTranslator(translator) {
     console.log('TO DO UPDATE TRANSLATOR');
+    debugger;
+    this.translatorService.update(translator).subscribe(json => {
+                     //this.notaries.push(json);
+                     this.table.renderRows();
+            });
   }
 
-  deleteTranslator(translator) {
+  deleteTranslator(translatorId) {
     console.log('TO DO DELETE TRANSLATOR BY ID');
+    this.translatorService.delete(translatorId).subscribe(result => {
+                     console.log(result);
+                     this.findAndDeleteTranslatorFromArray(translatorId);
+     },
+    err => console.log(err)
+    )
   }
 
-  showAddressDetails(address) {
+  showAddressDetails(address, translatorId) {
     this.dialog.open(DialogBoxAddressAdminComponent, {
       width: '30%',
       data: {
         data: address,
-        entityType: 'Translator'
+        entityType: 'Translator',
+        entityId : translatorId,
       }
     });
     this.table.renderRows();
   }
 
-  showTimetableDetails(timetable) {
+  showTimetableDetails(timetable, translatorId) {
     this.dialog.open(DialogBoxTimetableAdminComponent, {
       width: '30%',
       data: {
         data: timetable,
-        entityType: 'Translator'
+        entityType: 'Translator',
+        entityId : translatorId
       }
     });
     this.table.renderRows();
@@ -120,5 +136,10 @@ export class AdminTranslatorsComponent implements OnInit, OnDestroy {
   showServicesDetailsForEntityId(id) {
     this.router.navigate(['admin-translators/services'], {queryParams: {entityType: 'Translator', entityId: id}});
   }
+  findAndDeleteTranslatorFromArray(translatorId){
+        let index = this.translators.findIndex( translator => translator.id === translatorId );
+        this.translators.splice(index,1);
+        this.table.renderRows();
+      }
 }
 

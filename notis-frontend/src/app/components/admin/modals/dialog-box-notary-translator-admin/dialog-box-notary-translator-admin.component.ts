@@ -23,6 +23,11 @@ export class DialogBoxNotaryTranslatorAdminComponent {
   }
 
   doAction() {
+  if(!(this.localData.languages instanceof Array) && this.localData.languages!= undefined){
+  debugger;
+    let languages = this.localData.languages.split(" ");
+    this.localData.languages = languages;
+  }
     this.dialogRef.close({event: this.action, data: this.localData});
   }
 

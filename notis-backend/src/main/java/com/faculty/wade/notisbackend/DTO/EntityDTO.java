@@ -1,17 +1,30 @@
 package com.faculty.wade.notisbackend.DTO;
 
 
-public class NotaryDTO {
+import java.util.List;
+
+public class EntityDTO {
     private String name;
 
     private Integer authorizationNumber;
 
     private String phoneNumber;
 
-    public NotaryDTO(String name, Integer authorizationNumber, String phoneNumber) {
+    private List<String> languages;
+    public EntityDTO(){
+
+    }
+    public EntityDTO(String name, Integer authorizationNumber, String phoneNumber) {
         this.name = name;
         this.authorizationNumber = authorizationNumber;
         this.phoneNumber = phoneNumber;
+    }
+
+    public EntityDTO(String name, Integer authorizationNumber, String phoneNumber, List<String> languages) {
+        this.name = name;
+        this.authorizationNumber = authorizationNumber;
+        this.phoneNumber = phoneNumber;
+        this.languages = languages;
     }
 
     public String getName() {
@@ -36,5 +49,13 @@ public class NotaryDTO {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public List<String> getLanguages() {
+        return languages;
+    }
+
+    public void setLanguages(List<String> languages) {
+        this.languages = languages;
     }
 }

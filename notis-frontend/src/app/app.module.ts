@@ -42,6 +42,7 @@ import {UserTranslatorsComponent} from './components/user/user-translators/user-
 import {UserServicesNotaryTranslatorComponent} from './components/user/user-services-notary-translator/user-services-notary-translator.component';
 import {UserSearchWithFiltersComponent} from './components/user/user-search-with-filters/user-search-with-filters.component';
 import {AddressService} from './services/address.service';
+import {TimetableService} from './services/timetable.service';
 
 @NgModule({
   declarations: [
@@ -94,7 +95,7 @@ import {AddressService} from './services/address.service';
     DialogBoxDocumentsUserComponent,
     DialogBoxTimetableUserComponent
   ],
-  providers: [NotaryService, ServiceService, DocumentService, TranslatorService, AddressService],
+  providers: [NotaryService, ServiceService, DocumentService, TranslatorService, AddressService, TimetableService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
