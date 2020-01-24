@@ -1,9 +1,7 @@
 package com.faculty.wade.notisbackend.controller;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.faculty.wade.notisbackend.DTO.EntityDTO;
 import com.faculty.wade.notisbackend.configuration.TemporaryData;
 import com.faculty.wade.notisbackend.model.Notary;
-import com.faculty.wade.notisbackend.model.Service;
 import com.faculty.wade.notisbackend.service.NotaryService;
 
 @CrossOrigin(origins = "*")
@@ -81,25 +78,5 @@ public class NotaryController {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Something went wrong");
 		notaryService.add(notary);
 		return ResponseEntity.ok(notary);
-	}
-
-	// TO DO: implement on real
-	@CrossOrigin(origins = "*")
-	@PostMapping(value = "/getAllForSelectedServicesOffered")
-	public Map<String, Notary> getAllNotariesForSelectedServicesOffered(@RequestBody List<String> servicesOffered) {
-		Map<String, Notary> notariesAndMatchedServicesNumber = new HashMap<>();
-		for (Notary notary : TemporaryData.notaries) {
-			int matchedServicesNumber = 0;
-			List<Service> notaryServices = notary.getServices();
-			for (Service service : notaryServices) {
-				if (servicesOffered.contains(service.getType())) {
-					matchedServicesNumber++;
-				}
-			}
-			if (matchedServicesNumber > 0) {
-				notariesAndMatchedServicesNumber.put(notary.getId() + "<-->" + matchedServicesNumber, notary);
-			}
-		}
-		return notariesAndMatchedServicesNumber;
 	}
 }

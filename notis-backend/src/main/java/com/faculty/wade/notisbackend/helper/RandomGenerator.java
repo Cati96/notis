@@ -3,7 +3,6 @@ package com.faculty.wade.notisbackend.helper;
 import java.util.Random;
 
 public class RandomGenerator {
-
 	public static int getRandomNumberInRange(int min, int max) {
 
 		if (min >= max) {

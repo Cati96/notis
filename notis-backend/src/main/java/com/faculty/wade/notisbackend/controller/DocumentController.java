@@ -1,14 +1,10 @@
 package com.faculty.wade.notisbackend.controller;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -68,27 +64,5 @@ public class DocumentController {
 			}
 		}
 		return translators;
-	}
-
-	// TODO: implement on real
-	@CrossOrigin(origins = "*")
-	@PostMapping(value = "/getAllForSelectedServicesOffered")
-	public Map<String, Translator> getAllTranslatorsForSelectedServicesOffered(
-			@RequestBody List<String> servicesOffered) {
-		Map<String, Translator> translatorsAndMatchedServicesNumber = new HashMap<>();
-		for (Translator translator : TemporaryData.translators) {
-			int matchedServicesNumber = 0;
-			List<Service> translatorsServices = translator.getServices();
-			for (Service service : translatorsServices) {
-				if (servicesOffered.contains(service.getType())) {
-					matchedServicesNumber++;
-				}
-			}
-			if (matchedServicesNumber > 0) {
-				translatorsAndMatchedServicesNumber.put(translator.getId() + "<-->" + matchedServicesNumber,
-						translator);
-			}
-		}
-		return translatorsAndMatchedServicesNumber;
 	}
 }

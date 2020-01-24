@@ -19,7 +19,6 @@ import com.faculty.wade.notisbackend.service.TranslatorService;
 @RestController
 @RequestMapping("/timetables")
 public class TimetableController {
-
 	@Autowired
 	private NotaryService notaryService;
 	@Autowired

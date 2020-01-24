@@ -72,6 +72,7 @@ public class AddressController {
 	@PutMapping
 	public ResponseEntity<?> update(@RequestBody Address address) {
 		Integer entityId = address.getId();
+
 		if (entityId < 0) {
 			Translator translator = translatorService.get(Math.abs(entityId));
 			boolean isDeleted = translatorService.delete(translator);
