@@ -85,27 +85,27 @@ export class AdminNotariesComponent implements OnInit, OnDestroy {
 
     console.log('TO DO ADD NEW NOTARY');
     this.notaryService.addNotary(notary).subscribe(json => {
-             this.notaries.push(json);
-             this.table.renderRows();
+      this.notaries.push(json);
+      this.table.renderRows();
     });
   }
 
   updateNotary(notary) {
     console.log('TO DO UPDATE NOTARY');
     this.notaryService.update(notary).subscribe(json => {
-                 this.notaries.push(json);
-                 this.table.renderRows();
-        });
+      this.notaries.push(json);
+      this.table.renderRows();
+    });
   }
 
   deleteNotary(notaryID) {
     console.log('TO DO DELETE NOTARY BY ID');
     this.notaryService.delete(notaryID).subscribe(result => {
-                 console.log(result);
-                 this.findAndDeleteNotaryFromArray(notaryID);
-        },
-        err => console.log(err)
-        )
+        console.log(result);
+        this.findAndDeleteNotaryFromArray(notaryID);
+      },
+      err => console.log(err)
+    );
   }
 
   showAddressDetails(address, notaryId) {
@@ -114,7 +114,7 @@ export class AdminNotariesComponent implements OnInit, OnDestroy {
       data: {
         data: address,
         entityType: 'Notary',
-        entityId : notaryId,
+        entityId: notaryId,
       }
     });
     this.table.renderRows();
@@ -135,9 +135,10 @@ export class AdminNotariesComponent implements OnInit, OnDestroy {
   showServicesDetailsForEntityId(id) {
     this.router.navigate(['admin-notaries/services'], {queryParams: {entityType: 'Notary', entityId: id}});
   }
-  findAndDeleteNotaryFromArray(notaryId){
-      let index = this.notaries.findIndex( notary => notary.id === notaryId );
-      this.notaries.splice(index,1);
-      this.table.renderRows();
-    }
+
+  findAndDeleteNotaryFromArray(notaryId) {
+    let index = this.notaries.findIndex(notary => notary.id === notaryId);
+    this.notaries.splice(index, 1);
+    this.table.renderRows();
+  }
 }

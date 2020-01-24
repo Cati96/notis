@@ -2,7 +2,7 @@
   width: 100%;
 }
 
-.form-container-service{
+.form-container-service {
   display: flex;
   flex-direction: column;
 }

@@ -45,4 +45,24 @@ public class DocumentController {
 			return null;
 		}
 	}
+
+	// TODO: implement on real
+	@CrossOrigin(origins = "*")
+	@GetMapping(value = "/getAll")
+	public List<Translator> getAllTranslators() {
+		return TemporaryData.translators;
+	}
+
+	// TODO: implement on real
+	@CrossOrigin(origins = "*")
+	@GetMapping(value = "/getAllForAddressId")
+	public List<Translator> getAllTranslatorsForAddressId(@RequestParam("addressId") Integer addressId) {
+		List<Translator> translators = new ArrayList<>();
+		for (Translator translator : TemporaryData.translators) {
+			if (translator.getAddress().getId().equals(addressId)) {
+				translators.add(translator);
+			}
+		}
+		return translators;
+	}
 }

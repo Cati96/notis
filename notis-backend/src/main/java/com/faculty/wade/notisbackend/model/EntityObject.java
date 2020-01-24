@@ -3,26 +3,24 @@ package com.faculty.wade.notisbackend.model;
 import lombok.Builder;
 import lombok.Getter;
 
-import java.util.List;
-
 @Getter
 @Builder
 public class EntityObject {
-    private Integer id;
+	private Integer id;
 
-    private String entityType;
+	private String entityType;
 
-    private String name;
+	private String name;
 
-    private Integer authorizationNumber;
+	private Integer authorizationNumber;
 
-    private String phoneNumber;
+	private String phoneNumber;
 
-    private Address address;
+	private Address address;
 
-    private String timetable;
+	private String timetable;
 
-    private String services;
+	private String services;
 
-    private String  languages;
+	private String languages;
 }

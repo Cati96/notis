@@ -7,9 +7,11 @@ import com.faculty.wade.notisbackend.DTO.EntityDTO;
 import com.faculty.wade.notisbackend.DTO.ServiceDTO;
 import com.faculty.wade.notisbackend.service.ServiceService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.faculty.wade.notisbackend.configuration.TemporaryData;
 import com.faculty.wade.notisbackend.model.Notary;
@@ -57,4 +59,40 @@ public class ServiceController {
         serviceService.delete(serviceId, entityId);
         return ResponseEntity.ok(serviceId);
     }
+		} else if (entityType.toLowerCase().equals("translator")) {
+			return serviceService.getServicesForTranslator(entityId);
+		} else {
+			return null;
+		}
+	}
+
+	// TODO : implement on real
+	@CrossOrigin(origins = "*")
+	@GetMapping(value = "/getAllTypesForEntityType")
+	public List<String> getAllServiceTypesForEntityType(@RequestParam("entityType") String entityType) {
+		List<String> types = new ArrayList<>();
+		if (entityType.toLowerCase().equals("notary")) {
+			for (Notary notary : TemporaryData.notaries) {
+				List<Service> services = notary.getServices();
+				if (services != null) {
+					for (Service service : services) {
+						types.add(service.getType());
+					}
+				}
+			}
+			return types;
+		} else if (entityType.toLowerCase().equals("translator")) {
+			for (Translator translator : TemporaryData.translators) {
+				List<Service> services = translator.getServices();
+				if (services != null) {
+					for (Service service : services) {
+						types.add(service.getType());
+					}
+				}
+			}
+			return types;
+		} else {
+			return null;
+		}
+	}
 }

@@ -3,7 +3,6 @@ package com.faculty.wade.notisbackend.helper;
 import com.faculty.wade.notisbackend.model.Service;
 import com.faculty.wade.notisbackend.model.Timetable;
 
-
 import java.util.LinkedList;
 import java.util.List;
 

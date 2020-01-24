@@ -88,9 +88,6 @@
 <div class="search-by-current-location-result" [hidden]="!isSearchingByCurrentLocation">
   <div #mapContainerForSearchByCurrentLocation id="map-container-current-location"
        class="map-container-current-location"></div>
-  <!--  <div>-->
-  <!--    <ng-container *ngTemplateOutlet="template"></ng-container>-->
-  <!--  </div>-->
 </div>
 
 
@@ -98,22 +95,14 @@
   <div #mapContainerForSearchByCustomLocation id="map-container-custom-location"
        class="map-container-custom-location" [hidden]="!isLocationFound">
   </div>
-  <!--  <div>-->
-  <!--    <ng-container *ngTemplateOutlet="template"></ng-container>-->
-  <!--  </div>-->
 </div>
 
 <div class="search-by-services-offered" [hidden]="!isSearchingByServicesOffered">
   <div #mapContainerForSearchByServicesOffered id="map-container-services-offered"
        class="map-container-services-offered" [hidden]="!startedToSearchByServicesOffered">
   </div>
-  <!--  <div>-->
-  <!--    <ng-container *ngTemplateOutlet="template"></ng-container>-->
-  <!--  </div>-->
 </div>
 
-
-<!--<ng-template #template>-->
 <div class="entity-details-container" id="entity-details-container" [hidden]="validEntities.length===0">
   <div class="row">
     <div *ngFor="let entity of this.validEntities; let i = index" class="entity-details-card-{{i}}"
@@ -149,15 +138,15 @@
           <p><span style="color: midnightblue">Others:</span> {{entity.address.others}} </p>
         </mat-card-content>
         <mat-card-actions align="end">
-          <button mat-button mat-flat-button>Timetable</button>
-          <button mat-button mat-flat-button>Services</button>
-          <button mat-button mat-flat-button>Ratings</button>
+          <button mat-button mat-flat-button
+                  (click)="showTimetableDetails(entity.timetable === null ? {} : entity.timetable)">Timetable
+          </button>
+          <button mat-button mat-flat-button (click)="showServicesDetailsForEntityId(entity.id)">Services</button>
         </mat-card-actions>
       </mat-card>
     </div>
   </div>
 </div>
-<!--</ng-template>-->
 
 <div id="popup-marker-current-location-to-hide" class="popup-marker-current-location">
   <a href="#" id="popup-marker-current-location-closer" class="popup-marker-current-location-closer"></a>

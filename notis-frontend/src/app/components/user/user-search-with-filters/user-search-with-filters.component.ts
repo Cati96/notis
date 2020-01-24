@@ -24,6 +24,9 @@ import {NotaryService} from '../../../services/notary.service';
 import {TranslatorService} from '../../../services/translator.service';
 import {ServiceService} from '../../../services/service.service';
 import {CountyCityLocality} from '../../../core/county.city.locality';
+import {Router} from '@angular/router';
+import {DialogBoxTimetableUserComponent} from '../modals/dialog-box-timetable-user/dialog-box-timetable-user.component';
+import {MatDialog} from '@angular/material';
 
 @Component({
   selector: 'app-user-search-with-filters',
@@ -65,7 +68,7 @@ export class UserSearchWithFiltersComponent implements OnInit, AfterViewInit {
 
   constructor(private renderer: Renderer2, private http: HttpClient, private addressService: AddressService,
               private  notaryService: NotaryService, private  translatorService: TranslatorService,
-              private serviceService: ServiceService) {
+              private serviceService: ServiceService, private router: Router, private dialog: MatDialog) {
     this.isLocationFound = false;
     window.onchange = () => {
       setTimeout(() => {
@@ -145,6 +148,21 @@ export class UserSearchWithFiltersComponent implements OnInit, AfterViewInit {
     }
   }
 
+  searchByCityAndLocality() {
+    if (typeof this.mapContainerForSearchByCustomLocation !== 'undefined') {
+      this.isLocationFound = false;
+      this.deleteMapContainerElements(this.mapContainerForSearchByCustomLocation);
+    }
+    this.setCustomLocationAndCreateMap();
+  }
+
+  searchByServicesOffered() {
+    if (typeof this.mapContainerForSearchByServicesOffered !== 'undefined') {
+      this.deleteMapContainerElements(this.mapContainerForSearchByServicesOffered);
+    }
+    this.setSelectedServicesOfferedAndCreateMap();
+  }
+
   setCurrentLocationAndCreateMap() {
     this.mapOSM = null;
     this.validEntities = [];
@@ -207,7 +225,7 @@ export class UserSearchWithFiltersComponent implements OnInit, AfterViewInit {
 
         this.drawCircleInMeter(5000);
 
-        this.getAllAddressesForEntityAndSetOnlyValidOnTheMap(this.checkedEntityName);
+        this.getAllEntitiesAndSetOnlyValidAddressesInAreaOnTheMap(this.checkedEntityName);
 
         const vectorLayer = new VectorLayer({
           map: this.mapOSM,
@@ -269,7 +287,7 @@ export class UserSearchWithFiltersComponent implements OnInit, AfterViewInit {
           updateWhileInteracting: true,
         });
         this.createMapOnTarget('map-container-custom-location', mapOsmView, vectorLayer);
-        this.getAllAddressesForEntityAndCustomLocation(this.checkedEntityName, this.ccl.selectedCity, this.ccl.selectedLocality);
+        this.getAllEntitiesForCustomLocationAndMarkThem(this.checkedEntityName, this.ccl.selectedCity, this.ccl.selectedLocality);
         this.addPopupForMarker('popup-marker-custom-location');
         this.createPolygonAroundTheCityAndReturnVectorLayer();
       }
@@ -322,75 +340,9 @@ export class UserSearchWithFiltersComponent implements OnInit, AfterViewInit {
     this.createMapOnTarget('map-container-services-offered', mapOsmView, vectorLayer);
 
     const selectedServices = this.getSelectedServicesOffered();
-    if (this.checkedEntityName === 'Notary') {
-      this.notaryService.getAllNotariesForSelectedServicesOffered(selectedServices).subscribe(hashMap => {
-        const strMap = JSON.stringify(Array.from(Object.entries(hashMap)));
-        const mapObj = new Map(JSON.parse(strMap));
-        const addresses = [];
-        for (const obj of mapObj) {
-          // obj[0] is key as "entityId<-->matchedServicesNumber"
-          // obj[1] is value as entity
-          const entity = obj[1];
-          // @ts-ignore
-          addresses.push(entity.address);
-          // @ts-ignore
-          entity.matchedServicesNumber = (obj[0] as string).split('<-->')[1] + '/' + entity.services.length + ' services matched';
-          this.validEntities.push(entity);
-        }
 
-        for (const address of addresses) {
-          if (address !== null) {
-            let coords: any[];
-            let result: { addr: any; latitude: any; longitude: any; };
-            this.getJsonDataFromStringAddress(address).subscribe(res => {
-              if (res === null || res === undefined || res.features === null || res.features.length === 0) {
+    this.getAndSetEntitiesOnMapBySelectedServiceS(selectedServices, this.checkedEntityName);
 
-              } else {
-                // first is longitude, second is latitude
-                coords = res.features[0].geometry.coordinates;
-                result = {addr: address, latitude: coords[1], longitude: coords[0]};
-                this.markPointOnMap(result);
-                // this.getEntitiesForAddressAndMarkAsValid(address);
-              }
-            });
-          }
-        }
-      });
-    } else if (this.checkedEntityName === 'Translator') {
-      this.translatorService.getAllTranslatorsForSelectedServicesOffered(selectedServices).subscribe(hashMap => {
-        const strMap = JSON.stringify(Array.from(Object.entries(hashMap)));
-        const mapObj = new Map(JSON.parse(strMap));
-        const addresses = [];
-        for (const obj of mapObj) {
-          // obj[0] is key as "entityId<-->matchedServicesNumber"
-          // obj[1] is value as entity
-          const entity = obj[1];
-          // @ts-ignore
-          addresses.push(entity.address);
-          // @ts-ignore
-          entity.matchedServicesNumber = (obj[0] as string).split('<-->')[1] + '/' + entity.services.length + ' services matched';
-          this.validEntities.push(entity);
-        }
-
-        for (const address of addresses) {
-          if (address !== null) {
-            let coords: any[];
-            let result: { addr: any; latitude: any; longitude: any; };
-            this.getJsonDataFromStringAddress(address).subscribe(res => {
-              if (res === null || res === undefined || res.features === null || res.features.length === 0) {
-
-              } else {
-                // first is longitude, second is latitude
-                coords = res.features[0].geometry.coordinates;
-                result = {addr: address, latitude: coords[1], longitude: coords[0]};
-                this.markPointOnMap(result);
-                // this.getEntitiesForAddressAndMarkAsValid(address);
-              }
-            });
-          }
-        }
-      });
-    }
     this.addPopupForMarker('popup-marker-services-offered');
   }
 
@@ -540,77 +492,152 @@ export class UserSearchWithFiltersComponent implements OnInit, AfterViewInit {
       ));
   }
 
-  getAllAddressesForEntityAndSetOnlyValidOnTheMap(entityType) {
-    this.addressService.getAllAddressesForEntityType(entityType).subscribe(addresses => {
-      for (const address of addresses) {
-        if (address !== null) {
-          let coords: any[];
-          let result: { addr: any; latitude: any; longitude: any; };
-          this.getJsonDataFromStringAddress(address).subscribe(res => {
-            if (res === null || res === undefined || res.features === null || res.features.length === 0) {
-
-            } else {
-              // first is longitude, second is latitude
-              coords = res.features[0].geometry.coordinates;
-              result = {addr: address, latitude: coords[1], longitude: coords[0]};
-              const temp = this.checkIfPointIsInCircleAreaAndMarkItOnMap(result);
-              if (temp != null) {
-                this.getEntitiesForAddressAndMarkAsValid(address);
-              }
-            }
-          });
-        }
-      }
-    });
-    console.log('TO DO GET ALL ADDRESSES FOR NOTARIES/TRANSLATORS');
-  }
-
-  getAllAddressesForEntityAndCustomLocation(entityType, city, locality) {
-    this.addressService.getAllAddressesForEntityTypeAndCustomLocation(entityType, city, locality).subscribe(addresses => {
-      for (const address of addresses) {
-        if (address !== null) {
-          let coords: any[];
-          let result: { addr: any; latitude: any; longitude: any; };
-          this.getJsonDataFromStringAddress(address).subscribe(res => {
-            if (res === null || res === undefined || res.features === null || res.features.length === 0) {
-
-            } else {
-              // first is longitude, second is latitude
-              coords = res.features[0].geometry.coordinates;
-              result = {addr: address, latitude: coords[1], longitude: coords[0]};
-              this.markPointOnMap(result);
-              this.getEntitiesForAddressAndMarkAsValid(address);
-            }
-          });
-        }
-      }
-    });
-    console.log('TO DO GET ALL ADDRESSES FOR NOTARIES/TRANSLATORS FROM CUSTOM LOCATION');
-  }
-
-  getEntitiesForAddressAndMarkAsValid(address: any) {
-    if (this.checkedEntityName === 'Notary') {
-    debugger;
-      this.notaryService.getAllNotariesForAddress(address).subscribe(entities => {
-        for (const entity of entities) {
-          this.validEntities.push(entity);
-        }
-        this.validEntities = this.validEntities.filter((thing, index, self) =>
-          index === self.findIndex((t) => (
-            t.place === thing.place && t.name === thing.name
-          ))
-        );
+  getAndSetEntitiesOnMapBySelectedServiceS(selectedServices, entityType) {
+    if (entityType === this.entityTypes[0]) { // Notary
+      const addresses = [];
+      this.notaryService.getAllNotaries().subscribe(notaries => {
+        this.iterateInEntitiesAndCheckForServicesOfferedAndMarkThem(notaries, selectedServices);
       });
-    } else if (this.checkedEntityName === 'Translator') {
-      this.translatorService.getAllTranslatorsForAddressId(address.id).subscribe(entities => {
-        for (const entity of entities) {
-          this.validEntities.push(entity);
+    } else if (entityType === this.entityTypes[1]) { // Translator
+      this.translatorService.getAllTranslators().subscribe(translators => {
+        this.iterateInEntitiesAndCheckForServicesOfferedAndMarkThem(translators, selectedServices);
+      });
+    }
+  }
+
+  iterateInEntitiesAndCheckForServicesOfferedAndMarkThem(entities, selectedServices) {
+    const addresses = [];
+    for (const entity of entities) {
+      const services = entity.services;
+      let matchedServicesNumber = 0;
+      for (const service of services) {
+        if (selectedServices.indexOf(service.type) !== -1) {
+          matchedServicesNumber++;
         }
-        this.validEntities = this.validEntities.filter((thing, index, self) =>
-          index === self.findIndex((t) => (
-            t.place === thing.place && t.name === thing.name
-          ))
-        );
+      }
+      if (matchedServicesNumber > 0) {
+        entity.matchedServicesNumber = matchedServicesNumber;
+        this.validEntities.push(entity);
+        addresses.push(entity.address);
+      }
+    }
+
+    for (const address of addresses) {
+      if (address !== null) {
+        let coords: any[];
+        let result: { addr: any; latitude: any; longitude: any; };
+        this.getJsonDataFromStringAddress(address).subscribe(res => {
+          if (res === null || res === undefined || res.features === null || res.features.length === 0) {
+
+          } else {
+            // first is longitude, second is latitude
+            coords = res.features[0].geometry.coordinates;
+            result = {addr: address, latitude: coords[1], longitude: coords[0]};
+            this.markPointOnMap(result);
+          }
+        });
+      }
+    }
+  }
+
+  getAllEntitiesAndSetOnlyValidAddressesInAreaOnTheMap(entityType) {
+    this.validEntities = [];
+    if (entityType === this.entityTypes[0]) { // Notary
+      this.notaryService.getAllNotaries().subscribe(notaries => {
+        for (const notary of notaries) {
+          const address = notary.address;
+          if (address !== null) {
+            let coords: any[];
+            let result: { addr: any; latitude: any; longitude: any; };
+            this.getJsonDataFromStringAddress(address).subscribe(res => {
+              if (res === null || res === undefined || res.features === null || res.features.length === 0) {
+
+              } else {
+                // first is longitude, second is latitude
+                coords = res.features[0].geometry.coordinates;
+                result = {addr: address, latitude: coords[1], longitude: coords[0]};
+                const temp = this.checkIfPointIsInCircleAreaAndMarkItOnMap(result);
+                if (temp != null) {
+                  this.validEntities.push(notary);
+                }
+              }
+            });
+          }
+        }
+      });
+    } else { // Translator
+      this.translatorService.getAllTranslators().subscribe(translators => {
+        for (const translator of translators) {
+          const address = translator.address;
+          if (address !== null) {
+            let coords: any[];
+            let result: { addr: any; latitude: any; longitude: any; };
+            this.getJsonDataFromStringAddress(address).subscribe(res => {
+              if (res === null || res === undefined || res.features === null || res.features.length === 0) {
+
+              } else {
+                // first is longitude, second is latitude
+                coords = res.features[0].geometry.coordinates;
+                result = {addr: address, latitude: coords[1], longitude: coords[0]};
+                const temp = this.checkIfPointIsInCircleAreaAndMarkItOnMap(result);
+                if (temp != null) {
+                  this.validEntities.push(translator);
+                }
+              }
+            });
+          }
+        }
+      });
+    }
+  }
+
+  getAllEntitiesForCustomLocationAndMarkThem(entityType, city, locality) {
+    this.validEntities = [];
+    if (entityType === this.entityTypes[0]) { // Notary
+      this.notaryService.getAllNotaries().subscribe(notaries => {
+        for (const notary of notaries) {
+          const address = notary.address;
+          if (address !== null) {
+            if (address.city === city && address.locality === locality) {
+              let coords: any[];
+              let result: { addr: any; latitude: any; longitude: any; };
+              this.getJsonDataFromStringAddress(address).subscribe(res => {
+                if (res === null || res === undefined || res.features === null || res.features.length === 0) {
+
+                } else {
+                  // first is longitude, second is latitude
+                  coords = res.features[0].geometry.coordinates;
+                  result = {addr: address, latitude: coords[1], longitude: coords[0]};
+                  this.markPointOnMap(result);
+                  this.validEntities.push(notary);
+                }
+              });
+            }
+          }
+        }
+      });
+    } else { // Translator
+      this.translatorService.getAllTranslators().subscribe(translators => {
+        for (const translator of translators) {
+          const address = translator.address;
+          if (address !== null) {
+            if (address.city === city && address.locality === locality) {
+              let coords: any[];
+              let result: { addr: any; latitude: any; longitude: any; };
+              this.getJsonDataFromStringAddress(address).subscribe(res => {
+                if (res === null || res === undefined || res.features === null || res.features.length === 0) {
+
+                } else {
+                  // first is longitude, second is latitude
+                  coords = res.features[0].geometry.coordinates;
+                  result = {addr: address, latitude: coords[1], longitude: coords[0]};
+                  this.markPointOnMap(result);
+                  this.validEntities.push(translator);
+                }
+              });
+            }
+          }
+        }
       });
     }
   }
@@ -625,21 +652,6 @@ export class UserSearchWithFiltersComponent implements OnInit, AfterViewInit {
     for (const child of childElements) {
       this.renderer.removeChild(mapContainer.nativeElement, child);
     }
-  }
-
-  searchByCityAndLocality() {
-    if (typeof this.mapContainerForSearchByCustomLocation !== 'undefined') {
-      this.isLocationFound = false;
-      this.deleteMapContainerElements(this.mapContainerForSearchByCustomLocation);
-    }
-    this.setCustomLocationAndCreateMap();
-  }
-
-  searchByServicesOffered() {
-    if (typeof this.mapContainerForSearchByServicesOffered !== 'undefined') {
-      this.deleteMapContainerElements(this.mapContainerForSearchByServicesOffered);
-    }
-    this.setSelectedServicesOfferedAndCreateMap();
   }
 
   revertSearchByCustomLocationVariables() {
@@ -757,5 +769,19 @@ export class UserSearchWithFiltersComponent implements OnInit, AfterViewInit {
       .filter(opt => opt.checked)
       .map(opt => opt.value);
     return list.length > 0;
+  }
+
+  showServicesDetailsForEntityId(id) {
+    this.router.navigate(['notaries/services'], {queryParams: {entityType: this.checkedEntityName, entityId: id}});
+  }
+
+  showTimetableDetails(timetable) {
+    this.dialog.open(DialogBoxTimetableUserComponent, {
+      width: '30%',
+      data: {
+        data: timetable,
+        entityType: this.checkedEntityName
+      }
+    });
   }
 }

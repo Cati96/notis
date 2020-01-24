@@ -8,12 +8,12 @@
   width: 100%;
 }
 
-.address-edit-button{
+.address-edit-button {
   background-color: green;
   color: #fff;
 }
 
-.address-update-button{
+.address-update-button {
   background-color: #ffd740;
   color: black;
 }
