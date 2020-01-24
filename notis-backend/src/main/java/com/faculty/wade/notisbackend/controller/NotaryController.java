@@ -2,7 +2,10 @@ package com.faculty.wade.notisbackend.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+import com.faculty.wade.notisbackend.DTO.EntityDTO;
+import com.faculty.wade.notisbackend.service.NotaryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,8 +29,8 @@ import com.faculty.wade.notisbackend.service.NotaryService;
 @RestController
 @RequestMapping("/notaries")
 public class NotaryController {
-	@Autowired
-	private NotaryService notaryService;
+    @Autowired
+    private NotaryService notaryService;
 
 	@CrossOrigin(origins = "*")
 	@GetMapping(value = "/getAll")

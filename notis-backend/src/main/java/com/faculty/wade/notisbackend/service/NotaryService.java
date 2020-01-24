@@ -11,6 +11,9 @@ import com.faculty.wade.notisbackend.model.Address;
 import com.faculty.wade.notisbackend.model.EntityObject;
 import com.faculty.wade.notisbackend.model.Notary;
 import com.faculty.wade.notisbackend.queryes.SparkQLQuery;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class NotaryService {
@@ -52,7 +55,7 @@ public class NotaryService {
 
 	private Notary getDefaulNotary(EntityDTO entityDTO, Integer id) {
 		String schedule = "['10:00 - 14:00 | 15:00 - 18:00', '8:30 - 13:00 | 14:00 - 19:00', '9:30 - 12:00 | 13:00 - 19:00', '9:00 - 13:00 | 14:00 - 19:30', '9:00 - 13:00 | 14:00 - 19:30', '9:30 - 12:00 | 13:00 - 19:00', None]";
-		String services = "[['Contract', 'https://notariat-tineretului.net/contract/'], ['Divorce', 'https://notariat-tineretului.net/divort/'], ['Succession', 'https://notariat-tineretului.net/succesiune/'], ['Marriage agreement', 'https://notariat-tineretului.net/conventie-matrimoniala/'], ['Document Legalisation', 'https://notariat-tineretului.net/legalizari/'], ['Procure', 'https://notariat-tineretului.net/procura/']]";
+		String services = "[['1', 'Contract', 'https://notariat-tineretului.net/contract/'], ['2', 'Divorce', 'https://notariat-tineretului.net/divort/'], ['3', 'Succession', 'https://notariat-tineretului.net/succesiune/'], ['4', 'Marriage agreement', 'https://notariat-tineretului.net/conventie-matrimoniala/'], ['5', 'Document Legalisation', 'https://notariat-tineretului.net/legalizari/'], ['6', 'Procure', 'https://notariat-tineretului.net/procura/']]";
 		Address address = new Address("-", "-", "-", "-", "-", "-", "-", "-");
 		Notary notary = new Notary(id, entityDTO.getName(), "" + entityDTO.getAuthorizationNumber(),
 				entityDTO.getPhoneNumber(), address, LiteralConvertor.convertFromStringToTimetable(schedule),
