@@ -148,6 +148,21 @@ export class UserSearchWithFiltersComponent implements OnInit, AfterViewInit {
     }
   }
 
+  searchByCityAndLocality() {
+    if (typeof this.mapContainerForSearchByCustomLocation !== 'undefined') {
+      this.isLocationFound = false;
+      this.deleteMapContainerElements(this.mapContainerForSearchByCustomLocation);
+    }
+    this.setCustomLocationAndCreateMap();
+  }
+
+  searchByServicesOffered() {
+    if (typeof this.mapContainerForSearchByServicesOffered !== 'undefined') {
+      this.deleteMapContainerElements(this.mapContainerForSearchByServicesOffered);
+    }
+    this.setSelectedServicesOfferedAndCreateMap();
+  }
+
   setCurrentLocationAndCreateMap() {
     this.mapOSM = null;
     this.validEntities = [];
@@ -210,7 +225,7 @@ export class UserSearchWithFiltersComponent implements OnInit, AfterViewInit {
 
         this.drawCircleInMeter(5000);
 
-        this.getAllAddressesForEntityAndSetOnlyValidOnTheMap(this.checkedEntityName);
+        this.getAllEntitiesAndSetOnlyValidAddressesInAreaOnTheMap(this.checkedEntityName);
 
         const vectorLayer = new VectorLayer({
           map: this.mapOSM,
@@ -272,7 +287,7 @@ export class UserSearchWithFiltersComponent implements OnInit, AfterViewInit {
           updateWhileInteracting: true,
         });
         this.createMapOnTarget('map-container-custom-location', mapOsmView, vectorLayer);
-        this.getAllAddressesForEntityAndCustomLocation(this.checkedEntityName, this.ccl.selectedCity, this.ccl.selectedLocality);
+        this.getAllEntitiesForCustomLocationAndMarkThem(this.checkedEntityName, this.ccl.selectedCity, this.ccl.selectedLocality);
         this.addPopupForMarker('popup-marker-custom-location');
         this.createPolygonAroundTheCityAndReturnVectorLayer();
       }
@@ -543,76 +558,104 @@ export class UserSearchWithFiltersComponent implements OnInit, AfterViewInit {
       ));
   }
 
-  getAllAddressesForEntityAndSetOnlyValidOnTheMap(entityType) {
-    this.addressService.getAllAddressesForEntityType(entityType).subscribe(addresses => {
-      for (const address of addresses) {
-        if (address !== null) {
-          let coords: any[];
-          let result: { addr: any; latitude: any; longitude: any; };
-          this.getJsonDataFromStringAddress(address).subscribe(res => {
-            if (res === null || res === undefined || res.features === null || res.features.length === 0) {
+  getAllEntitiesAndSetOnlyValidAddressesInAreaOnTheMap(entityType) {
+    this.validEntities = [];
+    if (entityType === this.entityTypes[0]) { // Notary
+      this.notaryService.getAllNotaries().subscribe(notaries => {
+        for (const notary of notaries) {
+          const address = notary.address;
+          if (address !== null) {
+            let coords: any[];
+            let result: { addr: any; latitude: any; longitude: any; };
+            this.getJsonDataFromStringAddress(address).subscribe(res => {
+              if (res === null || res === undefined || res.features === null || res.features.length === 0) {
 
-            } else {
-              // first is longitude, second is latitude
-              coords = res.features[0].geometry.coordinates;
-              result = {addr: address, latitude: coords[1], longitude: coords[0]};
-              const temp = this.checkIfPointIsInCircleAreaAndMarkItOnMap(result);
-              if (temp != null) {
-                this.getEntitiesForAddressAndMarkAsValid(address);
+              } else {
+                // first is longitude, second is latitude
+                coords = res.features[0].geometry.coordinates;
+                result = {addr: address, latitude: coords[1], longitude: coords[0]};
+                const temp = this.checkIfPointIsInCircleAreaAndMarkItOnMap(result);
+                if (temp != null) {
+                  this.validEntities.push(notary);
+                }
               }
-            }
-          });
+            });
+          }
         }
-      }
-    });
-    console.log('TO DO GET ALL ADDRESSES FOR NOTARIES/TRANSLATORS');
-  }
-
-  getAllAddressesForEntityAndCustomLocation(entityType, city, locality) {
-    this.addressService.getAllAddressesForEntityTypeAndCustomLocation(entityType, city, locality).subscribe(addresses => {
-      for (const address of addresses) {
-        if (address !== null) {
-          let coords: any[];
-          let result: { addr: any; latitude: any; longitude: any; };
-          this.getJsonDataFromStringAddress(address).subscribe(res => {
-            if (res === null || res === undefined || res.features === null || res.features.length === 0) {
-
-            } else {
-              // first is longitude, second is latitude
-              coords = res.features[0].geometry.coordinates;
-              result = {addr: address, latitude: coords[1], longitude: coords[0]};
-              this.markPointOnMap(result);
-              this.getEntitiesForAddressAndMarkAsValid(address);
-            }
-          });
-        }
-      }
-    });
-    console.log('TO DO GET ALL ADDRESSES FOR NOTARIES/TRANSLATORS FROM CUSTOM LOCATION');
-  }
-
-  getEntitiesForAddressAndMarkAsValid(address: any) {
-    if (this.checkedEntityName === 'Notary') {
-      this.notaryService.getAllNotariesForAddressId(address.id).subscribe(entities => {
-        for (const entity of entities) {
-          this.validEntities.push(entity);
-        }
-        this.validEntities = this.validEntities.filter((thing, index, self) =>
-          index === self.findIndex((t) => (
-            t.place === thing.place && t.name === thing.name
-          ))
-        );
       });
-    } else if (this.checkedEntityName === 'Translator') {
-      this.translatorService.getAllTranslatorsForAddressId(address.id).subscribe(entities => {
-        for (const entity of entities) {
-          this.validEntities.push(entity);
+    } else { // Translator
+      this.translatorService.getAllTranslators().subscribe(translators => {
+        for (const translator of translators) {
+          const address = translator.address;
+          if (address !== null) {
+            let coords: any[];
+            let result: { addr: any; latitude: any; longitude: any; };
+            this.getJsonDataFromStringAddress(address).subscribe(res => {
+              if (res === null || res === undefined || res.features === null || res.features.length === 0) {
+
+              } else {
+                // first is longitude, second is latitude
+                coords = res.features[0].geometry.coordinates;
+                result = {addr: address, latitude: coords[1], longitude: coords[0]};
+                const temp = this.checkIfPointIsInCircleAreaAndMarkItOnMap(result);
+                if (temp != null) {
+                  this.validEntities.push(translator);
+                }
+              }
+            });
+          }
         }
-        this.validEntities = this.validEntities.filter((thing, index, self) =>
-          index === self.findIndex((t) => (
-            t.place === thing.place && t.name === thing.name
-          ))
-        );
+      });
+    }
+  }
+
+  getAllEntitiesForCustomLocationAndMarkThem(entityType, city, locality) {
+    this.validEntities = [];
+    if (entityType === this.entityTypes[0]) { // Notary
+      this.notaryService.getAllNotaries().subscribe(notaries => {
+        for (const notary of notaries) {
+          const address = notary.address;
+          if (address !== null) {
+            if (address.city === city && address.locality === locality) {
+              let coords: any[];
+              let result: { addr: any; latitude: any; longitude: any; };
+              this.getJsonDataFromStringAddress(address).subscribe(res => {
+                if (res === null || res === undefined || res.features === null || res.features.length === 0) {
+
+                } else {
+                  // first is longitude, second is latitude
+                  coords = res.features[0].geometry.coordinates;
+                  result = {addr: address, latitude: coords[1], longitude: coords[0]};
+                  this.markPointOnMap(result);
+                  this.validEntities.push(notary);
+                }
+              });
+            }
+          }
+        }
+      });
+    } else { // Translator
+      this.translatorService.getAllTranslators().subscribe(translators => {
+        for (const translator of translators) {
+          const address = translator.address;
+          if (address !== null) {
+            if (address.city === city && address.locality === locality) {
+              let coords: any[];
+              let result: { addr: any; latitude: any; longitude: any; };
+              this.getJsonDataFromStringAddress(address).subscribe(res => {
+                if (res === null || res === undefined || res.features === null || res.features.length === 0) {
+
+                } else {
+                  // first is longitude, second is latitude
+                  coords = res.features[0].geometry.coordinates;
+                  result = {addr: address, latitude: coords[1], longitude: coords[0]};
+                  this.markPointOnMap(result);
+                  this.validEntities.push(translator);
+                }
+              });
+            }
+          }
+        }
       });
     }
   }
@@ -627,21 +670,6 @@ export class UserSearchWithFiltersComponent implements OnInit, AfterViewInit {
     for (const child of childElements) {
       this.renderer.removeChild(mapContainer.nativeElement, child);
     }
-  }
-
-  searchByCityAndLocality() {
-    if (typeof this.mapContainerForSearchByCustomLocation !== 'undefined') {
-      this.isLocationFound = false;
-      this.deleteMapContainerElements(this.mapContainerForSearchByCustomLocation);
-    }
-    this.setCustomLocationAndCreateMap();
-  }
-
-  searchByServicesOffered() {
-    if (typeof this.mapContainerForSearchByServicesOffered !== 'undefined') {
-      this.deleteMapContainerElements(this.mapContainerForSearchByServicesOffered);
-    }
-    this.setSelectedServicesOfferedAndCreateMap();
   }
 
   revertSearchByCustomLocationVariables() {
