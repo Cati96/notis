@@ -32,7 +32,7 @@ public class SparkQLQuery {
 
         String queryString = "PREFIX ns1: <http://xmlns.com/foaf/0.1/> " +
                 "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> " +
-                "SELECT ?id ?person ?firstName ?lastName ?authorizationNumber ?phone ?schedule ?services ?county ?city ?street ?address ?country ?zipCode ?streetNr ?others WHERE { " +
+                "SELECT ?id ?person ?firstName ?lastName ?authorizationNumber ?phone ?schedule ?services ?county ?city ?street ?address ?country ?zipCode ?streetNr ?others ?locality WHERE { " +
                 " ?person rdf:type \"https://www.merriam-webster.com/dictionary/notary%20public\" ." +
                 " ?person <ns1:id> ?id ." +
                 " ?person <ns1:firstName> ?firstName ." +
@@ -49,6 +49,7 @@ public class SparkQLQuery {
                 " ?address <ns1:zipCode> ?zipCode ." +
                 " ?address <ns1:streetNr> ?streetNr ." +
                 " ?address <ns1:others> ?others ." +
+                " ?address <ns1:locality> ?locality ." +
                 "}";
         Query query = QueryFactory.create(queryString);
         QueryExecution qexec = QueryExecutionFactory.create(query, model);
@@ -70,10 +71,11 @@ public class SparkQLQuery {
             String zipCode = (String) soln.getLiteral("zipCode").getValue();
             String streetNr = (String) soln.getLiteral("streetNr").getValue();
             String others = (String) soln.getLiteral("others").getValue();
+            String locality = (String) soln.getLiteral("locality").getValue();
 
             Timetable schedule = LiteralConvertor.convertFromStringToTimetable(scheduleLiteral);
             List<Service> services = LiteralConvertor.convertFromStringToServices(servicesLiteral);
-            Address addressOnj = new Address(country, county, city, null, street, streetNr, zipCode, others);
+            Address addressOnj = new Address(country, county, city, locality, street, streetNr, zipCode, others);
 
             Notary notary = new Notary(id, firstName + " " + lastName, "" + authorizationNumber, phone, addressOnj, schedule, services);
             notaries.add(notary);
@@ -182,7 +184,7 @@ public class SparkQLQuery {
 
         String queryString = "PREFIX ns1: <http://xmlns.com/foaf/0.1/> " +
                 "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> " +
-                "SELECT ?id ?person ?firstName ?lastName ?authorizationNumber ?phone ?schedule ?services ?county ?city ?street ?languages ?country ?zipCode ?streetNr ?others WHERE { " +
+                "SELECT ?id ?person ?firstName ?lastName ?authorizationNumber ?phone ?schedule ?services ?county ?city ?street ?languages ?country ?zipCode ?streetNr ?others ?locality WHERE { " +
                 " ?person rdf:type \"https://www.merriam-webster.com/dictionary/translator\" ." +
                 " ?person <ns1:id> ?id ." +
                 " ?person <ns1:firstName> ?firstName ." +
@@ -200,6 +202,7 @@ public class SparkQLQuery {
                 " ?address <ns1:zipCode> ?zipCode ." +
                 " ?address <ns1:streetNr> ?streetNr ." +
                 " ?address <ns1:others> ?others ." +
+                " ?address <ns1:locality> ?locality ." +
                 "}";
         Query query = QueryFactory.create(queryString);
         QueryExecution qexec = QueryExecutionFactory.create(query, model);
@@ -222,10 +225,12 @@ public class SparkQLQuery {
             String zipCode = (String) soln.getLiteral("zipCode").getValue();
             String streetNr = (String) soln.getLiteral("streetNr").getValue();
             String others = (String) soln.getLiteral("others").getValue();
+            String locality = (String) soln.getLiteral("locality").getValue();
+
             Timetable schedule = LiteralConvertor.convertFromStringToTimetable(scheduleLiteral);
             List<String> languages = LiteralConvertor.convertFromStringToLanguages(languagesLiteral);
             List<com.faculty.wade.notisbackend.model.Service> services = LiteralConvertor.convertFromStringToServices(servicesLiteral);
-            Address addressOnj = new Address(country, county, city, null, street, streetNr, zipCode, others);
+            Address addressOnj = new Address(country, county, city, locality, street, streetNr, zipCode, others);
 
             Translator translator = new Translator(id, firstName + " " + lastName, "" + authorizationNumber, phone, addressOnj, schedule, services, languages);
             translators.add(translator);
@@ -381,6 +386,7 @@ public class SparkQLQuery {
         Property cityProperty = ResourceFactory.createProperty("ns1:", "city");
         Property streetProperty = ResourceFactory.createProperty("ns1:", "street");
         Property countryProperty = ResourceFactory.createProperty("ns1:", "country");
+        Property localityProperty = ResourceFactory.createProperty("ns1:", "locality");
         Property zipCodeProperty = ResourceFactory.createProperty("ns1:", "zipCode");
         Property othersProperty = ResourceFactory.createProperty("ns1:", "others");
         Property streetNumberProperty = ResourceFactory.createProperty("ns1:", "streetNr");
@@ -399,6 +405,7 @@ public class SparkQLQuery {
         Literal countyLiteral = ResourceFactory.createStringLiteral(entityObject.getAddress().getCounty());
         Literal cityLiteral = ResourceFactory.createStringLiteral(entityObject.getAddress().getCity());
         Literal streetLiteral = ResourceFactory.createStringLiteral(entityObject.getAddress().getStreet());
+        Literal localityLiteral = ResourceFactory.createStringLiteral(entityObject.getAddress().getLocality());
         Literal languagesLiteral = ResourceFactory.createStringLiteral(entityObject.getLanguages());
         Literal countryLiteral = ResourceFactory.createStringLiteral(entityObject.getAddress().getCountry());
         Literal zipCodeLiteral = ResourceFactory.createStringLiteral(entityObject.getAddress().getZipCode());
@@ -413,6 +420,7 @@ public class SparkQLQuery {
         addressResource.addLiteral(zipCodeProperty, zipCodeLiteral);
         addressResource.addLiteral(othersProperty, othersLiteral);
         addressResource.addLiteral(streetNumberProperty, streetNumberLiteral);
+        addressResource.addLiteral(localityProperty, localityLiteral);
 
         notary.addLiteral(firstNameProperty, firstNameLiteral);
         notary.addLiteral(lastNameProperty, lastNameLiteral);
