@@ -27,7 +27,6 @@ export class AddressService {
   }
 
   update(address: Address, entityId): Observable<any> {
-    debugger;
     address.id = entityId;
     return this.http.put(this.urlPart, address).pipe(map(
       data => Object.assign(new Address(), data)

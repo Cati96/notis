@@ -24,6 +24,9 @@ import {NotaryService} from '../../../services/notary.service';
 import {TranslatorService} from '../../../services/translator.service';
 import {ServiceService} from '../../../services/service.service';
 import {CountyCityLocality} from '../../../core/county.city.locality';
+import {Router} from '@angular/router';
+import {DialogBoxTimetableUserComponent} from '../modals/dialog-box-timetable-user/dialog-box-timetable-user.component';
+import {MatDialog} from '@angular/material';
 
 @Component({
   selector: 'app-user-search-with-filters',
@@ -65,7 +68,7 @@ export class UserSearchWithFiltersComponent implements OnInit, AfterViewInit {
 
   constructor(private renderer: Renderer2, private http: HttpClient, private addressService: AddressService,
               private  notaryService: NotaryService, private  translatorService: TranslatorService,
-              private serviceService: ServiceService) {
+              private serviceService: ServiceService, private router: Router, private dialog: MatDialog) {
     this.isLocationFound = false;
     window.onchange = () => {
       setTimeout(() => {
@@ -756,5 +759,19 @@ export class UserSearchWithFiltersComponent implements OnInit, AfterViewInit {
       .filter(opt => opt.checked)
       .map(opt => opt.value);
     return list.length > 0;
+  }
+
+  showServicesDetailsForEntityId(id) {
+    this.router.navigate(['notaries/services'], {queryParams: {entityType: this.checkedEntityName, entityId: id}});
+  }
+
+  showTimetableDetails(timetable) {
+    this.dialog.open(DialogBoxTimetableUserComponent, {
+      width: '30%',
+      data: {
+        data: timetable,
+        entityType: this.checkedEntityName
+      }
+    });
   }
 }

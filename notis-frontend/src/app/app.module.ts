@@ -43,6 +43,7 @@ import {UserServicesNotaryTranslatorComponent} from './components/user/user-serv
 import {UserSearchWithFiltersComponent} from './components/user/user-search-with-filters/user-search-with-filters.component';
 import {AddressService} from './services/address.service';
 import {TimetableService} from './services/timetable.service';
+import {MatSelectModule} from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -83,7 +84,8 @@ import {TimetableService} from './services/timetable.service';
     MatListModule,
     HttpClientModule,
     HttpClientJsonpModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatSelectModule
   ],
   entryComponents: [
     DialogBoxNotaryTranslatorAdminComponent,

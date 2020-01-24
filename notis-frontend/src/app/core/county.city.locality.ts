@@ -70,4 +70,31 @@ export class CountyCityLocality {
     this.selectedLocality = locality;
     this.isLocalitySelected = this.selectedLocality !== this.localities[0];
   }
+
+  getCountyIndexOnList(county) {
+    for (let i = 0; i < this.counties.length; i++) {
+      if (this.counties[i] === county) {
+        return i;
+      }
+    }
+    return -1;
+  }
+
+  getCityIndexOnList(city) {
+    for (let i = 0; i < this.cities.length; i++) {
+      if (this.cities[i] === city) {
+        return i;
+      }
+    }
+    return -1;
+  }
+
+  getLocalityIndexOnList(locality) {
+    for (let i = 0; i < this.localities.length; i++) {
+      if (this.localities[i] === locality) {
+        return i;
+      }
+    }
+    return -1;
+  }
 }
