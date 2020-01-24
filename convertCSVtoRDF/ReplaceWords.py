@@ -32,6 +32,7 @@ def replace_propertyes():
         .replace("ns1:id", "<ns1:id>") \
         .replace("ns1:languages", "<ns1:languages>") \
         .replace("ns1:country", "<ns1:country>") \
+        .replace("ns1:locality", "<ns1:locality>") \
         .replace("ns1:others", "<ns1:others>") \
         .replace("ns1:zipCode", "<ns1:zipCode>") \
         .replace("ns1:streetNr", "<ns1:streetNr>") \
