@@ -15,9 +15,8 @@ import org.springframework.http.ResponseEntity;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @org.springframework.stereotype.Service
 public class ServiceService {
@@ -106,6 +105,22 @@ public class ServiceService {
             notaryService.add(notary);
         }
         return true;
+    }
+
+    public List<String> getAllServicesForType(String entityType) {
+        Set<String> services = new HashSet<>();
+        List<List<Service>> allServices;
+        if (entityType.equals("Notary")) {
+            allServices = notaryService.getAll().stream().map(Notary::getServices).collect(Collectors.toList());
+        } else {
+            allServices = translatorService.getAll().stream().map(Translator::getServices).collect(Collectors.toList());
+        }
+        allServices.forEach(listOfServices -> {
+            listOfServices.forEach(service -> {
+                services.add(service.getType());
+            });
+        });
+        return new ArrayList<String>(services);
     }
 
 }

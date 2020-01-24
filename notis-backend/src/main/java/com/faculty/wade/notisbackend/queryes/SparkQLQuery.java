@@ -1,6 +1,7 @@
 package com.faculty.wade.notisbackend.queryes;
 
 import com.faculty.wade.notisbackend.DTO.EntityDTO;
+import com.faculty.wade.notisbackend.configuration.Global;
 import com.faculty.wade.notisbackend.helper.EntityCreator;
 import com.faculty.wade.notisbackend.helper.LiteralConvertor;
 import com.faculty.wade.notisbackend.helper.RandomGenerator;
@@ -24,7 +25,7 @@ public class SparkQLQuery {
         List<Notary> notaries = new LinkedList<>();
         Model model = ModelFactory.createDefaultModel();
         try {
-            model.read(new FileInputStream("./rdf/rdf.txt"), null, "TTL");
+            model.read(new FileInputStream(Global.RDF_FILE_PATH), null, "TTL");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -174,7 +175,7 @@ public class SparkQLQuery {
         Model model = ModelFactory.createDefaultModel();
         List<Translator> translators = new LinkedList<>();
         try {
-            model.read(new FileInputStream("./rdf/rdf.txt"), null, "TTL");
+            model.read(new FileInputStream(Global.RDF_FILE_PATH), null, "TTL");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -237,7 +238,7 @@ public class SparkQLQuery {
         List<com.faculty.wade.notisbackend.model.Service> services = new LinkedList<>();
         Model model = ModelFactory.createDefaultModel();
         try {
-            model.read(new FileInputStream("./rdf/rdf.txt"), null, "TTL");
+            model.read(new FileInputStream(Global.RDF_FILE_PATH), null, "TTL");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -266,7 +267,7 @@ public class SparkQLQuery {
         List<com.faculty.wade.notisbackend.model.Service> services = new LinkedList<>();
         Model model = ModelFactory.createDefaultModel();
         try {
-            model.read(new FileInputStream("./rdf/rdf.txt"), null, "TTL");
+            model.read(new FileInputStream(Global.RDF_FILE_PATH), null, "TTL");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -296,7 +297,7 @@ public class SparkQLQuery {
         EntityObject entityObject = EntityCreator.createEntityToBeStored(entityDTO, isTranslator);
 
         try {
-            model.read(new FileInputStream("./rdf/rdf.txt"), null, "TTL");
+            model.read(new FileInputStream(Global.RDF_FILE_PATH), null, "TTL");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -329,7 +330,7 @@ public class SparkQLQuery {
         Model model = ModelFactory.createDefaultModel();
 
         try {
-            model.read(new FileInputStream("./rdf/rdf.txt"), null, "TTL");
+            model.read(new FileInputStream(Global.RDF_FILE_PATH), null, "TTL");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -427,7 +428,7 @@ public class SparkQLQuery {
         model.add(notary, RDF.type, entityObject.getEntityType());
 
         try {
-            model.write(new FileOutputStream("./rdf/rdf.txt"), "TTL");
+            model.write(new FileOutputStream(Global.RDF_FILE_PATH), "TTL");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -438,7 +439,7 @@ public class SparkQLQuery {
         List<Notary> notaries = new LinkedList<>();
         Model model = ModelFactory.createDefaultModel();
         try {
-            model.read(new FileInputStream("./rdf/rdf.txt"), null, "TTL");
+            model.read(new FileInputStream(Global.RDF_FILE_PATH), null, "TTL");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -501,7 +502,7 @@ public class SparkQLQuery {
         List<Notary> notaries = new LinkedList<>();
         Model model = ModelFactory.createDefaultModel();
         try {
-            model.read(new FileInputStream("./rdf/rdf.txt"), null, "TTL");
+            model.read(new FileInputStream(Global.RDF_FILE_PATH), null, "TTL");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -564,7 +565,7 @@ public class SparkQLQuery {
     public static boolean deleteEntity(String identification) {
         Model model = ModelFactory.createDefaultModel();
         try {
-            model.read(new FileInputStream("./rdf/rdf.txt"), null, "TTL");
+            model.read(new FileInputStream(Global.RDF_FILE_PATH), null, "TTL");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -573,7 +574,7 @@ public class SparkQLQuery {
         model.removeAll(resource, null, (RDFNode) null);
 
         try {
-            model.write(new FileOutputStream("./rdf/rdf.txt"), "TTL");
+            model.write(new FileOutputStream(Global.RDF_FILE_PATH), "TTL");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
