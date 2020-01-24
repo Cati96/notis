@@ -34,7 +34,7 @@ public class TranslatorService {
 
     private Translator getDefaulTranslator(EntityDTO entityDTO, Integer id) {
         String schedule = "['10:00 - 14:00 | 15:00 - 18:00', '8:30 - 13:00 | 14:00 - 19:00', '9:30 - 12:00 | 13:00 - 19:00', '9:00 - 13:00 | 14:00 - 19:30', '9:00 - 13:00 | 14:00 - 19:30', '9:30 - 12:00 | 13:00 - 19:00', None]";
-        String services = "[['Contract', 'https://notariat-tineretului.net/contract/'], ['Divorce', 'https://notariat-tineretului.net/divort/'], ['Succession', 'https://notariat-tineretului.net/succesiune/'], ['Marriage agreement', 'https://notariat-tineretului.net/conventie-matrimoniala/'], ['Document Legalisation', 'https://notariat-tineretului.net/legalizari/'], ['Procure', 'https://notariat-tineretului.net/procura/']]";
+        String services = "[['1', 'Technical translations', 'Technical translations'], ['3', 'Literary translations', 'Literary translations'], ['2', 'Medical and pharmaceutical translations', 'Medical and pharmaceutical translations'], ['4', 'Legal translations', 'Legal translations'], ['5', 'Economic translations', 'Economic translations']]";
         Address address = new Address("-", "-", "-", "-", "-", "-", "-", "-");
         Translator translator = new Translator(id, entityDTO.getName(), "" + entityDTO.getAuthorizationNumber(), entityDTO.getPhoneNumber(), address, LiteralConvertor.convertFromStringToTimetable(schedule), LiteralConvertor.convertFromStringToServices(services), entityDTO.getLanguages());
         return translator;

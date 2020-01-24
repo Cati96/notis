@@ -25,7 +25,12 @@ export class NotaryService {
       res => res
     ));
   }
-
+  getAllNotariesForAddress(address): Observable<any> {
+  debugger;
+      return this.http.get(this.urlPart + address.country+"/"+address.county+"/"+address.city).pipe(map(
+        res => res
+      ));
+    }
   getAllNotariesForSelectedServicesOffered(servicesOffered): Observable<any> {
     return this.http.post(this.urlPart + 'getAllForSelectedServicesOffered', servicesOffered).pipe(map(res => res));
   }

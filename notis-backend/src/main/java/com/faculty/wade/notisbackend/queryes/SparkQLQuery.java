@@ -81,6 +81,69 @@ public class SparkQLQuery {
         return notaries;
     }
 
+    public static List<Notary> getAllNotaries(String vcountry, String vcounty, String vcity) {
+        List<Notary> notaries = new LinkedList<>();
+        Model model = ModelFactory.createDefaultModel();
+        try {
+            model.read(new FileInputStream("./rdf/rdf.txt"), null, "TTL");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        String queryString = "PREFIX ns1: <http://xmlns.com/foaf/0.1/> " +
+                "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> " +
+                "SELECT ?id ?person ?firstName ?lastName ?authorizationNumber ?phone ?schedule ?services ?county ?city ?street ?address ?country ?zipCode ?streetNr ?others WHERE { " +
+                " ?person rdf:type \"https://www.merriam-webster.com/dictionary/notary%20public\" ." +
+                " ?person <ns1:id> ?id ." +
+                " ?person <ns1:firstName> ?firstName ." +
+                " ?person <ns1:lastName> ?lastName ." +
+                " ?person <ns1:authorizationNumber> ?authorizationNumber ." +
+                " ?person <ns1:phone> ?phone ." +
+                " ?person <ns1:address> ?address ." +
+                " ?person <ns1:schedule> ?schedule ." +
+                " ?person <ns1:services> ?services ." +
+                " ?address <ns1:county> ?county ." +
+                " ?address <ns1:city> ?city ." +
+                " ?address <ns1:street> ?street ." +
+                " ?address <ns1:country> ?country ." +
+                " ?address <ns1:zipCode> ?zipCode ." +
+                " ?address <ns1:streetNr> ?streetNr ." +
+                " ?address <ns1:others> ?others ." +
+                " FILTER (?country = " + vcountry + " && ?county = "+vcounty +" && ?city = "+vcity+" ) " +
+                "}";
+        Query query = QueryFactory.create(queryString);
+        QueryExecution qexec = QueryExecutionFactory.create(query, model);
+        ResultSet results = qexec.execSelect();
+        while (results.hasNext()) {
+            QuerySolution soln = results.nextSolution();
+            Integer id = (Integer) soln.getLiteral("id").getValue();
+            String firstName = (String) soln.getLiteral("firstName").getValue();
+            String lastName = (String) soln.getLiteral("lastName").getValue();
+            Integer authorizationNumber = (Integer) soln.getLiteral("authorizationNumber").getValue();
+            String phone = (String) soln.getLiteral("phone").getValue();
+            Resource address = soln.getResource("address");
+            String scheduleLiteral = (String) soln.getLiteral("schedule").getValue();
+            String servicesLiteral = (String) soln.getLiteral("services").getValue();
+            String county = (String) soln.getLiteral("county").getValue();
+            String city = (String) soln.getLiteral("city").getValue();
+            String street = (String) soln.getLiteral("street").getValue();
+            String country = (String) soln.getLiteral("country").getValue();
+            String zipCode = (String) soln.getLiteral("zipCode").getValue();
+            String streetNr = (String) soln.getLiteral("streetNr").getValue();
+            String others = (String) soln.getLiteral("others").getValue();
+
+            Timetable schedule = LiteralConvertor.convertFromStringToTimetable(scheduleLiteral);
+            List<Service> services = LiteralConvertor.convertFromStringToServices(servicesLiteral);
+            Address addressOnj = new Address(country, county, city, null, street, streetNr, zipCode, others);
+
+            Notary notary = new Notary(id, firstName + " " + lastName, "" + authorizationNumber, phone, addressOnj, schedule, services);
+            notaries.add(notary);
+        }
+        qexec.close();
+        return notaries;
+    }
+
+
     public static ResultSet returnAllByPhoneNumberAndAuthorisation(EntityDTO entityDTO) {
         Model model = ModelFactory.createDefaultModel();
         try {

@@ -13,10 +13,10 @@ public class EntityCreator {
         String offeredServices;
         if (isTranslator) {
             entityID = "https://www.merriam-webster.com/dictionary/translator";
-            offeredServices = "[['IT translations', 'IT translations'], ['Literary translations', 'Literary translations'], ['Medical and pharmaceutical translations', 'Medical and pharmaceutical translations'], ['Economic translations', 'Economic translations'], ['Technical translations', 'Technical translations'], ['Legal translations', 'Legal translations']]";
+            offeredServices = "[['1', 'IT translations', 'IT translations'], ['2', 'Literary translations', 'Literary translations'], ['3', 'Medical and pharmaceutical translations', 'Medical and pharmaceutical translations'], ['4', 'Economic translations', 'Economic translations'], ['5', 'Technical translations', 'Technical translations'], ['6', 'Legal translations', 'Legal translations']]";
         } else {
             entityID = "https://www.merriam-webster.com/dictionary/notary%20public";
-            offeredServices = "[['Contract', 'https://notariat-tineretului.net/contract/'], ['Divorce', 'https://notariat-tineretului.net/divort/'], ['Succession', 'https://notariat-tineretului.net/succesiune/'], ['Marriage agreement', 'https://notariat-tineretului.net/conventie-matrimoniala/'], ['Document Legalisation', 'https://notariat-tineretului.net/legalizari/'], ['Procure', 'https://notariat-tineretului.net/procura/']]";
+            offeredServices = "[['1', 'Contract', 'https://notariat-tineretului.net/contract/'], ['2', 'Divorce', 'https://notariat-tineretului.net/divort/'], ['3', 'Succession', 'https://notariat-tineretului.net/succesiune/'], ['4', 'Marriage agreement', 'https://notariat-tineretului.net/conventie-matrimoniala/'], ['5', 'Document Legalisation', 'https://notariat-tineretului.net/legalizari/'], ['6', 'Procure', 'https://notariat-tineretului.net/procura/']]";
         }
         String languages = convertLanguagesToString(entityDTO.getLanguages());
         Address address = new Address("-", "-", "-", "-", "-", "-", "-", "-");

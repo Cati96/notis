@@ -590,7 +590,8 @@ export class UserSearchWithFiltersComponent implements OnInit, AfterViewInit {
 
   getEntitiesForAddressAndMarkAsValid(address: any) {
     if (this.checkedEntityName === 'Notary') {
-      this.notaryService.getAllNotariesForAddressId(address.id).subscribe(entities => {
+    debugger;
+      this.notaryService.getAllNotariesForAddress(address).subscribe(entities => {
         for (const entity of entities) {
           this.validEntities.push(entity);
         }

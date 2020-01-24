@@ -4,6 +4,24 @@
 @prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix ns1:   <http://xmlns.com/foaf/0.1/> .
 
+[ <ns1:city>      "POPEŞTI-LEORDENI" ;
+  <ns1:country>   "Romania" ;
+  <ns1:county>    "ILFOV" ;
+  <ns1:others>    "-" ;
+  <ns1:street>    "-" ;
+  <ns1:streetNr>  "-" ;
+  <ns1:zipCode>   "-"
+] .
+
+[ <ns1:city>      "-" ;
+  <ns1:country>   "ROMANIA" ;
+  <ns1:county>    "IASI" ;
+  <ns1:others>    "-" ;
+  <ns1:street>    "-" ;
+  <ns1:streetNr>  "-" ;
+  <ns1:zipCode>   "-"
+] .
+
 <http://example.org/people/MIHAELA_AANEI>
         a                          "https://www.merriam-webster.com/dictionary/translator" ;
         <ns1:address>              [ <ns1:city>      "-" ;
@@ -22,6 +40,24 @@
         <ns1:phone>                "0721921461" ;
         <ns1:schedule>             "['9:30 - 12:00 | 13:00 - 19:00', '9:00 - 13:00 | 14:00 - 19:30', '9:30 - 12:00 | 13:00 - 19:00', '8:30 - 13:00 | 14:00 - 19:00', '10:00 - 14:00 | 15:00 - 18:00', None, None]" ;
         <ns1:services>             "[['1', 'Technical translations', 'Technical translations'], ['3', 'Literary translations', 'Literary translations'], ['2', 'Medical and pharmaceutical translations', 'Medical and pharmaceutical translations'], ['4', 'Legal translations', 'Legal translations'], ['5', 'Economic translations', 'Economic translations']]" .
+
+[ <ns1:city>      "POPEŞTI-LEORDENI" ;
+  <ns1:country>   "Romania" ;
+  <ns1:county>    "ILFOV" ;
+  <ns1:others>    "-" ;
+  <ns1:street>    "-" ;
+  <ns1:streetNr>  "-" ;
+  <ns1:zipCode>   "-"
+] .
+
+[ <ns1:city>      "-" ;
+  <ns1:country>   "-" ;
+  <ns1:county>    "-" ;
+  <ns1:others>    "-" ;
+  <ns1:street>    "-" ;
+  <ns1:streetNr>  "-" ;
+  <ns1:zipCode>   "-"
+] .
 
 <http://example.org/people/ALEXANDRA_ADAM-HOTOIU>
         a                          "https://www.merriam-webster.com/dictionary/notary%20public" ;
@@ -60,41 +96,14 @@
         <ns1:schedule>             "['10:00 - 14:00 | 15:00 - 18:00', '10:00 - 14:00 | 15:00 - 18:00', '9:30 - 12:00 | 13:00 - 19:00', '10:00 - 14:00 | 15:00 - 18:00', '10:00 - 14:00 | 15:00 - 18:00', '9:30 - 12:00 | 13:00 - 19:00', None]" ;
         <ns1:services>             "[['4', 'Legal translations', 'Legal translations'], ['2', 'Medical and pharmaceutical translations', 'Medical and pharmaceutical translations'], ['3', 'Literary translations', 'Literary translations'], ['1', 'Technical translations', 'Technical translations'], ['5', 'Economic translations', 'Economic translations'], ['6', 'IT translations', 'IT translations']]" .
 
-[ <ns1:city>      "PITEŞTI" ;
-  <ns1:country>   "ROMANIA" ;
-  <ns1:county>    "ARGEŞ" ;
+[ <ns1:city>      "-" ;
+  <ns1:country>   "-" ;
+  <ns1:county>    "-" ;
   <ns1:others>    "-" ;
   <ns1:street>    "-" ;
   <ns1:streetNr>  "-" ;
   <ns1:zipCode>   "-"
 ] .
-
-[ <ns1:city>      "PITEŞTI" ;
-  <ns1:country>   "ROMANIA" ;
-  <ns1:county>    "ARGEŞ" ;
-  <ns1:others>    "-" ;
-  <ns1:street>    "-" ;
-  <ns1:streetNr>  "-" ;
-  <ns1:zipCode>   "-"
-] .
-
-<http://example.org/people/GHEORGHE_ABABEI>
-        a                          "https://www.merriam-webster.com/dictionary/notary%20public" ;
-        <ns1:address>              [ <ns1:city>      "BUHUŞI" ;
-                                     <ns1:country>   "ROMANIA" ;
-                                     <ns1:county>    "BACĂU" ;
-                                     <ns1:others>    "-" ;
-                                     <ns1:street>    "-" ;
-                                     <ns1:streetNr>  "-" ;
-                                     <ns1:zipCode>   "-"
-                                   ] ;
-        <ns1:authorizationNumber>  "110785296"^^xsd:int ;
-        <ns1:firstName>            "GHEORGHE" ;
-        <ns1:id>                   "0"^^xsd:int ;
-        <ns1:lastName>             "ABABEI" ;
-        <ns1:phone>                "0137503773" ;
-        <ns1:schedule>             "['9:00 - 13:00 | 14:00 - 19:30', '8:00 - 12:00 | 14:00-20:00', '9:30 - 12:00 | 13:00 - 19:00', '8:00 - 12:00 | 14:00-20:00', '10:00 - 14:00 | 15:00 - 18:00', '9:00 - 13:00 | 14:00 - 19:30', None]" ;
-        <ns1:services>             "[['6', 'DocumentLegalisation', 'https://notariat-tineretului.net/legalizari/'], ['3', 'Contract', 'https://notariat-tineretului.net/contract/'], ['1', 'Succession', 'https://notariat-tineretului.net/succesiune/'], ['5', 'Divorce', 'https://notariat-tineretului.net/divort/'], ['2', 'Declaration', 'https://notariat-tineretului.net/declaratie/'], ['2118447233', 'type', 'description']]" .
 
 <http://example.org/people/FLORENTINA_LOREDANA_ACHIM>
         a                          "https://www.merriam-webster.com/dictionary/notary%20public" ;
@@ -114,9 +123,27 @@
         <ns1:schedule>             "['9:30 - 12:00 | 13:00 - 19:00', '10:00 - 14:00 | 15:00 - 18:00', '8:00 - 12:00 | 14:00-20:00', '9:30 - 12:00 | 13:00 - 19:00', '9:30 - 12:00 | 13:00 - 19:00', None, None]" ;
         <ns1:services>             "[['5', 'Divorce', 'https://notariat-tineretului.net/divort/'], ['6', 'Document Legalisation', 'https://notariat-tineretului.net/legalizari/'], ['1', 'Succession', 'https://notariat-tineretului.net/succesiune/']]" .
 
-[ <ns1:city>      "PITEŞTI" ;
-  <ns1:country>   "ROMANIA" ;
-  <ns1:county>    "ARGEŞ" ;
+<http://example.org/people/GHEORGHE_ABABEI>
+        a                          "https://www.merriam-webster.com/dictionary/notary%20public" ;
+        <ns1:address>              [ <ns1:city>      "BUHUŞI" ;
+                                     <ns1:country>   "ROMANIA" ;
+                                     <ns1:county>    "BACĂU" ;
+                                     <ns1:others>    "-" ;
+                                     <ns1:street>    "-" ;
+                                     <ns1:streetNr>  "-" ;
+                                     <ns1:zipCode>   "-"
+                                   ] ;
+        <ns1:authorizationNumber>  110785296 ;
+        <ns1:firstName>            "GHEORGHE" ;
+        <ns1:id>                   0 ;
+        <ns1:lastName>             "ABABEI" ;
+        <ns1:phone>                "0137503773" ;
+        <ns1:schedule>             "['9:00 - 13:00 | 14:00 - 19:30', '8:00 - 12:00 | 14:00-20:00', '9:30 - 12:00 | 13:00 - 19:00', '8:00 - 12:00 | 14:00-20:00', '10:00 - 14:00 | 15:00 - 18:00', '9:00 - 13:00 | 14:00 - 19:30', None]" ;
+        <ns1:services>             "[['6', 'Document Legalisation', 'https://notariat-tineretului.net/legalizari/'], ['3', 'Contract', 'https://notariat-tineretului.net/contract/'], ['1', 'Succession', 'https://notariat-tineretului.net/succesiune/'], ['5', 'Divorce', 'https://notariat-tineretului.net/divort/'], ['2', 'Declaration', 'https://notariat-tineretului.net/declaratie/']]" .
+
+[ <ns1:city>      "POPEŞTI-LEORDENI" ;
+  <ns1:country>   "Romania" ;
+  <ns1:county>    "ILFOV" ;
   <ns1:others>    "-" ;
   <ns1:street>    "-" ;
   <ns1:streetNr>  "-" ;
@@ -164,15 +191,6 @@
 <https://www.merriam-webster.com/dictionary/translator>
         a       ns1:Person .
 
-[ <ns1:city>      "-" ;
-  <ns1:country>   "ROMANIA" ;
-  <ns1:county>    "IASI" ;
-  <ns1:others>    "-" ;
-  <ns1:street>    "-" ;
-  <ns1:streetNr>  "-" ;
-  <ns1:zipCode>   "-"
-] .
-
 <http://example.org/people/RADU_MIHAIL_ABABEI>
         a                          "https://www.merriam-webster.com/dictionary/notary%20public" ;
         <ns1:address>              [ <ns1:city>      "BACAU" ;
@@ -191,6 +209,34 @@
         <ns1:schedule>             "['8:30 - 13:00 | 14:00 - 19:00', '8:30 - 13:00 | 14:00 - 19:00', '10:00 - 14:00 | 15:00 - 18:00', '10:00 - 14:00 | 15:00 - 18:00', '9:00 - 13:00 | 14:00 - 19:30', '10:00 - 14:00 | 15:00 - 18:00', None]" ;
         <ns1:services>             "[['6', 'Document Legalisation', 'https://notariat-tineretului.net/legalizari/'], ['2', 'Declaration', 'https://notariat-tineretului.net/declaratie/'], ['1', 'Succession', 'https://notariat-tineretului.net/succesiune/'], ['3', 'Contract', 'https://notariat-tineretului.net/contract/'], ['7', 'Marriage agreement', 'https://notariat-tineretului.net/conventie-matrimoniala/'], ['5', 'Divorce', 'https://notariat-tineretului.net/divort/']]" .
 
+[ <ns1:city>      "-" ;
+  <ns1:country>   "-" ;
+  <ns1:county>    "-" ;
+  <ns1:others>    "-" ;
+  <ns1:street>    "-" ;
+  <ns1:streetNr>  "-" ;
+  <ns1:zipCode>   "-"
+] .
+
+<http://example.org/people/ADINAMIHAELA_ABABEI>
+        a                          "https://www.merriam-webster.com/dictionary/translator" ;
+        <ns1:address>              [ <ns1:city>      "-" ;
+                                     <ns1:country>   "ROMANIA" ;
+                                     <ns1:county>    "IASI" ;
+                                     <ns1:others>    "-" ;
+                                     <ns1:street>    "-" ;
+                                     <ns1:streetNr>  "-" ;
+                                     <ns1:zipCode>   "-"
+                                   ] ;
+        <ns1:authorizationNumber>  "18372"^^xsd:int ;
+        <ns1:firstName>            "ADINAMIHAELA" ;
+        <ns1:id>                   "4"^^xsd:int ;
+        <ns1:languages>            "['FRANCEZĂ']" ;
+        <ns1:lastName>             "ABABEI" ;
+        <ns1:phone>                "0314689358" ;
+        <ns1:schedule>             "['9:00 - 13:00 | 14:00 - 19:30', '10:00 - 14:00 | 15:00 - 18:00', '8:00 - 12:00 | 14:00-20:00', '10:00 - 14:00 | 15:00 - 18:00', '8:00 - 12:00 | 14:00-20:00', '8:30 - 13:00 | 14:00 - 19:00', None]" ;
+        <ns1:services>             "[['2', 'Medicalandpharmaceuticaltranslations', 'Medical and pharmaceutical translations'], ['3', 'Literarytranslations', 'Literary translations'], ['1', 'Technicaltranslations', 'Technical translations'], ['5', 'Economictranslations', 'Economic translations']]" .
+
 <http://example.org/people/ADINA_MIHAELA_ABABEI>
         a                          "https://www.merriam-webster.com/dictionary/translator" ;
         <ns1:address>              [ <ns1:city>      "-" ;
@@ -208,11 +254,11 @@
         <ns1:lastName>             "ABABEI" ;
         <ns1:phone>                "0314689358" ;
         <ns1:schedule>             "['9:00 - 13:00 | 14:00 - 19:30', '10:00 - 14:00 | 15:00 - 18:00', '8:00 - 12:00 | 14:00-20:00', '10:00 - 14:00 | 15:00 - 18:00', '8:00 - 12:00 | 14:00-20:00', '8:30 - 13:00 | 14:00 - 19:00', None]" ;
-        <ns1:services>             "[['6', 'ITtranslations22', 'IT translations22'], ['2', 'Medicalandpharmaceuticaltranslations', 'Medical and pharmaceutical translations'], ['3', 'Literarytranslations', 'Literary translations'], ['1', 'Technicaltranslations', 'Technical translations'], ['5', 'Economictranslations', 'Economic translations']]" .
+        <ns1:services>             "[['6', 'ITtranslations1', 'IT translations2'], ['2', 'Medicalandpharmaceuticaltranslations', 'Medical and pharmaceutical translations'], ['3', 'Literarytranslations', 'Literary translations'], ['1', 'Technicaltranslations', 'Technical translations'], ['5', 'Economictranslations', 'Economic translations']]" .
 
-[ <ns1:city>      "BUHUŞI" ;
+[ <ns1:city>      "-" ;
   <ns1:country>   "ROMANIA" ;
-  <ns1:county>    "BACĂU" ;
+  <ns1:county>    "IASI" ;
   <ns1:others>    "-" ;
   <ns1:street>    "-" ;
   <ns1:streetNr>  "-" ;
@@ -229,20 +275,20 @@
                                      <ns1:streetNr>  "-" ;
                                      <ns1:zipCode>   "-"
                                    ] ;
-        <ns1:authorizationNumber>  "546930667"^^xsd:int ;
+        <ns1:authorizationNumber>  546930667 ;
         <ns1:firstName>            "ADRIAN" ;
-        <ns1:id>                   "2"^^xsd:int ;
+        <ns1:id>                   2 ;
         <ns1:lastName>             "ACHIM" ;
         <ns1:phone>                "0874835777" ;
         <ns1:schedule>             "['10:00 - 14:00 | 15:00 - 18:00', '9:30 - 12:00 | 13:00 - 19:00', '8:30 - 13:00 | 14:00 - 19:00', '9:30 - 12:00 | 13:00 - 19:00', '8:00 - 12:00 | 14:00-20:00', '8:30 - 13:00 | 14:00 - 19:00', None]" ;
-        <ns1:services>             "[['2', 'Declaration', 'https://notariat-tineretului.net/declaratie/'], ['1', 'Succession', 'https://notariat-tineretului.net/succesiune/'], ['7', 'Marriageagreement', 'https://notariat-tineretului.net/conventie-matrimoniala/'], ['6', 'DocumentLegalisation', 'https://notariat-tineretului.net/legalizari/']]" .
+        <ns1:services>             "[['5', 'Divorce', 'https://notariat-tineretului.net/divort/'], ['2', 'Declaration', 'https://notariat-tineretului.net/declaratie/'], ['1', 'Succession', 'https://notariat-tineretului.net/succesiune/'], ['7', 'Marriage agreement', 'https://notariat-tineretului.net/conventie-matrimoniala/'], ['6', 'Document Legalisation', 'https://notariat-tineretului.net/legalizari/'], ['3', 'Contract', 'https://notariat-tineretului.net/contract/'], ['4', 'Procure', 'https://notariat-tineretului.net/procura/']]" .
 
 <https://www.merriam-webster.com/dictionary/notary%20public>
         a       ns1:Person .
 
-[ <ns1:city>      "PITEŞTI" ;
-  <ns1:country>   "ROMANIA" ;
-  <ns1:county>    "ARGEŞ" ;
+[ <ns1:city>      "POPEŞTI-LEORDENI" ;
+  <ns1:country>   "Romania" ;
+  <ns1:county>    "ILFOV" ;
   <ns1:others>    "-" ;
   <ns1:street>    "-" ;
   <ns1:streetNr>  "-" ;
