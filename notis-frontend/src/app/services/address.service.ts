@@ -14,18 +14,6 @@ export class AddressService {
 
   }
 
-  getAllAddressesForEntityType(entityType): Observable<any> {
-    const params = '?' + 'entityType=' + entityType;
-    return this.http.get(this.urlPart + 'getAllForEntityType' + params, {responseType: 'json'})
-      .pipe(map(res => res));
-  }
-
-  getAllAddressesForEntityTypeAndCustomLocation(entityType: any, city: any, locality: any): Observable<any> {
-    const params = '?' + 'entityType=' + entityType + '&city=' + city + '&locality=' + locality;
-    return this.http.get(this.urlPart + 'getAllForEntityTypeAndCustomLocation' + params, {responseType: 'json'})
-      .pipe(map(res => res));
-  }
-
   update(address: Address, entityId): Observable<any> {
     address.id = entityId;
     return this.http.put(this.urlPart, address).pipe(map(

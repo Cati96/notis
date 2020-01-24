@@ -20,17 +20,6 @@ export class NotaryService {
     ));
   }
 
-  getAllNotariesForAddressId(addressId): Observable<any> {
-    const params = '?' + 'addressId=' + addressId;
-    return this.http.get(this.urlPart + 'getAllForAddressId' + params, {responseType: 'json'}).pipe(map(
-      res => res
-    ));
-  }
-
-  getAllNotariesForSelectedServicesOffered(servicesOffered): Observable<any> {
-    return this.http.post(this.urlPart + 'getAllForSelectedServicesOffered', servicesOffered).pipe(map(res => res));
-  }
-
   addNotary(notary: Notary): Observable<any> {
     const languages = [];
     languages.push('English');

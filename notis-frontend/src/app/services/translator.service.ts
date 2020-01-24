@@ -21,17 +21,6 @@ export class TranslatorService {
     ));
   }
 
-  getAllTranslatorsForAddressId(addressId): Observable<any> {
-    const params = '?' + 'addressId=' + addressId;
-    return this.http.get(this.urlPart + 'getAllForAddressId' + params, {responseType: 'json'}).pipe(map(
-      res => res
-    ));
-  }
-
-  getAllTranslatorsForSelectedServicesOffered(servicesOffered): Observable<any> {
-    return this.http.post(this.urlPart + 'getAllForSelectedServicesOffered', servicesOffered).pipe(map(res => res));
-  }
-
   addTranslator(translator: Translator): Observable<any> {
     return this.http.post(this.urlPart, {
       name: translator.name,
