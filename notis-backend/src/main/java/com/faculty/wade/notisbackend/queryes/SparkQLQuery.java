@@ -17,6 +17,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 public class SparkQLQuery {
 
@@ -32,7 +33,7 @@ public class SparkQLQuery {
 
         String queryString = "PREFIX ns1: <http://xmlns.com/foaf/0.1/> " +
                 "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> " +
-                "SELECT ?id ?person ?firstName ?lastName ?authorizationNumber ?phone ?schedule ?services ?county ?city ?street ?address ?country ?zipCode ?streetNr ?others ?locality WHERE { " +
+                "SELECT ?id ?person ?firstName ?lastName ?authorizationNumber ?phone ?schedule ?services ?county ?city ?street ?address ?country ?zipCode ?streetNr ?others ?locality ?documents WHERE { " +
                 " ?person rdf:type \"https://www.merriam-webster.com/dictionary/notary%20public\" ." +
                 " ?person <ns1:id> ?id ." +
                 " ?person <ns1:firstName> ?firstName ." +
@@ -50,6 +51,7 @@ public class SparkQLQuery {
                 " ?address <ns1:streetNr> ?streetNr ." +
                 " ?address <ns1:others> ?others ." +
                 " ?address <ns1:locality> ?locality ." +
+                " ?person <ns1:documents> ?documents ." +
                 "}";
         Query query = QueryFactory.create(queryString);
         QueryExecution qexec = QueryExecutionFactory.create(query, model);
@@ -72,9 +74,13 @@ public class SparkQLQuery {
             String streetNr = (String) soln.getLiteral("streetNr").getValue();
             String others = (String) soln.getLiteral("others").getValue();
             String locality = (String) soln.getLiteral("locality").getValue();
-
+            String documentsLiteral = (String) soln.getLiteral("documents").getValue();
             Timetable schedule = LiteralConvertor.convertFromStringToTimetable(scheduleLiteral);
+            Map<Integer, List<Document>> serviceIdToDocumentList = LiteralConvertor.convertFromDocumentsStringToMap(documentsLiteral);
             List<Service> services = LiteralConvertor.convertFromStringToServices(servicesLiteral);
+            for (Service service : services) {
+                service.setDocuments(serviceIdToDocumentList.get(service.getId()));
+            }
             Address addressOnj = new Address(country, county, city, locality, street, streetNr, zipCode, others);
 
             Notary notary = new Notary(id, firstName + " " + lastName, "" + authorizationNumber, phone, addressOnj, schedule, services);
@@ -95,7 +101,7 @@ public class SparkQLQuery {
 
         String queryString = "PREFIX ns1: <http://xmlns.com/foaf/0.1/> " +
                 "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> " +
-                "SELECT ?id ?person ?firstName ?lastName ?authorizationNumber ?phone ?schedule ?services ?county ?city ?street ?address ?country ?zipCode ?streetNr ?others WHERE { " +
+                "SELECT ?id ?person ?firstName ?lastName ?authorizationNumber ?phone ?schedule ?services ?county ?city ?street ?address ?country ?zipCode ?streetNr ?others ?documents WHERE { " +
                 " ?person rdf:type \"https://www.merriam-webster.com/dictionary/notary%20public\" ." +
                 " ?person <ns1:id> ?id ." +
                 " ?person <ns1:firstName> ?firstName ." +
@@ -112,7 +118,8 @@ public class SparkQLQuery {
                 " ?address <ns1:zipCode> ?zipCode ." +
                 " ?address <ns1:streetNr> ?streetNr ." +
                 " ?address <ns1:others> ?others ." +
-                " FILTER (?country = " + vcountry + " && ?county = "+vcounty +" && ?city = "+vcity+" ) " +
+                " ?person <ns1:documents> ?documents ." +
+                " FILTER (?country = " + vcountry + " && ?county = " + vcounty + " && ?city = " + vcity + " ) " +
                 "}";
         Query query = QueryFactory.create(queryString);
         QueryExecution qexec = QueryExecutionFactory.create(query, model);
@@ -134,9 +141,13 @@ public class SparkQLQuery {
             String zipCode = (String) soln.getLiteral("zipCode").getValue();
             String streetNr = (String) soln.getLiteral("streetNr").getValue();
             String others = (String) soln.getLiteral("others").getValue();
-
+            String documentsLiteral = (String) soln.getLiteral("documents").getValue();
             Timetable schedule = LiteralConvertor.convertFromStringToTimetable(scheduleLiteral);
+            Map<Integer, List<Document>> serviceIdToDocumentList = LiteralConvertor.convertFromDocumentsStringToMap(documentsLiteral);
             List<Service> services = LiteralConvertor.convertFromStringToServices(servicesLiteral);
+            for (Service service : services) {
+                service.setDocuments(serviceIdToDocumentList.get(service.getId()));
+            }
             Address addressOnj = new Address(country, county, city, null, street, streetNr, zipCode, others);
 
             Notary notary = new Notary(id, firstName + " " + lastName, "" + authorizationNumber, phone, addressOnj, schedule, services);
@@ -184,7 +195,7 @@ public class SparkQLQuery {
 
         String queryString = "PREFIX ns1: <http://xmlns.com/foaf/0.1/> " +
                 "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> " +
-                "SELECT ?id ?person ?firstName ?lastName ?authorizationNumber ?phone ?schedule ?services ?county ?city ?street ?languages ?country ?zipCode ?streetNr ?others ?locality WHERE { " +
+                "SELECT ?id ?person ?firstName ?lastName ?authorizationNumber ?phone ?schedule ?services ?county ?city ?street ?languages ?country ?zipCode ?streetNr ?others ?locality ?documents WHERE { " +
                 " ?person rdf:type \"https://www.merriam-webster.com/dictionary/translator\" ." +
                 " ?person <ns1:id> ?id ." +
                 " ?person <ns1:firstName> ?firstName ." +
@@ -203,6 +214,7 @@ public class SparkQLQuery {
                 " ?address <ns1:streetNr> ?streetNr ." +
                 " ?address <ns1:others> ?others ." +
                 " ?address <ns1:locality> ?locality ." +
+                " ?person <ns1:documents> ?documents ." +
                 "}";
         Query query = QueryFactory.create(queryString);
         QueryExecution qexec = QueryExecutionFactory.create(query, model);
@@ -226,10 +238,14 @@ public class SparkQLQuery {
             String streetNr = (String) soln.getLiteral("streetNr").getValue();
             String others = (String) soln.getLiteral("others").getValue();
             String locality = (String) soln.getLiteral("locality").getValue();
-
+            String documentsLiteral = (String) soln.getLiteral("documents").getValue();
             Timetable schedule = LiteralConvertor.convertFromStringToTimetable(scheduleLiteral);
             List<String> languages = LiteralConvertor.convertFromStringToLanguages(languagesLiteral);
-            List<com.faculty.wade.notisbackend.model.Service> services = LiteralConvertor.convertFromStringToServices(servicesLiteral);
+            Map<Integer, List<Document>> serviceIdToDocumentList = LiteralConvertor.convertFromDocumentsStringToMap(documentsLiteral);
+            List<Service> services = LiteralConvertor.convertFromStringToServices(servicesLiteral);
+            for (Service service : services) {
+                service.setDocuments(serviceIdToDocumentList.get(service.getId()));
+            }
             Address addressOnj = new Address(country, county, city, locality, street, streetNr, zipCode, others);
 
             Translator translator = new Translator(id, firstName + " " + lastName, "" + authorizationNumber, phone, addressOnj, schedule, services, languages);
@@ -392,6 +408,7 @@ public class SparkQLQuery {
         Property streetNumberProperty = ResourceFactory.createProperty("ns1:", "streetNr");
         Property addressProperty = ResourceFactory.createProperty("ns1:", "address");
         Property languagesProperty = ResourceFactory.createProperty("ns1:", "languages");
+        Property documentsProperty = ResourceFactory.createProperty("ns1:", "documents");
         Resource addressResource = model.createResource();
 
         Literal firstNameLiteral = ResourceFactory.createStringLiteral(firstName);
@@ -411,7 +428,7 @@ public class SparkQLQuery {
         Literal zipCodeLiteral = ResourceFactory.createStringLiteral(entityObject.getAddress().getZipCode());
         Literal othersLiteral = ResourceFactory.createStringLiteral(entityObject.getAddress().getOthers());
         Literal streetNumberLiteral = ResourceFactory.createStringLiteral(entityObject.getAddress().getStreetNumber());
-
+        Literal documentsLiteral = ResourceFactory.createStringLiteral(entityObject.getDocuments());
 
         addressResource.addLiteral(countyProperty, countyLiteral);
         addressResource.addLiteral(cityProperty, cityLiteral);
@@ -429,6 +446,7 @@ public class SparkQLQuery {
         notary.addLiteral(authorizationNumberProperty, authorizationNumberLiteral);
         notary.addLiteral(scheduleProperty, scheduleLiteral);
         notary.addLiteral(servicesProperty, servicesLiteral);
+        notary.addLiteral(documentsProperty, documentsLiteral);
         notary.addProperty(addressProperty, addressResource);
         if (isTranslator)
             notary.addProperty(languagesProperty, languagesLiteral);
@@ -454,7 +472,7 @@ public class SparkQLQuery {
 
         String queryString = "PREFIX ns1: <http://xmlns.com/foaf/0.1/> " +
                 "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> " +
-                "SELECT ?id ?person ?firstName ?lastName ?authorizationNumber ?phone ?schedule ?services ?county ?city ?street ?address ?country ?zipCode ?streetNr ?others ?locality WHERE { " +
+                "SELECT ?id ?person ?firstName ?lastName ?authorizationNumber ?phone ?schedule ?services ?county ?city ?street ?address ?country ?zipCode ?streetNr ?others ?locality ?documents WHERE { " +
                 " ?person rdf:type \"https://www.merriam-webster.com/dictionary/notary%20public\" ." +
                 " ?person <ns1:id> ?id ." +
                 " ?person <ns1:firstName> ?firstName ." +
@@ -472,6 +490,7 @@ public class SparkQLQuery {
                 " ?address <ns1:streetNr> ?streetNr ." +
                 " ?address <ns1:others> ?others ." +
                 " ?address <ns1:locality> ?locality ." +
+                " ?person <ns1:documents> ?documents ." +
                 " FILTER (?id = " + notaryId + " ) " +
                 "}";
 
@@ -496,8 +515,13 @@ public class SparkQLQuery {
             String streetNr = (String) soln.getLiteral("streetNr").getValue();
             String others = (String) soln.getLiteral("others").getValue();
             String locality = (String) soln.getLiteral("locality").getValue();
+            String documentsLiteral = (String) soln.getLiteral("documents").getValue();
             Timetable schedule = LiteralConvertor.convertFromStringToTimetable(scheduleLiteral);
+            Map<Integer, List<Document>> serviceIdToDocumentList = LiteralConvertor.convertFromDocumentsStringToMap(documentsLiteral);
             List<Service> services = LiteralConvertor.convertFromStringToServices(servicesLiteral);
+            for (Service service : services) {
+                service.setDocuments(serviceIdToDocumentList.get(service.getId()));
+            }
             Address addressOnj = new Address(country, county, city, locality, street, streetNr, zipCode, others);
 
             Notary notary = new Notary(id, firstName + " " + lastName, "" + authorizationNumber, phone, addressOnj, schedule, services);
@@ -518,7 +542,7 @@ public class SparkQLQuery {
 
         String queryString = "PREFIX ns1: <http://xmlns.com/foaf/0.1/> " +
                 "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> " +
-                "SELECT ?id ?person ?firstName ?lastName ?authorizationNumber ?phone ?schedule ?services ?county ?city ?street ?languages ?country ?zipCode ?streetNr ?others ?locality WHERE { " +
+                "SELECT ?id ?person ?firstName ?lastName ?authorizationNumber ?phone ?schedule ?services ?county ?city ?street ?languages ?country ?zipCode ?streetNr ?others ?locality ?documents WHERE { " +
                 " ?person rdf:type \"https://www.merriam-webster.com/dictionary/translator\" ." +
                 " ?person <ns1:id> ?id ." +
                 " ?person <ns1:firstName> ?firstName ." +
@@ -537,6 +561,7 @@ public class SparkQLQuery {
                 " ?address <ns1:streetNr> ?streetNr ." +
                 " ?address <ns1:others> ?others ." +
                 " ?address <ns1:locality> ?locality ." +
+                " ?person <ns1:documents> ?documents ." +
                 " FILTER (?id = " + translatorId + " ) " +
                 "}";
         Query query = QueryFactory.create(queryString);
@@ -561,9 +586,14 @@ public class SparkQLQuery {
             String streetNr = (String) soln.getLiteral("streetNr").getValue();
             String others = (String) soln.getLiteral("others").getValue();
             String locality = (String) soln.getLiteral("locality").getValue();
+            String documentsLiteral = (String) soln.getLiteral("documents").getValue();
             Timetable schedule = LiteralConvertor.convertFromStringToTimetable(scheduleLiteral);
             List<String> languages = LiteralConvertor.convertFromStringToLanguages(languagesLiteral);
-            List<com.faculty.wade.notisbackend.model.Service> services = LiteralConvertor.convertFromStringToServices(servicesLiteral);
+            Map<Integer, List<Document>> serviceIdToDocumentList = LiteralConvertor.convertFromDocumentsStringToMap(documentsLiteral);
+            List<Service> services = LiteralConvertor.convertFromStringToServices(servicesLiteral);
+            for (Service service : services) {
+                service.setDocuments(serviceIdToDocumentList.get(service.getId()));
+            }
             Address addressOnj = new Address(country, county, city, locality, street, streetNr, zipCode, others);
 
             Translator translator = new Translator(id, firstName + " " + lastName, "" + authorizationNumber, phone, addressOnj, schedule, services, languages);

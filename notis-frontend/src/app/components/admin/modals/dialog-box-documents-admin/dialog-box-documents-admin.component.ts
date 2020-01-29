@@ -19,6 +19,7 @@ export class DialogBoxDocumentsAdminComponent implements OnInit {
   entityType: string;
   isDeleting: boolean;
   hiddenId: number;
+  entityId: number;
 
   @ViewChild(MatTable, {static: true}) table: MatTable<any>;
 
@@ -27,6 +28,7 @@ export class DialogBoxDocumentsAdminComponent implements OnInit {
               @Optional() @Inject(MAT_DIALOG_DATA) public data: any) {
     this.serviceId = data.serviceId;
     this.entityType = data.entityType;
+    this.entityId = data.entityId;
     this.isDeleting = false;
     this.documents = [];
     this.getAllDocumentsForServiceId();
@@ -48,7 +50,7 @@ export class DialogBoxDocumentsAdminComponent implements OnInit {
 
   getAllDocumentsForServiceId() {
     let temp;
-    this.documentService.getAllDocumentsForEntityTypeServiceId(this.entityType, this.serviceId)
+    this.documentService.getAllDocumentsForEntityTypeServiceId(this.entityType, this.serviceId, this.entityId)
       .subscribe(json => {
           temp = json;
           console.log(temp);
@@ -107,10 +109,20 @@ export class DialogBoxDocumentsAdminComponent implements OnInit {
 
   updateDocument(documentCustom) {
     console.log('TO DO UPDATE DOCUMENT');
+    console.log(documentCustom);
+    console.log(this.documents);
+    this.documentService.updateOrCreateDocument(this.entityType, this.entityId, this.serviceId, documentCustom).subscribe(
+    json=> console.log(json)
+    );
   }
 
   deleteDocument(id) {
     console.log('TO DO DELETE DOCUMENT BY ID');
+    this.documentService.deleteDocument(this.entityType, this.entityId, this.serviceId, id).subscribe(
+         json=> {console.log(json);
+                this.findAndDeleteDocumentFromArray(id);
+         }
+       );
   }
 
   doOpenDocument(templateType) {
@@ -146,4 +158,9 @@ export class DialogBoxDocumentsAdminComponent implements OnInit {
 
     this.table.renderRows();
   }
+  findAndDeleteDocumentFromArray(documentId) {
+      let index = this.documents.findIndex(notary => notary.id === documentId);
+      this.documents.splice(index, 1);
+
+    }
 }

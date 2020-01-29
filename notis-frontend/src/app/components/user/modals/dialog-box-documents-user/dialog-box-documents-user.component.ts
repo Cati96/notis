@@ -16,6 +16,7 @@ export class DialogBoxDocumentsUserComponent implements OnInit {
   serviceId: number;
   documents: Document[];
   entityType: string;
+  entityId: number;
 
   @ViewChild(MatTable, {static: true}) table: MatTable<any>;
 
@@ -24,6 +25,7 @@ export class DialogBoxDocumentsUserComponent implements OnInit {
               @Optional() @Inject(MAT_DIALOG_DATA) public data: any) {
     this.serviceId = data.serviceId;
     this.entityType = data.entityType;
+    this.entityId = data.entityId;
     this.getAllDocumentsForServiceId();
   }
 
@@ -35,7 +37,7 @@ export class DialogBoxDocumentsUserComponent implements OnInit {
   }
 
   getAllDocumentsForServiceId() {
-    this.documentService.getAllDocumentsForEntityTypeServiceId(this.entityType, this.serviceId)
+    this.documentService.getAllDocumentsForEntityTypeServiceId(this.entityType, this.serviceId, this.entityId)
       .subscribe(json => {
           this.documents = json;
         }

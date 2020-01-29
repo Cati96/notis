@@ -20,7 +20,7 @@
     <ns1:lastName> "ABABEI" ;
     <ns1:phone> "0203078356" ;
     <ns1:schedule> "['10:00 - 14:00 | 15:00 - 18:00', '10:00 - 14:00 | 15:00 - 18:00', '9:00 - 13:00 | 14:00 - 19:30', '8:30 - 13:00 | 14:00 - 19:00', '9:00 - 13:00 | 14:00 - 19:30', None, None]" ;
-    <ns1:services> "[['1', 'Technical translations', 'Technical translations'], ['6', 'IT translations', 'IT translations'], ['5', 'Economic translations', 'Economic translations']]" .
+    <ns1:services> "[['1', 'Technicallll translations', 'Technical translations'], ['6', 'IT translations', 'IT translations'], ['5', 'Economic translations', 'Economic translations']]" .
 
 <http://example.org/people/ADRIAN_ACHIM> a "https://www.merriam-webster.com/dictionary/notary%20public" ;
     <ns1:address> [ <ns1:city> "PITEŞTI" ;
