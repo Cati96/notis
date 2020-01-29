@@ -12,6 +12,24 @@ export class GlobalProvider {
   }
 
   static getAddressForSearchInUrl(address) {
+    if (address.streetNumber !== undefined && address.streetNumber !== null) {
+      address.streetNumber = address.streetNumber.replace('-', '');
+    }
+    if (address.street !== undefined && address.street !== null) {
+      address.street = address.street.replace('-', '');
+    }
+    if (address.locality !== undefined && address.locality !== null) {
+      address.locality = address.locality.replace('-', '');
+    }
+    if (address.city !== undefined && address.city !== null) {
+      address.city = address.city.replace('-', '');
+    }
+    if (address.zipCode !== undefined && address.zipCode !== null) {
+      address.zipCode = address.zipCode.replace('-', '');
+    }
+    if (address.country !== undefined && address.country !== null) {
+      address.country = address.country.replace('-', '');
+    }
     console.log(address);
     let stringAddress = '';
     if (address.streetNumber !== undefined && address.streetNumber !== null && address.streetNumber.length > 0) {

@@ -73,7 +73,7 @@ export class CountyCityLocality {
 
   getCountyIndexOnList(county) {
     for (let i = 0; i < this.counties.length; i++) {
-      if (this.counties[i] === county) {
+      if (this.counties[i].replace(' ', '') === county.replace(' ', '')) {
         return i;
       }
     }
@@ -82,7 +82,7 @@ export class CountyCityLocality {
 
   getCityIndexOnList(city) {
     for (let i = 0; i < this.cities.length; i++) {
-      if (this.cities[i] === city) {
+      if (this.cities[i].replace(' ', '') === city.replace(' ', '')) {
         return i;
       }
     }
@@ -91,7 +91,7 @@ export class CountyCityLocality {
 
   getLocalityIndexOnList(locality) {
     for (let i = 0; i < this.localities.length; i++) {
-      if (this.localities[i] === locality) {
+      if (this.localities[i].replace(' ', '') === locality.replace(' ', '')) {
         return i;
       }
     }
