@@ -16,16 +16,15 @@ tags:
   description: "Endpoints for notaries"
 - name: "translator"
   description: "Endpoints for translators"
-- name: "user"
-  description: "Operations about user"
-  externalDocs:
-    description: "Find out more about our store"
-    url: "http://swagger.io"
+- name: "addresses"
+  description: "Endpoints for address"
+- name: "services"
+  description: "Endpoints for services"
 schemes:
 - "https"
 - "http"
 paths:
-  /notary:
+  /notaries:
     post:
       tags:
       - "notary"
@@ -50,7 +49,7 @@ paths:
           description: "Invalid input"
         200:
           description: "Object successfully stored"
-  /notary/{id}:
+  /notaries/{id}:
     get:
       tags:
       - "notary"
@@ -139,24 +138,22 @@ paths:
       - admin_auth:
         - "write:entity"
         - "read:entity"
-  /notary/findByLocation:
+  /notaries/getAllForAddressId:
     get:
       tags:
       - "notary"
       summary: "Finds notaries by city"
-      description: "Multiple citiescan be provided with comma separated strings"
+      description: "Retrieve all Notaries from a specific address"
       operationId: "findNotariesByStatus"
       produces:
       - "application/xml"
       - "application/json"
       parameters:
-      - name: "city"
+      - name: "id"
         in: "query"
-        description: "City values that need to be considered for filter"
+        description: "Id of an address"
         required: true
-        type: "array"
-        items:
-          type: "string"
+        type: "number"
         collectionFormat: "multi"
       responses:
         200:
@@ -166,26 +163,17 @@ paths:
             items:
               $ref: "#/definitions/Notary"
         400:
-          description: "Invalid city value"
-  /notary/findByDocument:
+          description: "Invalid id"
+  /notaries/getAll:
     get:
       tags:
       - "notary"
       summary: "Finds notaries by documents"
-      description: "Muliple document names can be provided with comma separated strings"
+      description: "Retrieve all notaries"
       operationId: "findNotariesByDocuments"
       produces:
       - "application/xml"
       - "application/json"
-      parameters:
-      - name: "documents"
-        in: "query"
-        description: "Documents to filter by"
-        required: true
-        type: "array"
-        items:
-          type: "string"
-        collectionFormat: "multi"
       responses:
         200:
           description: "successfully retrieved notaries"
@@ -195,7 +183,7 @@ paths:
               $ref: "#/definitions/Notary"
         400:
           description: "Invalid tag value"
-  /translator:
+  /translators:
     post:
       tags:
       - "translator"
@@ -220,11 +208,7 @@ paths:
           description: "Invalid input"
         200:
           description: "Object successfully stored"
-      security:
-      - admin_auth:
-        - "write:entity"
-        - "read:entity"
-  /translator/{id}:
+  /translators/{id}:
     get:
       tags:
       - "translator"
@@ -279,7 +263,7 @@ paths:
         405:
           description: "Invalid input"
         404:
-          description: "Notary not found"
+          description: "Translator not found"
         200:
           description: "Object successfully updated"
       security:
@@ -307,96 +291,379 @@ paths:
           description: "Translator deleted successfully"
         400:
           description: "Invalid ID supplied"
-        404:
-          description: "Translator not found"
       security:
       - admin_auth:
         - "write:entity"
         - "read:entity"
-  /translator/findByLocation:
+  /translators/getAllForAddressId:
     get:
       tags:
       - "translator"
-      summary: "Finds translators by city"
-      description: "Multiple cities can be provided with comma separated strings"
-      operationId: "findTranslatorsByStatus"
+      summary: "Finds notaries by city"
+      description: "Retrieve all Translators from a specific address"
+      operationId: "findTranslatorByAddressId"
       produces:
       - "application/xml"
       - "application/json"
       parameters:
+      - name: "id"
+        in: "query"
+        description: "Id of an address"
+        required: true
+        type: "number"
+        collectionFormat: "multi"
+      responses:
+        200:
+          description: "successfully retrieved notaries"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Translator"
+        400:
+          description: "Invalid id"
+  /translators/getAll:
+    get:
+      tags:
+      - "translator"
+      summary: "Retrieve all notaries"
+      description: "Retrieve all notaries"
+      operationId: "retrieveAllTranslators"
+      produces:
+      - "application/xml"
+      - "application/json"
+      responses:
+        200:
+          description: "successfully retrieved notaries"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Translator"
+        400:
+          description: "Invalid tag value"
+  /addresses:
+    put:
+      tags:
+      - "addresses"
+      summary: "Update an address"
+      description: ""
+      operationId: "updateAddress"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Address object that needs to be updated"
+        required: true
+        schema:
+          $ref: "#/definitions/Address"
+      responses:
+        405:
+          description: "Invalid input"
+        404:
+          description: "Address not found"
+        200:
+          description: "Object successfully updated"
+      security:
+      - admin_auth:
+        - "write:entity"
+        - "read:entity"
+  /addresses/getAllForEntityType:
+    get:
+      tags:
+      - "addresses"
+      summary: "Retrieve all addresses based on entity type"
+      description: "Returns all addresses"
+      operationId: "getAddresses"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "entityType"
+        in: "path"
+        description: "Entity type: Notary or Translator"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Address"
+        400:
+          description: "Invalid entity type"
+  /addresses/getAllForEntityTypeAndCustomLocation:
+    get:
+      tags:
+      - "addresses"
+      summary: "Retrieve all addresses based on entity type"
+      description: "Returns all addresses"
+      operationId: "getAddressesByTypeAndAddress"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "entityType"
+        in: "path"
+        description: "Entity type: Notary or Translator"
+        required: true
+        type: "string"
       - name: "city"
-        in: "query"
-        description: "City values that need to be considered for filter"
+        in: "path"
+        description: "A city name"
         required: true
-        type: "array"
-        items:
-          type: "string"
-        collectionFormat: "multi"
+        type: "string"
+      - name: "locality"
+        in: "path"
+        description: "A locality name"
+        required: true
+        type: "string"
       responses:
         200:
-          description: "successfully retrieved translators"
+          description: "successful operation"
           schema:
             type: "array"
             items:
-              $ref: "#/definitions/Translator"
+              $ref: "#/definitions/Address"
         400:
-          description: "Invalid city value"
-  /translator/findByDocument:
-    get:
+          description: "Invalid ID supplied"
+        404:
+          description: "Notary not found"
+
+  /services/{id}:
+    post:
       tags:
-      - "translator"
-      summary: "Finds translators by documents"
-      description: "Muliple document names can be provided with comma separated strings"
-      operationId: "findTranslatorsByDocuments"
+      - "services"
+      summary: "Add a new service"
+      description: ""
+      operationId: "addService"
+      consumes:
+      - "application/json"
+      - "application/xml"
       produces:
       - "application/xml"
       - "application/json"
       parameters:
-      - name: "documents"
-        in: "query"
-        description: "Documents to filter by"
+      - in: "body"
+        name: "body"
+        description: "Service object that needs to be added to the RDF"
         required: true
-        type: "array"
-        items:
-          type: "string"
-        collectionFormat: "multi"
+        schema:
+          $ref: "#/definitions/Service"
+      - in: "path"
+        name: "id"
+        type: "string"
+        description: "Id of entity"
+        required: true
       responses:
+        405:
+          description: "Invalid input"
         200:
-          description: "successfully retrieved translators"
-          schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/Translator"
-        400:
-          description: "Invalid document value"
-  /translator/findByLanguage:
-    get:
+          description: "Object successfully stored"
+    put:
       tags:
-      - "translator"
-      summary: "Finds translators by language"
-      description: "Muliple languages can be provided with comma separated strings"
-      operationId: "findTranslatorsByLanguage"
+      - "services"
+      summary: "Update a service"
+      description: ""
+      operationId: "updateService"
+      consumes:
+      - "application/json"
+      - "application/xml"
       produces:
       - "application/xml"
       - "application/json"
       parameters:
-      - name: "languages"
-        in: "query"
-        description: "Languages to filter by"
+      - in: "body"
+        name: "body"
+        description: "Service object that needs to be updated"
         required: true
-        type: "array"
-        items:
-          type: "string"
+        schema:
+          $ref: "#/definitions/Service"
+      - name: "id"
+        in: "path"
+        description: "ID of entity to update"
+        required: true
+        type: "string"
+        format: "int64"
+      responses:
+        405:
+          description: "Invalid input"
+        404:
+          description: "Service not found"
+        200:
+          description: "Object successfully updated"
+      security:
+      - admin_auth:
+        - "write:entity"
+        - "read:entity"
+    delete:
+      tags:
+      - "services"
+      summary: "Deletes a service"
+      description: ""
+      operationId: "deleteService"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Entity id"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "serviceid"
+        in: "path"
+        description: "Service id to delete"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "Service deleted successfully"
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "Entity or service not found"
+      security:
+      - admin_auth:
+        - "write:entity"
+        - "read:entity"
+  /services/getAllTypesForEntityType:
+    get:
+      tags:
+      - "notary"
+      summary: "Retrieve all services types based on entity type"
+      description: "Retrieve all services types based on entity type"
+      operationId: "findAllServiceTypes"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "entityType"
+        in: "query"
+        description: "Entity type"
+        required: true
+        type: "string"
         collectionFormat: "multi"
       responses:
         200:
-          description: "successfully retrieved translators"
+          description: "successfully retrieved notaries"
           schema:
             type: "array"
             items:
-              $ref: "#/definitions/Translator"
+              $ref: "#/definitions/Notary"
         400:
-          description: "Invalid language value"
+          description: "Invalid id"  
+  /timetables:
+    put:
+        tags:
+        - "timetables"
+        summary: "Update a Timetable"
+        description: ""
+        operationId: "updateTimetable"
+        consumes:
+        - "application/json"
+        - "application/xml"
+        produces:
+        - "application/xml"
+        - "application/json"
+        parameters:
+        - in: "body"
+          name: "body"
+          description: "Timetable object that needs to be updated"
+          required: true
+          schema:
+            $ref: "#/definitions/Timetable"
+        responses:
+          405:
+            description: "Invalid input"
+          404:
+            description: "Timetable not found"
+          200:
+            description: "Object successfully updated"
+        security:
+        - admin_auth:
+          - "write:entity"
+          - "read:entity"
+  /documents/getAllForEntityTypeAndServiceId:
+    get:
+      tags:
+      - "documents"
+      summary: "Retrieve all documents based on entity type and service id"
+      description: "Retrieve all documents based on entity type and service id"
+      operationId: "findAllDocuemntsBasedOnEnityTypeAndServiceid"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "entityType"
+        in: "path"
+        description: "Entity type"
+        required: true
+        type: "string"
+      - name: "serviceId"
+        in: "path"
+        description: "Service id"
+        required: true
+        type: "number"
+      responses:
+        200:
+          description: "successfully retrieved notaries"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Document"
+        400:
+          description: "Invalid id"  
+  /documents/getAllForAddressId:
+    get:
+      tags:
+      - "documents"
+      summary: "Retrieve all documents based on address id"
+      description: "Retrieve all documents based on address id"
+      operationId: "findAllDocuemntsBasedOnAddressId"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "addressId"
+        in: "path"
+        description: "Address id"
+        required: true
+        type: "number"
+      responses:
+        200:
+          description: "successfully retrieved documents"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Document"
+        400:
+          description: "Invalid id"
+  /documents/getAll:
+    get:
+      tags:
+      - "documents"
+      summary: "Retrieve all documents"
+      description: "Retrieve all documents"
+      operationId: "findAllDocuemnts"
+      produces:
+      - "application/xml"
+      - "application/json"
+      responses:
+        200:
+          description: "successfully retrieved documents"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Document"
+        400:
+          description: "Invalid id"
 securityDefinitions:
   admin_auth:
     type: "oauth2"
@@ -415,23 +682,25 @@ definitions:
         id:
           type: "integer"
           format: "int64"
-        documents:
-          type: "object"
-          $ref: "#/definitions/Document"
-        city:
+        name:
           type: "string"
-          example: "Iasi"
-        country:
+          example: "Constantin Constantinescu"
+        authorizationNumber:
           type: "string"
-          example: "Romania"
-        county:
+          example: "23423423423"
+        phoneNumber:
           type: "string"
-          example: "Iasi"
+          example: "0742800955"
         address:
-          type: "string"
-          example: "Clopotari 28"
-        phoneNo:
-          type: "string"
+          type: "object"
+          $ref: "#/definitions/Address"
+        timetable:
+          type: "object"
+          $ref: "#/definitions/Timetable"
+        services:
+          type: "array"
+          items:
+              $ref: "#/definitions/Service"
   Translator:
     type: "object"
     required:
@@ -441,27 +710,29 @@ definitions:
         id:
           type: "integer"
           format: "int64"
-        documents:
-          type: "object"
-          $ref: "#/definitions/Document"
-        city:
+        name:
           type: "string"
-          example: "Iasi"
-        country:
+          example: "Constantin Constantinescu"
+        authorizationNumber:
           type: "string"
-          example: "Romania"
-        county:
+          example: "23423423423"
+        phoneNumber:
           type: "string"
-          example: "Iasi"
+          example: "0742800955"
         address:
-          type: "string"
-          example: "Clopotari 28"
-        phoneNo:
-          type: "string"
-          example: "0742800957"
-        languages:
           type: "object"
-          example: "[en, ro, fr]"
+          $ref: "#/definitions/Address"
+        timetable:
+          type: "object"
+          $ref: "#/definitions/Timetable"
+        services:
+          type: "array"
+          items:
+              $ref: "#/definitions/Service"
+        languages:
+          type: "array"
+          items:
+              type: "string"
   Document:
     type: "object"
     required:
@@ -479,6 +750,83 @@ definitions:
         template:
           type: "string"
           example: "https://templates.com/notaryDocument1"
+        price:
+          type: "number"
+          example: 30.2
+  Timetable:
+    type: "object"
+    properties:
+        id:
+          type: "integer"
+          format: "int64"
+        monday:
+          type: "string"
+          example: "8-16"
+        tuesday:
+          type: "string"
+          example: "8-16"
+        wednesday:
+          type: "string"
+          example: "8-16"
+        thursday:
+          type: "string"
+          example: "8-16"
+        friday:
+          type: "string"
+          example: "8-16"
+        saturday:
+          type: "string"
+          example: "8-16"
+        sunday:
+          type: "string"
+          example: "8-16"
+  Address:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      country:
+        type: "string"
+        example: "Romania"
+      county:
+        type: "string"
+        example: "Iasi"
+      city:
+        type: "string"
+        example: "Iasi"
+      locality:
+        type: "string"
+        example: "Baltatesti"
+      street:
+        type: "string"
+        example: "Clopotari"
+      streetNumber:
+        type: "string"
+        example: "54"
+      zipCode:
+        type: "string"
+        example: "610119"
+      other:
+        type: "string"
+        example: "comment"
+  Service:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      type:
+        type: "string"
+        example: "Marriage agreement"
+      description:
+        type: "string"
+        example: "description"
+      documents:
+        type: "array"
+        items:
+              $ref: "#/definitions/Document"
+        example: "array of documents"
   ApiResponse:
     type: "object"
     properties:
