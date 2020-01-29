@@ -454,7 +454,7 @@ public class SparkQLQuery {
 
         String queryString = "PREFIX ns1: <http://xmlns.com/foaf/0.1/> " +
                 "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> " +
-                "SELECT ?id ?person ?firstName ?lastName ?authorizationNumber ?phone ?schedule ?services ?county ?city ?street ?address ?country ?zipCode ?streetNr ?others WHERE { " +
+                "SELECT ?id ?person ?firstName ?lastName ?authorizationNumber ?phone ?schedule ?services ?county ?city ?street ?address ?country ?zipCode ?streetNr ?others ?locality WHERE { " +
                 " ?person rdf:type \"https://www.merriam-webster.com/dictionary/notary%20public\" ." +
                 " ?person <ns1:id> ?id ." +
                 " ?person <ns1:firstName> ?firstName ." +
@@ -471,6 +471,7 @@ public class SparkQLQuery {
                 " ?address <ns1:zipCode> ?zipCode ." +
                 " ?address <ns1:streetNr> ?streetNr ." +
                 " ?address <ns1:others> ?others ." +
+                " ?address <ns1:locality> ?locality ." +
                 " FILTER (?id = " + notaryId + " ) " +
                 "}";
 
@@ -494,10 +495,10 @@ public class SparkQLQuery {
             String zipCode = (String) soln.getLiteral("zipCode").getValue();
             String streetNr = (String) soln.getLiteral("streetNr").getValue();
             String others = (String) soln.getLiteral("others").getValue();
-
+            String locality = (String) soln.getLiteral("locality").getValue();
             Timetable schedule = LiteralConvertor.convertFromStringToTimetable(scheduleLiteral);
             List<Service> services = LiteralConvertor.convertFromStringToServices(servicesLiteral);
-            Address addressOnj = new Address(country, county, city, null, street, streetNr, zipCode, others);
+            Address addressOnj = new Address(country, county, city, locality, street, streetNr, zipCode, others);
 
             Notary notary = new Notary(id, firstName + " " + lastName, "" + authorizationNumber, phone, addressOnj, schedule, services);
             qexec.close();
@@ -517,7 +518,7 @@ public class SparkQLQuery {
 
         String queryString = "PREFIX ns1: <http://xmlns.com/foaf/0.1/> " +
                 "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> " +
-                "SELECT ?id ?person ?firstName ?lastName ?authorizationNumber ?phone ?schedule ?services ?county ?city ?street ?languages ?country ?zipCode ?streetNr ?others WHERE { " +
+                "SELECT ?id ?person ?firstName ?lastName ?authorizationNumber ?phone ?schedule ?services ?county ?city ?street ?languages ?country ?zipCode ?streetNr ?others ?locality WHERE { " +
                 " ?person rdf:type \"https://www.merriam-webster.com/dictionary/translator\" ." +
                 " ?person <ns1:id> ?id ." +
                 " ?person <ns1:firstName> ?firstName ." +
@@ -535,6 +536,7 @@ public class SparkQLQuery {
                 " ?address <ns1:zipCode> ?zipCode ." +
                 " ?address <ns1:streetNr> ?streetNr ." +
                 " ?address <ns1:others> ?others ." +
+                " ?address <ns1:locality> ?locality ." +
                 " FILTER (?id = " + translatorId + " ) " +
                 "}";
         Query query = QueryFactory.create(queryString);
@@ -558,10 +560,11 @@ public class SparkQLQuery {
             String zipCode = (String) soln.getLiteral("zipCode").getValue();
             String streetNr = (String) soln.getLiteral("streetNr").getValue();
             String others = (String) soln.getLiteral("others").getValue();
+            String locality = (String) soln.getLiteral("locality").getValue();
             Timetable schedule = LiteralConvertor.convertFromStringToTimetable(scheduleLiteral);
             List<String> languages = LiteralConvertor.convertFromStringToLanguages(languagesLiteral);
             List<com.faculty.wade.notisbackend.model.Service> services = LiteralConvertor.convertFromStringToServices(servicesLiteral);
-            Address addressOnj = new Address(country, county, city, null, street, streetNr, zipCode, others);
+            Address addressOnj = new Address(country, county, city, locality, street, streetNr, zipCode, others);
 
             Translator translator = new Translator(id, firstName + " " + lastName, "" + authorizationNumber, phone, addressOnj, schedule, services, languages);
             qexec.close();

@@ -62,7 +62,7 @@ public class ServiceService {
             Translator translator = translatorService.get(Math.abs(entityId));
             boolean isDeleted = translatorService.delete(translator);
             List<Service> services = translator.getServices();
-            Optional<Service> serviceOptional = services.stream().filter(serv -> serv.getId() == serviceDTO.getId()).findFirst();
+            Optional<Service> serviceOptional = services.stream().filter(serv -> serv.getId().equals(serviceDTO.getId())).findFirst();
             if (!serviceOptional.isPresent())
                 return null;
             service = serviceOptional.get();
@@ -74,7 +74,7 @@ public class ServiceService {
             Notary notary = notaryService.get(entityId);
             boolean isDeleted = notaryService.delete(notary);
             List<Service> services = notary.getServices();
-            Optional<Service> serviceOptional = services.stream().filter(serv -> serv.getId() == serviceDTO.getId()).findFirst();
+            Optional<Service> serviceOptional = services.stream().filter(serv -> serv.getId().equals(serviceDTO.getId())).findFirst();
             if (!serviceOptional.isPresent())
                 return null;
             service = serviceOptional.get();
