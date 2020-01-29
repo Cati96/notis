@@ -38,6 +38,7 @@ def replace_propertyes():
         .replace("ns1:streetNr", "<ns1:streetNr>") \
         .replace("<ns1:street>Nr", "<ns1:streetNr>") \
         .replace("<ns1:street>Nr", "<ns1:streetNr>") \
+        .replace("ns1:documents", "<ns1:documents>") \
         .replace("<https://www.merriam-webster.com/dictionary/notary%20public>",
                  "\"https://www.merriam-webster.com/dictionary/notary%20public\"") \
         .replace("<https://www.merriam-webster.com/dictionary/translator>",

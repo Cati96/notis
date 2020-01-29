@@ -3,7 +3,9 @@ package com.faculty.wade.notisbackend.helper;
 import com.faculty.wade.notisbackend.DTO.EntityDTO;
 import com.faculty.wade.notisbackend.model.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class EntityCreator {
@@ -54,9 +56,11 @@ public class EntityCreator {
                 .timetable(convertTimeTableToString(notary.getTimetable()))
                 .services(convertServicesToString(notary.getServices()))
                 .languages("-")
+                .documents(convertDocumentsTOsTRING(notary.getServices()))
                 .build();
         return entityObject;
     }
+
     public static EntityObject createEntityToBeStored(Translator translator, boolean isTranslator) {
         Integer id = translator.getId();
         String entityID;
@@ -78,6 +82,7 @@ public class EntityCreator {
                 .timetable(convertTimeTableToString(translator.getTimetable()))
                 .services(convertServicesToString(translator.getServices()))
                 .languages(convertLanguagesToString(translator.getLanguages()))
+                .documents(convertDocumentsTOsTRING(translator.getServices()))
                 .build();
         return entityObject;
     }
@@ -97,13 +102,28 @@ public class EntityCreator {
     }
 
     private static String convertServicesToString(List<Service> services) {
-        String servicesString = services.stream().map(service -> "['" + service.getId()+"', '"+ service.getType() + "', '" + service.getDescription() + "']").collect(Collectors.joining(", "));
+        String servicesString = services.stream().map(service -> "['" + service.getId() + "', '" + service.getType() + "', '" + service.getDescription() + "']").collect(Collectors.joining(", "));
         return "[" + servicesString + "]";
     }
 
-    private static String convertLanguagesToString(List<String> languages){
+    private static String convertLanguagesToString(List<String> languages) {
 //        "['FRANCEZĂ', 'RUSĂ']"
-        String languagesString = languages.stream().map(language->"'"+language.toUpperCase().replace(",","")+"'").collect(Collectors.joining(", "));
-        return "["+languagesString+"]";
+        String languagesString = languages.stream().map(language -> "'" + language.toUpperCase().replace(",", "") + "'").collect(Collectors.joining(", "));
+        return "[" + languagesString + "]";
+    }
+
+    private static String convertDocumentsTOsTRING(List<Service> services) {
+        StringBuilder sb = new StringBuilder("[");
+        for (Service service : services) {
+            if (service.getDocuments() != null) {
+                for (Document doc : service.getDocuments()) {
+                    sb.append("[" + service.getId() + ", " + doc.getId() + ", " + doc.getType() + ", " + doc.getFormat() + ", " + doc.getTemplate() + ", " + doc.getPrice() + "], ");
+                }
+            }
+        }
+        String res = sb.toString();
+        res = res.substring(0, res.length()-2);
+
+        return res+"]";
     }
 }

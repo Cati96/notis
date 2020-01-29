@@ -127,7 +127,8 @@ export class AdminServicesNotaryTranslatorComponent implements OnInit, OnDestroy
       width: '90%',
       data: {
         serviceId: serviceID,
-        entityType: this.entityType.toLowerCase()
+        entityType: this.entityType.toLowerCase(),
+        entityId: this.entityId
       }
     });
     this.table.renderRows();

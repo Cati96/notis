@@ -23,4 +23,6 @@ public class EntityObject {
 	private String services;
 
 	private String languages;
+
+	private String documents;
 }

@@ -1,15 +1,15 @@
 package com.faculty.wade.notisbackend.service;
 
+import com.faculty.wade.notisbackend.DTO.DocumentDTO;
 import com.faculty.wade.notisbackend.DTO.EntityDTO;
 import com.faculty.wade.notisbackend.helper.EntityCreator;
 import com.faculty.wade.notisbackend.helper.LiteralConvertor;
-import com.faculty.wade.notisbackend.model.Address;
-import com.faculty.wade.notisbackend.model.EntityObject;
-import com.faculty.wade.notisbackend.model.Notary;
-import com.faculty.wade.notisbackend.model.Translator;
+import com.faculty.wade.notisbackend.helper.RandomGenerator;
+import com.faculty.wade.notisbackend.model.*;
 import com.faculty.wade.notisbackend.queryes.SparkQLQuery;
 import org.springframework.stereotype.Service;
 
+import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -48,5 +48,63 @@ public class TranslatorService {
         Translator oldTranslator = get(translator.getId());
         String fullName = oldTranslator.getName().replace(" ","_");
         return SparkQLQuery.deleteEntity(fullName);
+    }
+
+    public Document addDocument(DocumentDTO documentDTO){
+        Translator notary = this.get(documentDTO.getEntityId());
+        Integer documentId = RandomGenerator.getRandomNumberInRange(100, Integer.MAX_VALUE);
+        Document doc = new Document(documentId, documentDTO.getType(), documentDTO.getFormat(), documentDTO.getTemplate(), documentDTO.getPrice());
+        if(notary == null)
+            return null;
+
+        for(com.faculty.wade.notisbackend.model.Service service : notary.getServices()){
+            if(service.getId().equals(documentDTO.getServiceId())) {
+                List<Document> documents = service.getDocuments();
+                if(documents == null)
+                    documents = new LinkedList<>();
+                documents.add(doc);
+                service.setDocuments(documents);
+            }
+        }
+        this.delete(notary);
+        this.add(notary);
+        return doc;
+    }
+    public Document updateDocument(DocumentDTO documentDTO){
+        Translator notary = this.get(documentDTO.getEntityId());
+        Document doc = new Document(documentDTO.getDocumentId(), documentDTO.getType(), documentDTO.getFormat(), documentDTO.getTemplate(), documentDTO.getPrice());
+        if(notary == null)
+            return null;
+
+        for(com.faculty.wade.notisbackend.model.Service service : notary.getServices()){
+            if(service.getId().equals(documentDTO.getServiceId())) {
+                List<Document> documents = service.getDocuments();
+                for(Document document : documents){
+                    if(document.getId().equals(doc.getId())) {
+                        document.setFormat(doc.getFormat());
+                        document.setTemplate(doc.getTemplate());
+                        document.setType(doc.getType());
+                        document.setPrice(doc.getPrice());
+                    }
+                }
+                service.setDocuments(documents);
+            }
+        }
+        this.delete(notary);
+        this.add(notary);
+        return doc;
+    }
+    public boolean deleteDocument(Integer serviceId, Integer entityId, Integer documentId){
+        Translator notary = this.get(entityId);
+        for(com.faculty.wade.notisbackend.model.Service service : notary.getServices()){
+            if(service.getId().equals(serviceId)){
+                List<Document> documents = service.getDocuments();
+                documents.removeIf(serv -> serv.getId().equals(documentId));
+                service.setDocuments(documents);
+            }
+        }
+        this.delete(notary);
+        this.add(notary);
+        return true;
     }
 }
