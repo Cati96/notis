@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>User guide</title>
+    <link rel="stylesheet" href="./Scholarly HTML_files/scholarly.min.css">
+    <link rel="stylesheet" href="./Scholarly%20HTML_files/technical-report.css">
+</head>
+
+<body>
+<header>
+    <h1 id="header-title">User Guide</h1>
+</header>
+<div class="contentinfo">
+    <ol role="directory">
+        <li><a id="content-info-link" href="#user-guide"><span>1. </span>User guide</a>
+            <ol role="directory">
+                <li><a id="content-info-link" href="#user"><span>1.1. </span>User</a></li>
+                <li><a id="content-info-link" href="#admin"><span>1.2. </span>Admin</a></li>
+            </ol>
+        </li>
+        <li><a id="content-info-link" href="#bibliography"><span>2. </span>Bibliografy</a></li>
+    </ol>
+</div>
+<section id="user-guide">
+    <h2><span>1. </span>User guide</h2>
+    <p>From the main screen shown in the image bellow we can select what type of user we want to use.</p>
+    <p>
+        The admin user has the right to modify entities such that: notaries, translators, addresses, services, etc.</p>
+    <p>Normal users can only view and search entities based on location and type of services that they offer.</p>
+    <img class="user-guide-imgs" src="./user_guide_img/main.png" alt="architecture"/>
+    <section id="user">
+        <h3><span>1.1 </span>User</h3>
+        <p>Users can see three main tabs in the navigation bar: <b>Notaries</b>, <b>Translators</b> and <b>Search with
+            filters</b>. The first two tabs are very similar.</p>
+        <p>When accessing the Notaries tab, first thing that we will see will be all the notaries that are present in
+            our database.</p>
+        <img class="user-guide-imgs" src="./user_guide_img/norati_main.png" alt="architecture"/>
+        <p>We are able to see the name, the authorisation number and the phone number. By clicking on <b>See details</b>
+            button under <b>Addresses</b>, <b>Timetable</b> or <b>Services</b> we will be able to check extra
+            information that will appear in a new modal.</p>
+        <p>In image below we can see the modal in which the address is displayed. In the left side we can see the
+            address details and on the right side a map on which the position is displayed using a marker. We have the
+            possibility to zoom in or out the map.</p>
+        <img class="user-guide-imgs" src="./user_guide_img/notary_address.png" alt="architecture"/>
+        <p>The <b>Timetable</b> tab will open a new modal in which we can check the working hours of the entity
+            separated by days.</p>
+        <img class="user-guide-imgs" src="./user_guide_img/notary_timetable.png" alt="architecture"/>
+        <p>In order to see the services offered by each entity we can click on <b>See details</b> button situated on the
+            <b>Services</b> column. The type of service and a short description will be visible on our screen. Here we
+            can see also the document available for each service and also we can download templates by clicking on the
+            <b>Download</b> button.</p>
+        <img class="user-guide-imgs" src="./user_guide_img/notary_service.png" alt="architecture"/>
+        <img class="user-guide-imgs" src="./user_guide_img/notary_documents.png" alt="architecture"/>
+        <p>The <b>Translator</b> tab is very similar, the only difference is that notaries have also information about
+            the languages.</p>
+        <p>In <b>Search by filters</b> tab we can search entities based on their location or by the type of services
+            that they offer.</p>
+        <p>The first step is to select what type of entities we want to search for. Here we have two options: Notaries
+            and Translators. Next we will need to select the criteria by which we will search.</p>
+        <p>When we try to searh by the service offered a list of services will appear on the screen. We can select the
+            services by clicking on the box from the left of the service name. After clicking on <b>Search</b> button a
+            map will appear and we will be able to see the position of all the entities that respect our searching
+            criteria.</p>
+        <img class="user-guide-imgs" src="./user_guide_img/notary_search_by_service.png" alt="architecture"/>
+        <img class="user-guide-imgs" src="./user_guide_img/notary_search_by_service_2.png" alt="architecture"/>
+        <p>Another option is to search by the current location or by a custom location. For the second case we need to
+            complete a form with the desired address.</p>
+        <img class="user-guide-imgs" src="./user_guide_img/search_by_location.png" alt="architecture"/>
+    </section>
+    <section id="admin">
+        <h3><span>1.2 </span>Admin</h3>
+        <p>The admin have the possibility to edit the information from the rdf and also to add new information. The
+            interface is very similar with the interface for the normal user but we have extra buttons for create, edit
+            and delete.</p>
+        <p>Below we have the main screen for notaries. We can see that a button for edit and delete is present for each
+            notary. The plus sign from the upper-right corner is used to create a new notary.</p>
+        <img class="user-guide-imgs" src="./user_guide_img/admin_main.png" alt="architecture"/>
+        <p>When we want to update an entity we can click on the <b>Edit</b> button and a modal in which we can change
+            the name, the authorisation number, the phone number and the languages(only for translators).</p>
+        <img class="user-guide-imgs" src="./user_guide_img/update_translator.png" alt="architecture"/>
+        <p>We can change also the address and the timetable for each entity by following the same steps.</p>
+        <p>In order to create or to edit services we can expand the service tab and we will be able to see all the
+            services under a certain entity. Here we have the same buttons for create, edit and delete.</p>
+        <img class="user-guide-imgs" src="./user_guide_img/update_service.png" alt="architecture"/>
+        <p>From this page we can also access the documents for each service. Here we have also the possibility to
+            create, edit or remove a document.</p>
+        <img class="user-guide-imgs" src="./user_guide_img/update_documents.png" alt="architecture"/>
+    </section>
+</section>
+<section id="bibliography">
+    <h2><span>2. </span>Bibliography</h2>
+    <dl>
+        <dt id="ref-HTML">Scholarly HTML</dt>
+        <dd property="schema:citation" typeof="schema:ScholarlyArticle"
+            resource="https://w3c.github.io/scholarly-html/">
+            <cite property="schema:name"><a href="https://w3c.github.io/scholarly-html/">Scholarly HTML</a></cite>.
+        </dd>
+    </dl>
+</section>
+</body>
+</html>

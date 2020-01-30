@@ -51,6 +51,7 @@ export class DialogBoxAddressAdminComponent implements OnInit {
       if (index !== -1) {
         this.ccl.selectedCounty = this.ccl.counties[index];
         this.ccl.isCountySelected = true;
+        this.ccl.onChangeCounty(county);
         console.log('selected county:', this.ccl.selectedCounty);
       }
     }
@@ -61,6 +62,7 @@ export class DialogBoxAddressAdminComponent implements OnInit {
       if (index !== -1) {
         this.ccl.selectedCity = this.ccl.cities[index];
         this.ccl.isCitySelected = true;
+        this.ccl.onChangeCity(city);
         console.log('selected city:', this.ccl.selectedCity);
       }
     }
@@ -71,6 +73,7 @@ export class DialogBoxAddressAdminComponent implements OnInit {
       if (index !== -1) {
         this.ccl.selectedLocality = this.ccl.localities[index];
         this.ccl.isLocalitySelected = true;
+        this.ccl.onChangeLocality(locality);
         console.log('selected locality:', this.ccl.selectedLocality);
       }
     }

@@ -26,6 +26,10 @@ header {
     height: auto;
 }
 
+.user-guide-imgs {
+    width: 100%;
+    height: auto;
+}
 /*
 body {
     max-width: 50%;
