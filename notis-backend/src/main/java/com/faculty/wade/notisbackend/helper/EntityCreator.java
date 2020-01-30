@@ -121,8 +121,10 @@ public class EntityCreator {
                 }
             }
         }
+
         String res = sb.toString();
-        res = res.substring(0, res.length()-2);
+        if(res.length()>3)
+             res = res.substring(0, res.length()-2);
 
         return res+"]";
     }
