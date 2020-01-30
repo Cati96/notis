@@ -534,5 +534,5 @@
   <ns1:others>    "-" ;
   <ns1:street>    "-" ;
   <ns1:streetNr>  "-" ;
-  <ns1:zipCode>   "-"
+  <ns1:zipCode>   "--"
 ] .
