@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!-- saved from url=(0037)https://w3c.github.io/scholarly-html/ -->
 <html>
 
 <head>
@@ -11,110 +10,150 @@
 </head>
 
 <body>
-    <header>
-        <h1 id="header-title">Technical Report</h1>
-    </header>
-    <div class="contentinfo">
-        <ol role="directory">
-            <li><a id="content-info-link" href="#abstract"><span>1. </span>Abstract</a></li>
-            <li><a id="content-info-link" href="#introduction"><span>2. </span>Introduction and objectives</a></li>
-            <li><a id="content-info-link" href="#application-architecture"><span>3. </span>Application Architecture</a>
+<header>
+    <h1 id="header-title">Technical Report</h1>
+</header>
+<div class="contentinfo">
+    <ol role="directory">
+        <li><a id="content-info-link" href="#abstract"><span>1. </span>Abstract</a></li>
+        <li><a id="content-info-link" href="#introduction"><span>2. </span>Introduction and objectives</a></li>
+        <li><a id="content-info-link" href="#application-architecture"><span>3. </span>Application Architecture</a>
+            <ol role="directory">
+                <li><a id="content-info-link" href="#server"><span>3.1. </span>Server</a></li>
                 <ol role="directory">
-                    <li><a id="content-info-link" href="#server"><span>3.1. </span>Server</a></li>
-                    <ol role="directory">
-                        <li><a id="content-info-link" href="#maven"><span>3.1.1. </span>Maven</a></li>
-                        <li><a id="content-info-link" href="#spring-boot"><span>3.1.2. </span>Spring Boot</a></li>
-                        <li><a id="content-info-link" href="#apache-jena"><span>3.1.3. </span>Apache Jena</a></li>
-                    </ol>
-                    <li><a id="content-info-link" href="#client"><span>3.2. </span>Client</a></li>
-                    <ol role="directory">
-                        <li><a id="content-info-link" href="#angular"><span>3.2.1. </span>Angular</a></li>
-                        <li><a id="content-info-link" href="#nodejs"><span>3.2.2. </span>NodeJS</a></li>
-                    </ol>
+                    <li><a id="content-info-link" href="#maven"><span>3.1.1. </span>Maven</a></li>
+                    <li><a id="content-info-link" href="#tomcat"><span>3.1.2. </span>Tomcat</a></li>
+                    <li><a id="content-info-link" href="#spring-boot"><span>3.1.3. </span>Spring Boot</a></li>
+                    <li><a id="content-info-link" href="#apache-jena"><span>3.1.4. </span>Apache Jena</a></li>
                 </ol>
-            </li>
-            <li><a id="content-info-link" href="#rdf-structure"><span>4. </span>RDF structure</a></li>
-            <li><a id="content-info-link" href="#challanges"><span>5. </span>Challanges encounted</a></li>
-            <li><a id="content-info-link" href="#results"><span>6. </span>Results</a></li>
-            <li><a id="content-info-link" href="#conclusion"><span>7. </span>Conclusion</a></li>
-            <li><a id="content-info-link" href="#future-improvements"><span>8. </span>Future improvements</a></li>
-            <li><a id="content-info-link" href="#bibliography"><span>9. </span>Bibliography</a></li>
-        </ol>
-    </div>
-    <section id="abstract">
-        <h2><span>1. </span>Abstract</h2>
-        <p>
-            In this report we have highlighted the stages of the current project development, its description, the technologies used and the challenges encountered. Finally, we presented some conclusions and future improvements for our application.
-        </p>
-    </section>
-    <section id="introduction">
-        <!-- review? -->
-        <h2><span>2. </span>Introduction and objectives</h2>
-        <p>
-            Notis is a web application that offers the possibility to search for different entities as notaries and translators based on different searching criterias such as: proximity, type of documents that can be released, etc.
-        </p>
-        <p>
-            The application offer real-time locations on map (provided by Google Maps) on which we can indentify the user location or actual positions of the offices and estimates the time needed to travel to the desired destination using different types of transport (personal vehicle, bicycle, public transport, walking).
-        </p>
-        <p>
-            For each type of entity we display informations regarding the documents that can be released, their prices and general contact informations such as: telephone number and email address. Also, we can check which are the additional documents we need to provide and we can download templates for them in order to complete them and to not waste any precious time.
-        </p>
+                <li><a id="content-info-link" href="#client"><span>3.2. </span>Client</a></li>
+                <ol role="directory">
+                    <li><a id="content-info-link" href="#angular"><span>3.2.1. </span>Angular</a></li>
+                    <li><a id="content-info-link" href="#nodejs"><span>3.2.2. </span>NodeJS</a></li>
+                    <li><a id="content-info-link" href="#open-street-map"><span>3.2.3. </span>OpenStreetMap</a></li>
+                </ol>
+            </ol>
+        </li>
+        <li><a id="content-info-link" href="#rdf-structure"><span>4. </span>RDF structure</a></li>
+        <li><a id="content-info-link" href="#sparql-queries"><span>5. </span>Interesting SPARQL Queries</a></li>
+        <li><a id="content-info-link" href="#requirements"><span>6. </span>Initial goals & Requirements</a></li>
+        <li><a id="content-info-link" href="#results"><span>7. </span>Results</a></li>
+        <li><a id="content-info-link" href="#challanges"><span>8. </span>Challenges encountered</a></li>
+        <li><a id="content-info-link" href="#conclusion"><span>9. </span>Conclusion</a></li>
+        <li><a id="content-info-link" href="#future-improvements"><span>10. </span>Future improvements</a></li>
+        <li><a id="content-info-link" href="#bibliography"><span>11. </span>Bibliography</a></li>
+    </ol>
+</div>
+<section id="abstract">
+    <h2><span>1. </span>Abstract</h2>
+    <p>
+        In this report we have highlighted the stages of the current project development, its description, the
+        technologies used and the challenges encountered. Finally, we presented some conclusions and future improvements
+        for our application.
+    </p>
+</section>
+<section id="introduction">
+    <!-- review? -->
+    <h2><span>2. </span>Introduction and objectives</h2>
+    <p>
+        Notis is a web application that offers the possibility to search for different entities as notaries and
+        translators based on different searching criterias such as: proximity, type of documents that can be released,
+        etc.
+    </p>
+    <p>
+        The application offer real-time locations on map (provided by Google Maps) on which we can indentify the user
+        location or actual positions of the offices and estimates the time needed to travel to the desired destination
+        using different types of transport (personal vehicle, bicycle, public transport, walking).
+    </p>
+    <p>
+        For each type of entity we display informations regarding the documents that can be released, their prices and
+        general contact informations such as: telephone number and email address. Also, we can check which are the
+        additional documents we need to provide and we can download templates for them in order to complete them and to
+        not waste any precious time.
+    </p>
 
-    </section>
-    <section id="application-architecture">
-        <h2><span>3. </span>Application Architecture</h2>
-        <p>
-            Application architecture is separated in two main components consisting of: the server application and the client application. In the image below we can visualize the main architecture.
-        </p>
-        <img id="architecture-img" src="../UML/arhitecture.png" alt="architecture" />
-        <p>Communication between server and client is made via HTTP requests.</p>
-        <section id="server">
-            <h3><span>3.1 </span>Server</h3>
-            <p> The server application is written in Java. In Java we do all the processing that the application requires. Regarding technologies we are using: Spring Boot, Maven and Apache Jena.</p>
-            <p>For a better structure of a code, as design pattern we use MVCS pattern where we split the code in four main parts: </p>
-            <ul>
-                <li>M-Model: represents an POJO object which is carrying data (gets/sets data)</li>
-                <li>V-View: represents the visualization of the data that model contains; we are skipping that part</li>
-                <li>C-Controller: the one who exposes the data; connects the service with the model, acting as a bridge</li>
-                <li>S-Service: encapsulates the business logic, letting the Model clean</li>
-            </ul>
-            <section id="maven">
-                <h4><span>3.1.1 </span>Maven</h4>
-                <p>Maven is used in order to resolve all imports of dependecies required for the project.</p>
-            </section>
-            <section id="spring-boot">
-                <h4><span>3.1.2 </span>Spring Boot</h4>
-                <p>Spring Boot is used to accelerate and facilitate back-end application development. With the help of Spring we create a microservice which helps in processing of data necessary for client, through endpoints. There is an OpenAPI document that contains the main endpoints offered by our server can be found <a href="./openApi.html">here</a>.
-                </p>
-            </section>
-            <section id="apache-jena">
-                <h4><span>3.1.3 </span>Apache Jena</h4>
-                <p>We made use of Apache Jena framework to manipulate the RDF model and to interogate it via SPARQL. The RDF structure will be described in the next chapter.</p>
-            </section>
+</section>
+<section id="application-architecture">
+    <h2><span>3. </span>Application Architecture</h2>
+    <p>
+        Application architecture is separated in two main components consisting of: the server application and the
+        client application. In the image below we can visualize the main architecture.
+    </p>
+    <img id="architecture-img" src="../UML/arhitecture.png" alt="architecture"/>
+    <p>Communication between server and client is made via HTTP requests.</p>
+    <section id="server">
+        <h3><span>3.1 </span>Server</h3>
+        <p> The server application is written in Java. In Java we do all the processing that the application requires.
+            Regarding technologies we are using: Spring Boot, Maven and Apache Jena.</p>
+        <p>For a better structure of a code, as design pattern we use MVCS pattern where we split the code in four main
+            parts: </p>
+        <p>Finally, in order to can use our back-end application, we are deploying it in Apache Tomcat container.</p>
+        <ul>
+            <li>M-Model: represents an POJO object which is carrying data (gets/sets data)</li>
+            <li>V-View: represents the visualization of the data that model contains; we are skipping that part</li>
+            <li>C-Controller: the one who exposes the data; connects the service with the model, acting as a bridge</li>
+            <li>S-Service: encapsulates the business logic, letting the Model clean</li>
+        </ul>
+        <section id="maven">
+            <h4><span>3.1.1 </span>Maven</h4>
+            <p>Maven is used in order to resolve all imports of dependecies required for the project.</p>
         </section>
-        <section id="client">
-            <h3><span>3.2 </span>Client</h3>
-            <p>The client web application is developed using Angular framework and runs on a NodeJS server.
+        <section id="tomcat">
+            <h4><span>3.1.2 </span>Tomcat</h4>
+            <p>Apache Tomcat is an open-source implementation of the Java Servlet, JavaServer Pages, Java Expression
+                Language and WebSocket technologies.</p>
+            <p>Tomcat provides a "pure Java" HTTP web server environment in which Java based web applications can
+                run.</p>
+        </section>
+        <section id="spring-boot">
+            <h4><span>3.1.3 </span>Spring Boot</h4>
+            <p>Spring Boot is used to accelerate and facilitate back-end application development. With the help of
+                Spring we create a microservice which helps in processing of data necessary for client, through
+                endpoints. There is an OpenAPI document that contains the main endpoints offered by our server can be
+                found <a href="./openApi.html">here</a>.
             </p>
-            <p>In order to use a proper map on which the users can see the actual position of different offices across the country we made use of Google Maps API. The official documentation of this API can be consulted <a href="https://developers.google.com/maps/documentation">here</a>.
-            </p>
-            <section id="angular">
-                <h4><span>3.2.1 </span>Angular</h4>
-                <p>Angular is a platform for building mobile and desktop web applications, based ob TypeScript language.</p>
-            </section>
-            <section id="nodejs">
-                <h4><span>3.2.2 </span>NodeJS</h4>
-                <p>NodeJS is a JavaScript runtime environment that executes JavaScript code outside of a browser. NodeJS lets developers use JavaScript to write command line tools and for server-side scripting—running scripts server-side to produce dynamic web page content before the page is sent to the user's web browser. </p>
-            </section>
+        </section>
+        <section id="apache-jena">
+            <h4><span>3.1.4 </span>Apache Jena</h4>
+            <p>We made use of Apache Jena framework to manipulate the RDF model and to interogate it via SPARQL. The RDF
+                structure will be described in the next chapter.</p>
         </section>
     </section>
-    <section id="rdf-structure">
-        <h2><span>4. </span>RDF structure</h2>
-        <p>RDF was generated using rdflib Python library. Data was provided in two excel documents and a Python script was used to filter the data, add missing information and to create a rdf document in the rdf/XML format.
+    <section id="client">
+        <h3><span>3.2 </span>Client</h3>
+        <p>The client web application is developed using Angular framework and runs on a NodeJS server.
         </p>
-        <p>The rdf contains two types of entities: Notary and Translator. Both entities are of type person. Their structure are very similar, only some minor differences are present. We can check the syntax for both entities below.
+        <p>In order to use a proper map on which the users can see the actual position of different offices across the
+            country we made use of OpenStreetMap API. The official documentation of this API can be consulted <a
+                    href="https://wiki.openstreetmap.org/wiki/API_v0.6">here</a>.
         </p>
-          <figure typeof="schema:SoftwareSourceCode" resource="#person-example" id="person-example">
+        <section id="angular">
+            <h4><span>3.2.1 </span>Angular</h4>
+            <p>Angular is a platform for building mobile and desktop web applications, based ob TypeScript language.</p>
+        </section>
+        <section id="nodejs">
+            <h4><span>3.2.2 </span>NodeJS</h4>
+            <p>NodeJS is a JavaScript runtime environment that executes JavaScript code outside of a browser. NodeJS
+                lets developers use JavaScript to write command line tools and for server-side scripting—running scripts
+                server-side to produce dynamic web page content before the page is sent to the user's web browser. </p>
+        </section>
+        <section id="open-street-map">
+            <h4><span>3.2.3 </span>OpenStreetMap</h4>
+            <p>OpenStreetMap is a free street level map of the world, created by an ever growing community of
+                mappers. It offers an editing API for fetching and saving raw geodata from/to the OpenStreetMap
+                database.</p>
+        </section>
+    </section>
+</section>
+<section id="rdf-structure">
+    <h2><span>4. </span>RDF structure</h2>
+    <p>RDF was generated using rdflib Python library. Data was provided in two excel documents and a Python script was
+        used to filter the data, add missing information and to create a rdf document in the rdf/XML format.
+    </p>
+    <p>The rdf contains two types of entities: Notary and Translator. Both entities are of type person. Their structure
+        are very similar, only some minor differences are present. We can check the syntax for both entities below.
+    </p>
+    <figure typeof="schema:SoftwareSourceCode" resource="#person-example" id="person-example">
           <pre><code>
               &lt;ns1:notary rdf:about="http://example.org/people/MARIA_CREŢOI-DAVID"&gt;
                 &lt;ns2:lastName&gt;CREŢOI&lt;/ns2:lastName&gt;
@@ -129,14 +168,14 @@
                 &lt;ns2:phoneNo&gt;0705788213&lt;/ns2:phoneNo&gt;
               &lt;/ns1:notary&gt;
           </code></pre>
-          <figcaption>
+        <figcaption>
             <span property="schema:name"></span>
             <span property="schema:description">
               Example of a Notary.
             </span>
-          </figcaption>
-        </figure>
-        <figure typeof="schema:SoftwareSourceCode" resource="#person-example" id="person-example">
+        </figcaption>
+    </figure>
+    <figure typeof="schema:SoftwareSourceCode" resource="#person-example" id="person-example">
           <pre><code>
             &lt;ns2:translator rdf:about="http://example.org/people/Emel_Abduraman"&gt;
              &lt;ns1:phoneNo&gt;072135773&lt;/ns1:phoneNo&gt;
@@ -152,36 +191,94 @@
              &lt;ns1:lastName&gt;Abduraman&lt;/ns1:lastName&gt;
             &lt;/ns2:translator&gt;
           </code></pre>
-          <figcaption>
+        <figcaption>
             <span property="schema:name"></span>
             <span property="schema:description">
               Example of a Translator.
             </span>
-          </figcaption>
-        </figure>
-        <p>As we can see both entities have a similar structure, the only difference being the <b>languages</b> tag that is applying only for translators. This structure will suffer changes in the future, different types of document templates will be added and the prices for each service that is offered by an entity.
-        </p>
-        <p>Different types of RDFs can be generated using the <b>rdflib</b> library such as:‘xml’, ‘n3’, ‘turtle’, ‘nt’, ‘pretty-xml’, ‘trix’, ‘trig’. The current format is pretty-xml.</p>
-    </section>
-    <section id="challanges">
-        <h2><span>5. </span>Challanges encounted</h2>
-    </section>
-    <section id="results">
-        <h2><span>6. </span>Results</h2>
-    </section>
-    <section id="conclusion">
-        <h2><span>7. </span>Conclusion</h2>
-    </section>
-    <section id="future-improvements">
-        <h2><span>8. </span>Future improvements</h2>
-    </section>
-    <section id="bibliography">
-        <h2><span>9. </span>Bibliography</h2>
-        <dl>
-            <dt id="ref-HTML">Scholarly HTML</dt>
-            <dd property="schema:citation" typeof="schema:ScholarlyArticle" resource="https://w3c.github.io/scholarly-html/">
-                <cite property="schema:name"><a href="https://w3c.github.io/scholarly-html/">Scholarly HTML</a></cite>.
-            </dd>
-        </dl>
-    </section>
-</body></html>
+        </figcaption>
+    </figure>
+    <p>As we can see both entities have a similar structure, the only difference being the <b>languages</b> tag that is
+        applying only for translators. This structure will suffer changes in the future, different types of document
+        templates will be added and the prices for each service that is offered by an entity.
+    </p>
+    <p>Different types of RDFs can be generated using the <b>rdflib</b> library such as:‘xml’, ‘n3’, ‘turtle’, ‘nt’,
+        ‘pretty-xml’, ‘trix’, ‘trig’. The current format is pretty-xml.</p>
+</section>
+<section id="sparql-queries">
+    <h2><span>5. </span>Interesting SPARQL Queries</h2>
+</section>
+<section id="requirements">
+    <h2><span>6. </span>Initial goals & Requirements</h2>
+    <p>Our application starts from the premise that there are people who want to find out multiple information about
+        notary officials from their country.</p>
+    <p>So, we established a couple of goals/requirements to follow in order to satisfy the end-users:</p>
+    <ul>
+        <li>To can list all notaries and translators along with their base information like authorization number,
+            address, timetable
+        </li>
+        <li>For each official to display all services offered with their price and with all draft documents for each
+            service
+        </li>
+        <li>To search for notaries or translators in area of user's current location, or by selecting a custom
+            location
+        </li>
+        <li>Finally, from the end-user perspective to can search entities by their services offered</li>
+    </ul>
+    <p>As a plus, to make our life easier, to can have an administrative console where we can manipulate all the
+        notaries and translators.</p>
+</section>
+<section id="results">
+    <h2><span>7. </span>Results</h2>
+    <p>In the end, our application satisfies our initial requirements, so everybody can search for notary officials in
+        order to find what kind of services they offer, which is their timetable, how they can be contacted and where
+        they can be found.</p>
+    <p>More that this, we have a web administrative console, where just a few people can have access and in which we can
+        add, remove or modify translators and notaries along with their information about services, documents, timetable
+        and address. </p>
+</section>
+<section id="challanges">
+    <h2><span>8. </span>Challenges encountered</h2>
+    <p>One of our biggest challenge was to create the RDF model and to fill with the existent data about notary
+        officials.</p>
+    <p>More than this, another difficulty was to manipulate the data inside the RDF, because we never worked with this
+        kind of data modeling and interrogation.</p>
+    <p>Another challenge that we had was to work with the maps. Initially we started to work with GoogleMaps APIs and it
+        seemed okay to work with this API until we wasn't able to use one of their feature because an amount of money
+        was necessary
+        to buy a key required for the API. So we had to change out maps API provider from Google Maps to something else.
+        We tried multiple API providers after that until we found the OpenStreetMap API which was our lifeline. </p>
+    <p>We need some time to figure it out how the OSM API works, how we can work with the map container, overlayers,
+        features, markers
+        and other things, how to destroy in a good way, how to recreate them and so on.</p>
+</section>
+<section id="conclusion">
+    <h2><span>9. </span>Conclusion</h2>
+    <p>To sum up, we think that we successfully accomplished our initial requirements so the end-users can benefit from
+        our application if they want to find out more information about legalized notaries and translators.</p>
+    <p>For us, as a team, but not only, for us as individuals, we taught something really new, working with RDFs and
+        SPARQL and another thing, how to implement a map container which has multiple features.</p>
+</section>
+<section id="future-improvements">
+    <h2><span>10. </span>Future improvements</h2>
+    In the future we can add some new features like:
+    <ul>
+        <li>Adding for user possibility to add review and rating to one entity (notary/translator)</li>
+        <li>To offer more search criteria</li>
+        <li>To add on the maps possibility to see the best way to arrive to the entity's office with multiple
+            transportation modes.
+        </li>
+    </ul>
+</section>
+<section id="bibliography">
+    <h2><span>11. </span>Bibliography</h2>
+    <dl>
+        <dt id="ref-HTML">Scholarly HTML</dt>
+        <dd property="schema:citation" typeof="schema:ScholarlyArticle"
+            resource="https://w3c.github.io/scholarly-html/">
+            <cite property="schema:name"><a href="https://w3c.github.io/scholarly-html/">Scholarly HTML</a></cite>.
+        </dd>
+    </dl>
+</section>
+</body>
+</html>
