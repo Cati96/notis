@@ -154,8 +154,8 @@
         are very similar, only some minor differences are present. We can check the syntax for both entities below.
     </p>
 
-    <img id="architecture-img" src="rdf_img/translator-rdf.png" alt="architecture"/>
-    <img id="architecture-img" src="rdf_img/notary-rdf.png" alt="architecture"/>
+    <img class="rdf-img" src="rdf_img/translator-rdf.png" alt="architecture"/>
+    <img class="rdf-img" src="rdf_img/notary-rdf.png" alt="architecture"/>
 
     <p>As we can see both entities have a similar structure, the only difference being the <b>languages</b> tag that is
         applying only for translators. This structure will suffer changes in the future, different types of document
@@ -237,6 +237,9 @@
     </ul>
     <p>As a plus, to make our life easier, to can have an administrative console where we can manipulate all the
         notaries and translators.</p>
+    <p>Regarding to the deployment of the application we propose to deploy the back-end and front-end side to one
+        personal Ubuntu server which has installed the Tomcat for deploying the back-end and NodeJS and NPM for
+        deploying the front-end.</p>
 </section>
 <section id="results">
     <h2><span>7. </span>Results</h2>
@@ -246,6 +249,8 @@
     <p>More that this, we have a web administrative console, where just a few people can have access and in which we can
         add, remove or modify translators and notaries along with their information about services, documents, timetable
         and address. </p>
+    <p>The only minus is that we successfully deployed just the back-end on the remote server because we had a problem
+        with the SSL so the front-end doesn't work remote, so it's working locally, for the moment.</p>
 </section>
 <section id="challanges">
     <h2><span>8. </span>Challenges encountered</h2>
@@ -276,8 +281,9 @@
         <li>Adding for user possibility to add review and rating to one entity (notary/translator)</li>
         <li>To offer more search criteria</li>
         <li>To add on the maps possibility to see the best way to arrive to the entity's office with multiple
-            transportation modes.
+            transportation modes
         </li>
+        <li>To have the front-end module on the remote server also</li>
     </ul>
 </section>
 <section id="bibliography">
