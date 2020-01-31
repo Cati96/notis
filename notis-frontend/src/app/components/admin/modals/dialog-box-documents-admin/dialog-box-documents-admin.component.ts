@@ -112,21 +112,23 @@ export class DialogBoxDocumentsAdminComponent implements OnInit {
     console.log(documentCustom);
     console.log(this.documents);
     this.documentService.updateOrCreateDocument(this.entityType, this.entityId, this.serviceId, documentCustom).subscribe(
-    json=> console.log(json)
+      json => console.log(json)
     );
   }
 
   deleteDocument(id) {
     console.log('TO DO DELETE DOCUMENT BY ID');
     this.documentService.deleteDocument(this.entityType, this.entityId, this.serviceId, id).subscribe(
-         json=> {console.log(json);
-                this.findAndDeleteDocumentFromArray(id);
-         }
-       );
+      json => {
+        console.log(json);
+        this.findAndDeleteDocumentFromArray(id);
+      }
+    );
   }
 
   doOpenDocument(templateType) {
     this.documentService.downloadFile().subscribe(blob => {
+        console.log('Document name:', templateType);
         importedSaveAs(blob, templateType);
       }
     );
@@ -140,6 +142,9 @@ export class DialogBoxDocumentsAdminComponent implements OnInit {
           alert('There is an error on uploading your file.\nTry again please.');
         } else {
           documentCustom.template = temp;
+          this.documentService.updateOrCreateDocument(this.entityType, this.entityId, this.serviceId, documentCustom).subscribe(
+            json => console.log(json)
+          );
         }
       }
     );
@@ -158,9 +163,10 @@ export class DialogBoxDocumentsAdminComponent implements OnInit {
 
     this.table.renderRows();
   }
-  findAndDeleteDocumentFromArray(documentId) {
-      let index = this.documents.findIndex(notary => notary.id === documentId);
-      this.documents.splice(index, 1);
 
-    }
+  findAndDeleteDocumentFromArray(documentId) {
+    let index = this.documents.findIndex(notary => notary.id === documentId);
+    this.documents.splice(index, 1);
+
+  }
 }

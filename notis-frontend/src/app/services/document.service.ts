@@ -15,30 +15,30 @@ export class DocumentService {
 
   }
 
-  getAllDocumentsForEntityTypeServiceId(entityType, serviceId: number, entityId:number): Observable<any> {
+  getAllDocumentsForEntityTypeServiceId(entityType, serviceId: number, entityId: number): Observable<any> {
     const params = '?entityType=' + entityType + '&serviceId=' + serviceId + '&entityId=' + entityId;
     return this.http.get(this.urlPart + 'getAllForEntityTypeAndServiceId' + params, {responseType: 'json'})
       .pipe(map(res => res));
   }
 
-  updateOrCreateDocument(entityType, entityId, serviceId, document){
+  updateOrCreateDocument(entityType, entityId, serviceId, document) {
 
-   return this.http.post(this.urlPart, {
-    entityType: entityType,
-    entityId: entityId,
-    serviceId: serviceId,
-    documentId: document.id,
-    type: document.type,
-    format: document.format,
-    template: "-",
-    price: document.price
-   }).pipe(map( data => new Document(data)));
+    return this.http.post(this.urlPart, {
+      entityType: entityType,
+      entityId: entityId,
+      serviceId: serviceId,
+      documentId: document.id,
+      type: document.type,
+      format: document.format,
+      template: document.template,
+      price: document.price
+    }).pipe(map(data => new Document(data)));
   }
 
-  deleteDocument(entityType, entityId, serviceId, documentId){
+  deleteDocument(entityType, entityId, serviceId, documentId) {
     const params = entityType + '/' + serviceId + '/' + entityId + '/' + documentId;
-        return this.http.delete(this.urlPart + params, {responseType: 'json'})
-          .pipe(map(res => res));
+    return this.http.delete(this.urlPart + params, {responseType: 'json'})
+      .pipe(map(res => res));
   }
 
   downloadFile(): Observable<Blob> {
