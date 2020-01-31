@@ -32,6 +32,7 @@ public class EntityCreator {
                 .timetable("['10:00 - 14:00 | 15:00 - 18:00', '8:30 - 13:00 | 14:00 - 19:00', '9:30 - 12:00 | 13:00 - 19:00', '9:00 - 13:00 | 14:00 - 19:30', '9:00 - 13:00 | 14:00 - 19:30', '9:30 - 12:00 | 13:00 - 19:00', None]")
                 .services(offeredServices)
                 .languages(languages)
+                .documents("[]")
                 .build();
         return entityObject;
     }
